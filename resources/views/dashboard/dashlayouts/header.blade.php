@@ -10,7 +10,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
     <!-- Title -->
-    <link rel="shortcut icon" href="https://siap.al-azhar.id/upload/favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="{{ asset('logo.png') }}" type="image/x-icon" />
     <title>Ta'aruf Jodohku v.2.0 | YPI Al Azhar</title>
 
     <!-- Meta Tags -->

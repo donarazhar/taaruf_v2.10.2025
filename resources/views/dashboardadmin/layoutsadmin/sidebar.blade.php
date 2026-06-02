@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="shortcut icon" href="https://siap.al-azhar.id/upload/favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="{{ asset('logo.png') }}" type="image/x-icon" />
     <title>Ta'aruf Admin - Dashboard</title>
 
     <!-- Fonts -->
@@ -587,8 +587,8 @@
     <aside class="sidebar" id="sidebar">
         <!-- Sidebar Brand -->
         <a class="sidebar-brand" href="/dashboardadmin">
-            <div class="sidebar-brand-icon">
-                <i class="fas fa-layer-group"></i>
+            <div class="sidebar-brand-icon" style="background: transparent;">
+                <img src="{{ asset('logo.png') }}" alt="Logo" style="width: 100%; height: 100%; object-fit: contain;">
             </div>
             <div class="sidebar-brand-text">Ta'aruf <sup>v.2.0</sup></div>
         </a>
