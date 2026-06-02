@@ -25,7 +25,7 @@ class DashboardAdminController extends Controller
             ->leftJoin('biodata', 'karyawan.email', '=', 'biodata.email')
             ->leftJoin('kriteriapasangan', 'karyawan.email', '=', 'kriteriapasangan.email')
             ->orderBy('id_karyawan', 'asc')
-            ->paginate(4); // Sesuaikan nilai paginate sesuai kebutuhan
+            ->paginate(10); // Sesuaikan nilai paginate sesuai kebutuhan
 
         $pendidikan = Biodata::selectRaw('pendidikan, COUNT(*) as count')
             ->groupBy('pendidikan')

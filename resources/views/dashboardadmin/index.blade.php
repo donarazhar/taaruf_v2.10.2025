@@ -343,42 +343,61 @@
         <h1 class="page-title">Data Karyawan</h1>
     </div>
 
-    <!-- Employee Cards Grid -->
-    @if($datakaryawan->count() > 0)
-        <div class="employee-grid">
-            @foreach ($datakaryawan as $d)
-                <div class="employee-card">
-                    <div class="employee-header">
-                        <div class="employee-info">
-                            <div class="employee-nip">
-                                {{ $d->nip }}
-                                <span class="employee-ref">Ref: {{ $d->referensi_detail ?? '-' }}</span>
-                            </div>
-                            <h3 class="employee-name">{{ $d->nama }}</h3>
-                            <div class="employee-criteria">
-                                {{ $d->kriteriaumum }}
-                            </div>
-                        </div>
-                        <div>
-                            @if ($d->foto == null)
-                                <img src="{{ asset('assets/img/nophoto.png') }}" alt="avatar" class="employee-avatar">
-                            @else
-                                @php
-                                    $path = Storage::url('uploads/karyawan/img/' . $d->foto);
-                                @endphp
-                                <img src="{{ $path }}" alt="{{ $d->nama }}" class="employee-avatar">
-                            @endif
-                        </div>
+    <!-- Employee Data Table -->
+    <div class="table-card">
+        <div class="table-header">
+            <h6 class="table-title">Daftar Karyawan</h6>
+        </div>
+        <div class="table-body">
+            <div class="table-responsive">
+                @if($datakaryawan->count() > 0)
+                    <table class="modern-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 60px;">No.</th>
+                                <th>Profil</th>
+                                <th>NIP</th>
+                                <th>Kriteria Umum</th>
+                                <th>Referensi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($datakaryawan as $key => $d)
+                                <tr>
+                                    <td><strong>{{ $datakaryawan->firstItem() + $key }}</strong></td>
+                                    <td>
+                                        <div style="display: flex; align-items: center; gap: 12px;">
+                                            @if ($d->foto == null)
+                                                <img src="{{ asset('assets/img/nophoto.png') }}" alt="avatar" class="table-avatar" style="margin: 0;">
+                                            @else
+                                                @php
+                                                    $path = Storage::url('uploads/karyawan/img/' . $d->foto);
+                                                @endphp
+                                                <img src="{{ $path }}" alt="{{ $d->nama }}" class="table-avatar" style="margin: 0;">
+                                            @endif
+                                            <strong>{{ $d->nama }}</strong>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <span style="background: var(--primary-light); color: var(--primary); padding: 4px 8px; border-radius: 4px; font-weight: 600; font-size: 0.85rem;">
+                                            {{ $d->nip }}
+                                        </span>
+                                    </td>
+                                    <td>{{ $d->kriteriaumum }}</td>
+                                    <td>{{ $d->referensi_detail ?? '-' }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                @else
+                    <div class="empty-state">
+                        <i class="fas fa-users"></i>
+                        <p>Belum ada data karyawan</p>
                     </div>
-                </div>
-            @endforeach
+                @endif
+            </div>
         </div>
-    @else
-        <div class="empty-state">
-            <i class="fas fa-users"></i>
-            <p>Belum ada data karyawan</p>
-        </div>
-    @endif
+    </div>
 
     <!-- Pagination -->
     <div class="pagination-wrapper">
