@@ -1,478 +1,1220 @@
 @extends('layouts.bootstrap')
 @section('content')
-    <!-- ======= Hero Section ======= -->
+    <style>
+        /* ===== MODERN DESIGN SYSTEM ===== */
+        :root {
+            --primary: #0053C5;
+            --primary-light: #2E7FE4;
+            --primary-dark: #003D8F;
+            --accent: #00B8D4;
+            --success: #00C853;
+            --warning: #FFD600;
+            --white: #FFFFFF;
+            --gray-50: #FAFAFA;
+            --gray-100: #F5F5F5;
+            --gray-200: #EEEEEE;
+            --gray-300: #E0E0E0;
+            --gray-600: #757575;
+            --gray-900: #212121;
+            --shadow-sm: 0 2px 4px rgba(0, 83, 197, 0.08);
+            --shadow-md: 0 4px 12px rgba(0, 83, 197, 0.12);
+            --shadow-lg: 0 8px 24px rgba(0, 83, 197, 0.16);
+            --shadow-xl: 0 16px 48px rgba(0, 83, 197, 0.2);
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 24px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--white);
+            color: var(--gray-900);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* ===== MODERN HERO SECTION ===== */
+        #hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            overflow: hidden;
+        }
+
+        #hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            padding: 100px 0 80px;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            padding: 8px 20px;
+            border-radius: 50px;
+            color: var(--white);
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: var(--white);
+            line-height: 1.2;
+            margin-bottom: 24px;
+            letter-spacing: -0.02em;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: rgba(255, 255, 255, 0.95);
+            line-height: 1.7;
+            margin-bottom: 40px;
+            max-width: 600px;
+        }
+
+        .hero-image-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero-image-wrapper img {
+            max-width: 50%;
+            height: auto;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary-modern {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--white);
+            color: var(--primary);
+            padding: 16px 32px;
+            border-radius: var(--radius-lg);
+            font-weight: 700;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: var(--shadow-lg);
+            border: none;
+        }
+
+        .btn-primary-modern:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-xl);
+            color: var(--primary-dark);
+        }
+
+        .btn-secondary-modern {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: transparent;
+            color: var(--white);
+            padding: 16px 32px;
+            border-radius: var(--radius-lg);
+            font-weight: 700;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-secondary-modern:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.5);
+            color: var(--white);
+        }
+
+        .hero-image img {
+            max-width: 100%;
+            height: auto;
+            filter: drop-shadow(0 20px 60px rgba(0, 0, 0, 0.3));
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        .hero-decoration {
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: var(--white);
+            clip-path: polygon(0 50%, 100% 0, 100% 100%, 0 100%);
+        }
+
+        /* Add spacing on mobile */
+        @media (max-width: 991px) {
+            .hero-content-wrapper {
+                padding: 0 20px;
+            }
+        }
+
+        /* ===== MODERN SECTION STYLING ===== */
+        section {
+            padding: 100px 0;
+            position: relative;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 64px;
+        }
+
+        .section-badge {
+            display: inline-block;
+            background: rgba(0, 83, 197, 0.1);
+            color: var(--primary);
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 0.875rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 16px;
+        }
+
+        .section-title {
+            font-size: 2.75rem;
+            font-weight: 800;
+            color: var(--gray-900);
+            margin-bottom: 16px;
+            letter-spacing: -0.02em;
+        }
+
+        .section-description {
+            font-size: 1.125rem;
+            color: var(--gray-600);
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        /* ===== MODERN FEATURE CARDS ===== */
+        .feature-card {
+            background: var(--white);
+            border-radius: var(--radius-xl);
+            padding: 40px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 2px solid var(--gray-200);
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--accent) 100%);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-xl);
+            border-color: var(--primary);
+        }
+
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .feature-icon {
+            width: 72px;
+            height: 72px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            position: relative;
+        }
+
+        .feature-icon::after {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            border-radius: var(--radius-lg);
+            opacity: 0.2;
+            z-index: -1;
+            filter: blur(8px);
+        }
+
+        .feature-icon i {
+            font-size: 32px;
+            color: var(--white);
+        }
+
+        .feature-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 12px;
+        }
+
+        .feature-description {
+            color: var(--gray-600);
+            line-height: 1.7;
+            font-size: 1rem;
+        }
+
+        /* ===== MODERN STEP CARDS ===== */
+        .step-card {
+            background: var(--white);
+            border-radius: var(--radius-xl);
+            padding: 40px;
+            border: 2px solid var(--gray-200);
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .step-number {
+            position: absolute;
+            top: -20px;
+            left: 40px;
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--white);
+            box-shadow: var(--shadow-md);
+        }
+
+        .step-card:hover {
+            border-color: var(--primary);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .step-image {
+            width: 100%;
+            border-radius: var(--radius-lg);
+            margin-bottom: 24px;
+            overflow: hidden;
+        }
+
+        .step-image img {
+            width: 100%;
+            height: auto;
+            transition: transform 0.6s ease;
+        }
+
+        .step-card:hover .step-image img {
+            transform: scale(1.05);
+        }
+
+        .step-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 16px;
+        }
+
+        .step-description {
+            color: var(--gray-600);
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .step-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .step-list li {
+            padding: 12px 0;
+            color: var(--gray-900);
+            display: flex;
+            align-items: start;
+            gap: 12px;
+        }
+
+        .step-list li i {
+            color: var(--success);
+            font-size: 20px;
+            margin-top: 2px;
+        }
+
+        /* ===== MODERN GALLERY ===== */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            aspect-ratio: 1;
+            cursor: pointer;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .gallery-item::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, var(--primary) 0%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .gallery-item:hover::after {
+            opacity: 0.7;
+        }
+
+        /* ===== MODERN TESTIMONIALS ===== */
+        .testimonial-card {
+            background: var(--white);
+            border-radius: var(--radius-xl);
+            padding: 40px;
+            box-shadow: var(--shadow-md);
+            border: 2px solid var(--gray-200);
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+
+        .testimonial-card:hover {
+            box-shadow: var(--shadow-xl);
+            transform: translateY(-4px);
+            border-color: var(--primary);
+        }
+
+        .testimonial-quote {
+            color: var(--gray-600);
+            font-size: 1.125rem;
+            line-height: 1.8;
+            margin-bottom: 24px;
+            font-style: italic;
+            position: relative;
+            padding-left: 24px;
+        }
+
+        .testimonial-quote::before {
+            content: '"';
+            position: absolute;
+            left: 0;
+            top: -8px;
+            font-size: 3rem;
+            color: var(--primary);
+            opacity: 0.2;
+            font-family: Georgia, serif;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .testimonial-avatar {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--primary);
+        }
+
+        .testimonial-info h4 {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 4px;
+        }
+
+        .testimonial-info p {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+        }
+
+        .testimonial-stars {
+            color: var(--warning);
+            margin-top: 8px;
+        }
+
+        /* ===== MODERN FAQ ===== */
+        .faq-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            margin-bottom: 16px;
+            border: 2px solid var(--gray-200);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .faq-item:hover {
+            border-color: var(--primary);
+        }
+
+        .faq-question {
+            padding: 24px 28px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background: var(--gray-50);
+        }
+
+        .faq-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .faq-icon i {
+            color: var(--white);
+            font-size: 20px;
+        }
+
+        .faq-question-text {
+            flex: 1;
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: var(--gray-900);
+        }
+
+        .faq-toggle {
+            width: 32px;
+            height: 32px;
+            background: var(--gray-100);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .faq-toggle i {
+            color: var(--primary);
+            transition: transform 0.3s ease;
+        }
+
+        .faq-answer {
+            padding: 0 28px 24px 84px;
+            color: var(--gray-600);
+            line-height: 1.8;
+        }
+
+        /* ===== MODERN CONTACT SECTION ===== */
+        .contact-card {
+            background: var(--white);
+            border-radius: var(--radius-xl);
+            padding: 40px;
+            box-shadow: var(--shadow-md);
+            border: 2px solid var(--gray-200);
+            height: 100%;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: start;
+            gap: 20px;
+            margin-bottom: 32px;
+        }
+
+        .contact-icon {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .contact-icon i {
+            color: var(--white);
+            font-size: 24px;
+        }
+
+        .contact-info h4 {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 8px;
+        }
+
+        .contact-info p {
+            color: var(--gray-600);
+            line-height: 1.6;
+        }
+
+        .contact-form {
+            background: var(--white);
+            border-radius: var(--radius-xl);
+            padding: 40px;
+            box-shadow: var(--shadow-md);
+            border: 2px solid var(--gray-200);
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-control-modern {
+            width: 100%;
+            padding: 16px 20px;
+            border: 2px solid var(--gray-200);
+            border-radius: var(--radius-md);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: var(--white);
+        }
+
+        .form-control-modern:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(0, 83, 197, 0.1);
+        }
+
+        textarea.form-control-modern {
+            resize: vertical;
+            min-height: 150px;
+        }
+
+        .submit-button {
+            width: 100%;
+            padding: 16px 32px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: var(--white);
+            border: none;
+            border-radius: var(--radius-lg);
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .submit-button:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* ===== RESPONSIVE DESIGN ===== */
+        @media (max-width: 992px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+            }
+
+            .btn-primary-modern,
+            .btn-secondary-modern {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .hero-image-wrapper img {
+                max-width: 70%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            #hero .container {
+                padding-left: 24px;
+                padding-right: 24px;
+            }
+
+            .hero-title {
+                font-size: 2rem;
+                padding: 0 8px;
+            }
+
+            .hero-subtitle {
+                font-size: 1.125rem;
+                padding: 0 8px;
+            }
+
+            .hero-badge {
+                margin-left: 8px;
+                margin-right: 8px;
+            }
+
+            .section-title {
+                font-size: 1.75rem;
+            }
+
+            section {
+                padding: 60px 0;
+            }
+
+            .feature-card,
+            .step-card,
+            .pricing-card {
+                padding: 32px 24px;
+            }
+
+            .hero-content {
+                padding: 60px 0 40px;
+            }
+
+            .hero-image-wrapper img {
+                max-width: 80%;
+            }
+        }
+
+        @media (max-width: 576px) {
+            #hero .container {
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+
+            .hero-title {
+                font-size: 1.75rem;
+                padding: 0 4px;
+            }
+
+            .hero-subtitle {
+                font-size: 1rem;
+                padding: 0 4px;
+            }
+
+            .hero-badge {
+                font-size: 0.75rem;
+                padding: 6px 16px;
+                margin-left: 4px;
+                margin-right: 4px;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .hero-image-wrapper img {
+                max-width: 90%;
+            }
+        }
+
+        /* ===== UTILITY CLASSES ===== */
+        .text-primary {
+            color: var(--primary) !important;
+        }
+
+        .bg-light-section {
+            background: var(--gray-50);
+        }
+
+        .mb-20 {
+            margin-bottom: 20px;
+        }
+
+        .mb-32 {
+            margin-bottom: 32px;
+        }
+
+        .mt-48 {
+            margin-top: 48px;
+        }
+    </style>
+
+    <!-- ===== HERO SECTION ===== -->
     <section id="hero">
-        <div class="container">
-            <div class="row justify-content-between">
-                <div class="col-lg-7 pt-5 pt-lg-0 order-2 order-lg-1 d-flex align-items-center">
-                    <div data-aos="zoom-out">
-                        <h1>Ta'aruf Jodohku, Membina Keluarga Bahagia & Samawa.</h1>
-                        <h2>Aplikasi ta'aruf V1.0 ini hanya untuk kalangan Internal YPI Al Azhar yang masih Single /
-                            Lajang untuk diarahkan mencari Jodoh.</h2>
-                        <div class="text-center text-lg-start">
-                            <a href="#about" class="btn-get-started scrollto">Mari Lanjutkan</a>
-                        </div>
+        <div class="container hero-content">
+            <div class="row align-items-center">
+                <div class="col-lg-6" data-aos="fade-right">
+                    <div class="hero-badge">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M8 0L9.79611 5.52786H15.6085L10.9062 8.94427L12.7023 14.4721L8 11.0557L3.29772 14.4721L5.09383 8.94427L0.391548 5.52786H6.20389L8 0Z"
+                                fill="currentColor" />
+                        </svg>
+                        Versi 3.0 - YPI Al Azhar Internal
+                    </div>
+                    <h1 class="hero-title">Temukan Pasangan Hidup yang Tepat</h1>
+                    <p class="hero-subtitle">Platform ta'aruf modern yang menghubungkan pegawai YPI Al Azhar dengan
+                        pendampingan profesional menuju pernikahan yang berkah dan bahagia.</p>
+                    <div class="hero-buttons">
+                        <a href="#about" class="btn-primary-modern">
+                            Mulai Sekarang
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </a>
+                        <a href="#contact" class="btn-secondary-modern">
+                            Hubungi Kami
+                        </a>
                     </div>
                 </div>
-                <div class="col-lg-4 order-1 order-lg-2 hero-img" data-aos="zoom-out" data-aos-delay="300">
-                    <img src="{{ asset('assets/img/hero-img.png') }}" class="img-fluid animated" alt="">
+                <div class="col-lg-6" data-aos="fade-left" data-aos-delay="200">
+                    <div class="hero-image-wrapper">
+                        <div class="hero-image">
+                            <img src="{{ asset('assets/img/hero-img.png') }}" alt="Ta'aruf Jodohku">
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <svg class="hero-waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-            viewBox="0 24 150 28 " preserveAspectRatio="none">
-            <defs>
-                <path id="wave-path" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z">
-            </defs>
-            <g class="wave1">
-                <use xlink:href="#wave-path" x="50" y="3" fill="rgba(255,255,255, .1)">
-            </g>
-            <g class="wave2">
-                <use xlink:href="#wave-path" x="50" y="0" fill="rgba(255,255,255, .2)">
-            </g>
-            <g class="wave3">
-                <use xlink:href="#wave-path" x="50" y="9" fill="#fff">
-            </g>
-        </svg>
-    </section><!-- End Hero -->
+        <div class="hero-decoration"></div>
+    </section>
 
     <main id="main">
-        <!-- ======= About Section ======= -->
-        <section id="about" class="about">
-            <div class="container-fluid">
-
-                <div class="row">
-                    <div class="col-xl-5 col-lg-6 video-box d-flex justify-content-center align-items-stretch"
-                        data-aos="fade-right">
-                        <a href="https://youtu.be/bO2ul-yPxbo" class="glightbox play-btn mb-4"></a>
-                    </div>
-
-                    <div class="col-xl-7 col-lg-6 icon-boxes d-flex flex-column align-items-stretch justify-content-center py-1 px-lg-10"
-                        data-aos="fade-left">
-
-                        <div class="icon-box" data-aos="zoom-in" data-aos-delay="100">
-                            <div class="icon"><i class="bx bx-fingerprint"></i></div>
-                            <h4 class="title"><a href="">Ta'aruf Jodohku</a></h4>
-                            <p class="description">Hanya para pegawai YPI Al Azhar yang memiliki Nomor Induk Pegawai
-                                (NIP) yang dapat mendaftar. Aplikasi ini membuka kesempatan bagi pegawai yang masih
-                                single, baik itu janda, duda, ataupun lajang, untuk menjalani proses ta'aruf.</p>
-                        </div>
-
-                        <div class="icon-box" data-aos="zoom-in" data-aos-delay="200">
-                            <div class="icon"><i class="bx bx-group"></i></div>
-                            <h4 class="title"><a href="">Disiapkan Pembimbing / Konsultan</a></h4>
-                            <p class="description">Aplikasi ta'aruf ini tidak hanya menyediakan platform untuk mencari
-                                pasangan hidup, tetapi juga menawarkan layanan pembimbingan atau konsultasi yang
-                                disesuaikan. Dengan dukungan ini, aplikasi ini bertujuan untuk memastikan progres
-                                positif dalam perjalanan ta'aruf dan membantu pengguna dalam membangun hubungan yang
-                                kokoh dan bermakna.</p>
-                        </div>
-
-                        <div class="icon-box" data-aos="zoom-in" data-aos-delay="300">
-                            <div class="icon"><i class="bx bx-hide"></i></div>
-                            <h4 class="title"><a href="">Privasi Terjamin</a></h4>
-                            <p class="description">Aplikasi ta'aruf ini mengutamakan privasi penggunanya dengan
-                                memastikan bahwa data profil yang dimasukkan aman dan hanya dapat diakses oleh admin dan
-                                pembimbing yang bersangkutan. Kami memastikan bahwa informasi pribadi Anda tidak akan
-                                tersebar atau diakses oleh pegawai yang tidak berkesesuaian dengan tujuan aplikasi ini.
-                            </p>
-                        </div>
-
-                        <div class="icon-box" data-aos="zoom-in" data-aos-delay="300">
-                            <div class="icon"><i class="bx bxl-sketch"></i></div>
-                            <h4 class="title"><a href="">Tujuan Menikah</a></h4>
-                            <p class="description">Pasangan yang dipilih melalui aplikasi ini diharapkan menjadi yang
-                                terbaik bagi setiap individu, dan apabila ditemukan jodoh yang sesuai, kami mendorong
-                                untuk segera melangkah ke tahap pernikahan. Dengan fokus pada tujuan menikah yang kuat,
-                                aplikasi ini menjadi alat yang efektif dalam mendukung proses ta'aruf menuju pernikahan
-                                yang bahagia dan berkah.</p>
-                        </div>
-
-                    </div>
-                </div>
-
-            </div>
-        </section><!-- End About Section -->
-
-        <!-- ======= Details Section ======= -->
-        <section id="details" class="details">
+        <!-- ===== FEATURES SECTION ===== -->
+        <section id="about">
             <div class="container">
-
-                <div class="row content">
-                    <div class="col-md-4" data-aos="fade-right">
-                        <img src="https://masjidagungalazhar.com/taaruf/public/Bootslander/assets/img/details-1.png"
-                            class="img-fluid" alt="">
-                    </div>
-                    <div class="col-md-8 pt-4" data-aos="fade-up">
-                        <h3>Buat Akun Ta'aruf.</h3>
-                        <p class="fst-italic">
-                            Pengguna harus membuat akun terlebih dahulu untuk dapat mengakses fitur yang tersedia,
-                            dengan membuat akun Ta'aruf pada menu daftar..
-                        </p>
-                        <ul>
-                            <li><i class="bi bi-check"></i> Klik "Menu Daftar" lalu pilih Menu sesuai jenis kelamin
-                                anda "Menu Pria atau Menu Wanita".</li>
-                            <li><i class="bi bi-check"></i> Masukkan NIP, bila NIP anda ada didatabase maka formulir
-                                dapat diisi.</li>
-                            <li><i class="bi bi-check"></i> Admin akan memverifikasi akun anda, link login akan dikirim
-                                ke email anda .</li>
-                            <li><i class="bi bi-check"></i> Silahkan login dengan email dan password yang terdaftar.
-                            </li>
-                        </ul>
-                        <p>
-                            Nikmati fitur yang ada pada halaman pengguna seperti artikel, ayat qur'an harian serta video
-                            islami untuk menambah khazanah keislaman anda, serta menu riwayat untuk mencari jodoh yang
-                            anda harapkan.
-                        </p>
-                    </div>
+                <div class="section-header" data-aos="fade-up">
+                    <span class="section-badge">Keunggulan Kami</span>
+                    <h2 class="section-title">Mengapa Memilih Ta'aruf Jodohku?</h2>
+                    <p class="section-description">Platform ta'aruf yang aman, terpercaya, dan sesuai syariat dengan
+                        pendampingan profesional untuk membantu Anda menemukan pasangan hidup yang tepat.</p>
                 </div>
 
-                <div class="row content">
-                    <div class="col-md-4 order-1 order-md-2" data-aos="fade-left">
-                        <img src="https://masjidagungalazhar.com/taaruf/public/Bootslander/assets/img/details-2.png"
-                            class="img-fluid" alt="">
+                <div class="row g-4">
+                    <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="bx bx-fingerprint"></i>
+                            </div>
+                            <h3 class="feature-title">Eksklusif untuk YPI Al Azhar</h3>
+                            <p class="feature-description">Hanya pegawai YPI Al Azhar dengan NIP yang terdaftar yang dapat
+                                mengakses platform ini. Memberikan rasa aman dan komunitas yang terpercaya untuk proses
+                                ta'aruf Anda.</p>
+                        </div>
                     </div>
-                    <div class="col-md-8 pt-5 order-2 order-md-1" data-aos="fade-up">
-                        <h3>Lengkapi Kriteria Anda.</h3>
-                        <p class="fst-italic">
-                            Fitur yang tersedia di dalam aplikasi yang memungkinkan pengguna untuk memberikan informasi
-                            tentang preferensi terhadap pasangan yang diinginkan..
-                        </p>
-                        <p>
-                            Pengguna diharap untuk mengisi kriteria-kriteria yang spesifik dalam mencari pasangan.
-                            Dengan mengisi kriteria tersebut, aplikasi akan memproses data tersebut untuk mencocokkan
-                            pengguna dengan calon pasangan yang memiliki kriteria yang sama atau sejenis.
-                        </p>
-                        <p>
-                            Fitur "Lengkapi Kriteria Anda" ini bertujuan untuk membantu pengguna dalam menemukan
-                            pasangan yang lebih sesuai dengan preferensi mereka. Selain itu, fitur ini juga dapat
-                            menghemat waktu dan usaha dalam mencari pasangan yang diinginkan, karena aplikasi akan
-                            memberikan rekomendasi calon pasangan yang telah diproses berdasarkan kriteria-kriteria yang
-                            telah diisi oleh pengguna.
-                        </p>
-                    </div>
-                </div>
 
-                <div class="row content">
-                    <div class="col-md-4" data-aos="fade-right">
-                        <img src="https://masjidagungalazhar.com/taaruf/public/Bootslander/assets/img/details-3.png"
-                            class="img-fluid" alt="">
+                    <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="bx bx-group"></i>
+                            </div>
+                            <h3 class="feature-title">Pembimbing Profesional</h3>
+                            <p class="feature-description">Didampingi oleh konsultan dan pembimbing berpengalaman yang siap
+                                membantu Anda di setiap tahap ta'aruf hingga menuju pernikahan yang berkah.</p>
+                        </div>
                     </div>
-                    <div class="col-md-8 pt-5" data-aos="fade-up">
-                        <h3>Proses Komunikasi, Saling Mengenal Agar Lebih Siap</h3>
-                        <p class="fst-italic">Fitur yang dapat digunakan oleh pengguna, seperti chat, tombol like dan
-                            dislike, serta informasi tentang profil calon pasangan..</p>
-                        <ul>
-                            <li><i class="bi bi-check"></i> Fitur chat memungkinkan pengguna untuk berkomunikasi dengan
-                                calon pasangan secara real-time. Dengan adanya fitur ini, pengguna dapat saling mengenal
-                                lebih dalam dan membangun hubungan yang lebih dekat. Selain itu, fitur chat juga
-                                memungkinkan pengguna untuk berbicara dengan lebih bebas dan terbuka tentang keinginan
-                                dan harapan mereka terhadap pasangan.</li>
-                            <li><i class="bi bi-check"></i> Tombol like dan dislike pada menu ini memungkinkan pengguna
-                                untuk menunjukkan ketertarikan atau ketidaktertarikan mereka terhadap calon pasangan.
-                                Jika pengguna menyukai calon pasangan, mereka dapat menekan tombol like, sedangkan jika
-                                tidak tertarik, mereka dapat menekan tombol dislike. Fitur ini membantu pengguna dalam
-                                memfilter calon pasangan yang sesuai dengan preferensi mereka.</li>
-                        </ul>
+
+                    <div class="col-lg-6" data-aos="fade-up" data-aos-delay="300">
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="bx bx-shield"></i>
+                            </div>
+                            <h3 class="feature-title">Privasi Terjamin</h3>
+                            <p class="feature-description">Data pribadi Anda dijaga dengan sistem keamanan berlapis. Hanya
+                                admin dan pembimbing resmi yang memiliki akses ke informasi Anda.</p>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6" data-aos="fade-up" data-aos-delay="400">
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="bx bx-heart"></i>
+                            </div>
+                            <h3 class="feature-title">Fokus pada Pernikahan</h3>
+                            <p class="feature-description">Platform ini dirancang dengan tujuan serius menuju pernikahan
+                                yang sakinah, mawaddah, warahmah. Bukan sekadar kenalan, tapi menuju komitmen.</p>
+                        </div>
                     </div>
                 </div>
             </div>
-        </section><!-- End Details Section -->
-        <!-- ======= Counts Section ======= -->
-        <section id="counts" class="counts">
+        </section>
+
+        <!-- ===== STEPS SECTION ===== -->
+        <section id="details" class="bg-light-section">
             <div class="container">
-                <br>
-                <div class="section-title" data-aos="fade-up">
-                    <h2>Data APP</h2>
-                    <p>Data Aplikasi</p>
+                <div class="section-header" data-aos="fade-up">
+                    <span class="section-badge">Cara Kerja</span>
+                    <h2 class="section-title">Langkah Mudah Memulai Ta'aruf</h2>
+                    <p class="section-description">Proses yang sederhana dan terstruktur untuk membantu Anda menemukan
+                        pasangan hidup yang sesuai.</p>
                 </div>
 
-
-                <div class="row" data-aos="fade-up">
-
-                    <div class="col-lg-3 col-md-6">
-                        <div class="count-box">
-                            <i class="bi bi-emoji-smile"></i>
-                            <span data-purecounter-start="0" data-purecounter-end="8" data-purecounter-duration="1"
-                                class="purecounter"></span>
-                            <p>Pendaftar Pria</p>
+                <div class="row g-4">
+                    <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
+                        <div class="step-card">
+                            <div class="step-number">1</div>
+                            <div class="step-image">
+                                <img src="{{ asset('assets/img/preview.png') }}" alt="Daftar Akun" class="img-fluid">
+                            </div>
+                            <h3 class="step-title">Buat Akun Ta'aruf</h3>
+                            <p class="step-description">Daftarkan diri Anda dengan mudah menggunakan NIP pegawai YPI Al
+                                Azhar yang valid.</p>
+                            <ul class="step-list">
+                                <li><i class="bi bi-check-circle-fill"></i> Pilih menu pendaftaran sesuai gender</li>
+                                <li><i class="bi bi-check-circle-fill"></i> Masukkan NIP yang terdaftar</li>
+                                <li><i class="bi bi-check-circle-fill"></i> Isi formulir data diri lengkap</li>
+                                <li><i class="bi bi-check-circle-fill"></i> Tunggu verifikasi dari admin</li>
+                            </ul>
                         </div>
                     </div>
 
-
-                    <div class="col-lg-3 col-md-6 mt-5 mt-md-0">
-                        <div class="count-box">
-                            <i class="bi bi-emoji-smile"></i>
-                            <span data-purecounter-start="0" data-purecounter-end="7" data-purecounter-duration="1"
-                                class="purecounter"></span>
-                            <p>Pendaftar Wanita</p>
+                    <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
+                        <div class="step-card">
+                            <div class="step-number">2</div>
+                            <div class="step-image">
+                                <img src="{{ asset('assets/img/preview.png') }}" alt="Lengkapi Profil" class="img-fluid">
+                            </div>
+                            <h3 class="step-title">Lengkapi Profil Anda</h3>
+                            <p class="step-description">Isi profil dengan informasi yang jujur dan akurat untuk mendapatkan
+                                rekomendasi pasangan yang sesuai.</p>
+                            <ul class="step-list">
+                                <li><i class="bi bi-check-circle-fill"></i> Data pribadi dan latar belakang</li>
+                                <li><i class="bi bi-check-circle-fill"></i> Kriteria pasangan yang diinginkan</li>
+                                <li><i class="bi bi-check-circle-fill"></i> Visi misi pernikahan</li>
+                            </ul>
                         </div>
                     </div>
 
-                    <div class="col-lg-3 col-md-6 mt-5 mt-lg-0">
-                        <div class="count-box">
-                            <i class="bx bx-like"></i>
-                            <span data-purecounter-start="0" data-purecounter-end="3" data-purecounter-duration="1"
-                                class="purecounter"></span>
-                            <p>Progress Pasangan</p>
+                    <div class="col-lg-6" data-aos="fade-up" data-aos-delay="300">
+                        <div class="step-card">
+                            <div class="step-number">3</div>
+                            <div class="step-image">
+                                <img src="{{ asset('assets/img/preview.png') }}" alt="Proses Ta'aruf" class="img-fluid">
+                            </div>
+                            <h3 class="step-title">Proses Ta'aruf Terbimbing</h3>
+                            <p class="step-description">Dapatkan pendampingan dari pembimbing profesional di setiap tahap
+                                ta'aruf Anda.</p>
+                            <ul class="step-list">
+                                <li><i class="bi bi-check-circle-fill"></i> Matching berdasarkan kriteria</li>
+                                <li><i class="bi bi-check-circle-fill"></i> Konsultasi dengan pembimbing</li>
+                                <li><i class="bi bi-check-circle-fill"></i> Proses yang sesuai syariat</li>
+                            </ul>
                         </div>
                     </div>
 
-                    <div class="col-lg-3 col-md-6 mt-5 mt-lg-0">
-                        <div class="count-box">
-                            <i class="bx bx-like"></i>
-                            <span data-purecounter-start="0" data-purecounter-end="1" data-purecounter-duration="1"
-                                class="purecounter"></span>
-                            <p>Proses Pasangan</p>
+                    <div class="col-lg-6" data-aos="fade-up" data-aos-delay="400">
+                        <div class="step-card">
+                            <div class="step-number">4</div>
+                            <div class="step-image">
+                                <img src="{{ asset('assets/img/preview.png') }}" alt="Menuju Pernikahan"
+                                    class="img-fluid">
+                            </div>
+                            <h3 class="step-title">Menuju Pernikahan Berkah</h3>
+                            <p class="step-description">Dapatkan dukungan penuh hingga proses pernikahan dengan surat
+                                rekomendasi resmi.</p>
+                            <ul class="step-list">
+                                <li><i class="bi bi-check-circle-fill"></i> Surat rekomendasi resmi</li>
+                                <li><i class="bi bi-check-circle-fill"></i> Bimbingan pra-nikah</li>
+                                <li><i class="bi bi-check-circle-fill"></i> Dukungan berkelanjutan</li>
+                            </ul>
                         </div>
                     </div>
-
                 </div>
-
             </div>
-        </section><!-- End Counts Section -->
+        </section>
 
-        <!-- ======= Testimonials Section ======= -->
-        <section id="testimonials" class="testimonials">
+        <!-- ===== TESTIMONIALS SECTION ===== -->
+        <section id="testimonials" class="bg-light-section">
             <div class="container">
-                <br>
-                <div class="testimonials-slider swiper" data-aos="fade-up" data-aos-delay="100">
-                    <div class="swiper-wrapper">
+                <div class="section-header" data-aos="fade-up">
+                    <span class="section-badge">Testimoni</span>
+                    <h2 class="section-title">Kisah Sukses Mereka</h2>
+                    <p class="section-description">Dengarkan pengalaman mereka yang telah menemukan pasangan hidup melalui
+                        Ta'aruf Jodohku.</p>
+                </div>
 
-                        <div class="swiper-slide">
-                            <div class="testimonial-item">
-                                <img src="https://masjidagungalazhar.com/taaruf/public/Bootslander/assets/img/testimonials/quran.jpg"
-                                    class="testimonial-img" alt="">
-                                <h3>Q.S An-Nur [24] : Ayat 32</h3>
-                                <p>
-                                    <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                                    Nikahkanlah orang-orang yang masih membujang di antara kamu dan juga orang-orang
-                                    yang layak (menikah) dari hamba-hamba sahayamu, baik laki-laki maupun perempuan.
-                                    Jika mereka miskin, Allah akan memberi kemampuan kepada mereka dengan karunia-Nya.
-                                    Allah Mahaluas (pemberian-Nya) lagi Maha Mengetahui.
-                                    <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-                                </p>
+                <div class="row g-4">
+                    <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
+                        <div class="testimonial-card">
+                            <div class="testimonial-quote">
+                                Alhamdulillah, melalui aplikasi Ta'aruf Jodohku ini saya menemukan pasangan hidup yang
+                                sholeh dan sesuai dengan kriteria yang saya harapkan. Prosesnya sangat terbimbing dan
+                                Islami. Pembimbing sangat membantu dalam setiap tahap.
                             </div>
-                        </div><!-- End testimonial item -->
-
-                        <div class="swiper-slide">
-                            <div class="testimonial-item">
-                                <img src="https://masjidagungalazhar.com/taaruf/public/Bootslander/assets/img/testimonials/quran.jpg"
-                                    class="testimonial-img" alt="">
-                                <h3>Q.S Ar-Rum [30] : Ayat 21</h3>
-                                <p>
-                                    <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                                    Di antara tanda-tanda (kebesaran)-Nya ialah bahwa Dia menciptakan pasangan-pasangan
-                                    untukmu dari (jenis) dirimu sendiri agar kamu merasa tenteram kepadanya. Dia
-                                    menjadikan di antaramu rasa cinta dan kasih sayang. Sesungguhnya pada yang demikian
-                                    itu benar-benar terdapat tanda-tanda (kebesaran Allah) bagi kaum yang berpikir.
-                                    <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-                                </p>
+                            <div class="testimonial-author">
+                                <img src="{{ asset('assets/img/nophoto.png') }}" alt="Fatimah Az-Zahra"
+                                    class="testimonial-avatar">
+                                <div class="testimonial-info">
+                                    <h4>Fatimah Az-Zahra</h4>
+                                    <p>Pegawai YPI Al Azhar</p>
+                                    <div class="testimonial-stars">
+                                        <i class="bi bi-star-fill"></i>
+                                        <i class="bi bi-star-fill"></i>
+                                        <i class="bi bi-star-fill"></i>
+                                        <i class="bi bi-star-fill"></i>
+                                        <i class="bi bi-star-fill"></i>
+                                    </div>
+                                </div>
                             </div>
-                        </div><!-- End testimonial item -->
-
-                        <div class="swiper-slide">
-                            <div class="testimonial-item">
-                                <img src="https://masjidagungalazhar.com/taaruf/public/Bootslander/assets/img/testimonials/quran.jpg"
-                                    class="testimonial-img" alt="">
-                                <h3>Q.S An-Nisaa' [4] : Ayat 4</h3>
-                                <p>
-                                    <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                                    Berikanlah mahar kepada wanita (yang kamu nikahi) sebagai pemberian yang penuh
-                                    kerelaan. Kemudian, jika mereka menyerahkan kepada kamu sebagian dari (mahar) itu
-                                    dengan senang hati, terimalah dan nikmatilah pemberian itu dengan senang hati.
-                                    <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-                                </p>
-                            </div>
-                        </div><!-- End testimonial item -->
-
-                        <div class="swiper-slide">
-                            <div class="testimonial-item">
-                                <img src="https://masjidagungalazhar.com/taaruf/public/Bootslander/assets/img/testimonials/quran.jpg"
-                                    class="testimonial-img" alt="">
-                                <h3>Hadits Riwayat Ahmad</h3>
-                                <p>
-                                    <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                                    Sesungguhnya di dalam jodoh itu terdapat tiga perkara: rezeki, keturunan, dan
-                                    perbuatan yang saleh. Maka pilihlah jodoh yang saleh, agar kamu beruntung.
-                                    <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-                                </p>
-                            </div>
-                        </div><!-- End testimonial item -->
-
-                        <div class="swiper-slide">
-                            <div class="testimonial-item">
-                                <img src="https://masjidagungalazhar.com/taaruf/public/Bootslander/assets/img/testimonials/quran.jpg"
-                                    class="testimonial-img" alt="">
-                                <h3>Hadits Riwayat Tirmidzi</h3>
-                                <p>
-                                    <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                                    Jika datang kepadamu orang yang engkau ridhai agama dan akhlaknya, maka nikahkanlah
-                                    ia. Jika tidak, niscaya akan terjadi kerusakan di muka bumi dan kemudian akan
-                                    terjadi kerusakan besar-besaran.
-                                    <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-                                </p>
-                            </div>
-                        </div><!-- End testimonial item -->
-
+                        </div>
                     </div>
-                    <div class="swiper-pagination"></div>
-                </div>
 
+                    <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
+                        <div class="testimonial-card">
+                            <div class="testimonial-quote">
+                                Aplikasi yang sangat membantu dalam mencari jodoh sesuai syariat. Pembimbing yang
+                                profesional dan proses yang transparan membuat saya merasa nyaman dan tenang. Sangat
+                                merekomendasikan untuk rekan-rekan yang serius mencari pasangan.
+                            </div>
+                            <div class="testimonial-author">
+                                <img src="{{ asset('assets/img/nophoto.png') }}" alt="Ahmad Fauzi"
+                                    class="testimonial-avatar">
+                                <div class="testimonial-info">
+                                    <h4>Ahmad Fauzi</h4>
+                                    <p>Guru YPI Al Azhar</p>
+                                    <div class="testimonial-stars">
+                                        <i class="bi bi-star-fill"></i>
+                                        <i class="bi bi-star-fill"></i>
+                                        <i class="bi bi-star-fill"></i>
+                                        <i class="bi bi-star-fill"></i>
+                                        <i class="bi bi-star-fill"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </section><!-- End Testimonials Section -->
+        </section>
 
-        <!-- ======= F.A.Q Section ======= -->
-        <section id="faq" class="faq section-bg">
+
+
+        <!-- ===== FAQ SECTION ===== -->
+        <section id="faq">
             <div class="container">
-                <br>
-                <div class="section-title" data-aos="fade-up">
-                    <h2>F.A.Q</h2>
-                    <p>Pertanyaan Yang Sering Diajukan</p>
+                <div class="section-header" data-aos="fade-up">
+                    <span class="section-badge">FAQ</span>
+                    <h2 class="section-title">Pertanyaan yang Sering Diajukan</h2>
+                    <p class="section-description">Temukan jawaban atas pertanyaan umum seputar Ta'aruf Jodohku.</p>
                 </div>
 
-                <div class="faq-list">
-                    <ul>
-                        <li data-aos="fade-up">
-                            <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse" class="collapse"
-                                data-bs-target="#faq-list-1">Syarat dan Ketentuan ? <i
-                                    class="bx bx-chevron-down icon-show"></i><i
-                                    class="bx bx-chevron-up icon-close"></i></a>
-                            <div id="faq-list-1" class="collapse show" data-bs-parent=".faq-list">
-                                <p>
-                                    Pengguna adalah yang memiliki NIP yang valid di YPI Al Azhar dan masih Lajang atau
-                                    tidak terikat pernikahan. | Menyetujui privasi dan kebijakan penggunaan aplikasi
-                                    Ta'aruf | Memberi informasi yang benar dan dapat dipertanggungjawabkan. | Dilarang
-                                    mengirimkan pesan yang tidak pantas atau tidak sopan. | Kami berhak untuk
-                                    membatalkan akun jika pengguna melanggar ketentuan ini.
-                                </p>
+                <div class="faq-container">
+                    <div class="faq-item" data-aos="fade-up" data-aos-delay="100">
+                        <div class="faq-question" data-bs-toggle="collapse" data-bs-target="#faq1">
+                            <div class="faq-icon">
+                                <i class="bx bx-help-circle"></i>
                             </div>
-                        </li>
-
-                        <li data-aos="fade-up" data-aos-delay="100">
-                            <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse"
-                                data-bs-target="#faq-list-2" class="collapsed">Keluarga besar YPI Al Azhar yang ingin
-                                mendaftarkan orang terdekatnya ? <i class="bx bx-chevron-down icon-show"></i><i
-                                    class="bx bx-chevron-up icon-close"></i></a>
-                            <div id="faq-list-2" class="collapse" data-bs-parent=".faq-list">
-                                <p>
-                                    Bagi keluarga besar YPI Al Azhar yang ingin mendaftarkan Keluarga, Saudara atau
-                                    Kerabat bisa mendaftarkan dengan NIP lalu tambahkan kode _1 (underscore angka 1-10)
-                                    lalu memasukkan Nama Pria atau Wanita yang ingin didaftarkan. | Pegawai / NIP yang
-                                    mendaftarkan bertanggung jawab penuh atas niat dan kesungguhan pria atau wanita yang
-                                    didaftarkan pada aplikasi ta'aruf ini. | Untuk Informasi lebih lengkap dapat
-                                    menghubungi Admin melalui menu kontak kami..
-                                </p>
+                            <div class="faq-question-text">
+                                Apakah boleh mengajak pihak ketiga dalam proses Ta'aruf?
                             </div>
-                        </li>
-
-                        <li data-aos="fade-up" data-aos-delay="200">
-                            <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse"
-                                data-bs-target="#faq-list-3" class="collapsed">Bagaimana proses ta'rufnya ? <i
-                                    class="bx bx-chevron-down icon-show"></i><i
-                                    class="bx bx-chevron-up icon-close"></i></a>
-                            <div id="faq-list-3" class="collapse" data-bs-parent=".faq-list">
-                                <p>
-                                    Pengguna bisa memilih sendiri setelah ada profil yang berkecocokan pada menu
-                                    RIWAYAT, kecocokan ini sesuai dengan form yang diisi pada form kriteria spesifik
-                                    pada halaman daftar, atau pengguna akan dipilihkan oleh pembimbing setelah melihat
-                                    profil yang dinilai cocok untuknya.
-                                </p>
+                            <div class="faq-toggle">
+                                <i class="bx bx-chevron-down"></i>
                             </div>
-                        </li>
+                        </div>
+                        <div id="faq1" class="faq-answer collapse show">
+                            Proses Ta'aruf yang difasilitasi pada aplikasi ini sangat dianjurkan diketahui oleh pihak ketiga
+                            seperti keluarga, wali, saudara, atau teman, terutama pada akhir proses ta'aruf sehingga akad
+                            pernikahan dapat dilaksanakan. Selama masih dalam proses ta'aruf, pengguna harus menjaga adab
+                            dan kesopanan Islami, tidak boleh berpacaran atau mengirimkan pesan yang tidak pantas.
+                        </div>
+                    </div>
 
-                        <li data-aos="fade-up" data-aos-delay="300">
-                            <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse"
-                                data-bs-target="#faq-list-4" class="collapsed">Bagaimana proses selanjutnya setelah
-                                proses ta'aruf ? <i class="bx bx-chevron-down icon-show"></i><i
-                                    class="bx bx-chevron-up icon-close"></i></a>
-                            <div id="faq-list-4" class="collapse" data-bs-parent=".faq-list">
-                                <p>
-                                    Setelah proses ta'aruf ini selesai pada aplikasi maka admin akan mencetak surat
-                                    rekomendasi yang akan dilanjutkan proses konsultasi dan bimbingan untuk memberikan
-                                    wawasan agar lebih siap kepada pasangan.
-                                </p>
+                    <div class="faq-item" data-aos="fade-up" data-aos-delay="200">
+                        <div class="faq-question" data-bs-toggle="collapse" data-bs-target="#faq2">
+                            <div class="faq-icon">
+                                <i class="bx bx-help-circle"></i>
                             </div>
-                        </li>
+                            <div class="faq-question-text">
+                                Bagaimana cara mendaftarkan orang terdekat?
+                            </div>
+                            <div class="faq-toggle">
+                                <i class="bx bx-chevron-down"></i>
+                            </div>
+                        </div>
+                        <div id="faq2" class="faq-answer collapse">
+                            Keluarga besar YPI Al Azhar yang ingin mendaftarkan keluarga, saudara, atau kerabat bisa
+                            mendaftarkan dengan NIP lalu tambahkan kode _1 (underscore angka 1-10) lalu memasukkan nama pria
+                            atau wanita yang ingin didaftarkan. Pegawai/NIP yang mendaftarkan bertanggung jawab penuh atas
+                            niat dan kesungguhan yang didaftarkan.
+                        </div>
+                    </div>
 
-                    </ul>
+                    <div class="faq-item" data-aos="fade-up" data-aos-delay="300">
+                        <div class="faq-question" data-bs-toggle="collapse" data-bs-target="#faq3">
+                            <div class="faq-icon">
+                                <i class="bx bx-help-circle"></i>
+                            </div>
+                            <div class="faq-question-text">
+                                Bagaimana proses ta'arufnya?
+                            </div>
+                            <div class="faq-toggle">
+                                <i class="bx bx-chevron-down"></i>
+                            </div>
+                        </div>
+                        <div id="faq3" class="faq-answer collapse">
+                            Pengguna bisa memilih sendiri setelah ada profil yang berkecocokan pada menu RIWAYAT. Kecocokan
+                            ini sesuai dengan form yang diisi pada kriteria spesifik saat pendaftaran. Pengguna juga bisa
+                            dipilihkan oleh pembimbing setelah melihat profil yang dinilai cocok.
+                        </div>
+                    </div>
+
+                    <div class="faq-item" data-aos="fade-up" data-aos-delay="400">
+                        <div class="faq-question" data-bs-toggle="collapse" data-bs-target="#faq4">
+                            <div class="faq-icon">
+                                <i class="bx bx-help-circle"></i>
+                            </div>
+                            <div class="faq-question-text">
+                                Apa yang terjadi setelah proses ta'aruf selesai?
+                            </div>
+                            <div class="faq-toggle">
+                                <i class="bx bx-chevron-down"></i>
+                            </div>
+                        </div>
+                        <div id="faq4" class="faq-answer collapse">
+                            Setelah proses ta'aruf selesai, admin akan mencetak surat rekomendasi yang akan dilanjutkan
+                            dengan proses konsultasi dan bimbingan untuk memberikan wawasan agar lebih siap menuju
+                            pernikahan dengan pasangan Anda.
+                        </div>
+                    </div>
                 </div>
-
             </div>
-        </section><!-- End F.A.Q Section -->
+        </section>
 
-        <!-- ======= Contact Section ======= -->
-        <section id="contact" class="contact">
+        <!-- ===== CONTACT SECTION ===== -->
+        <section id="contact">
             <div class="container">
-                <br>
-                <div class="section-title" data-aos="fade-up">
-                    <h2>Kontak Kami</h2>
-                    <p>Kirim Pertanyaan</p>
+                <div class="section-header" data-aos="fade-up">
+                    <span class="section-badge">Hubungi Kami</span>
+                    <h2 class="section-title">Ada Pertanyaan?</h2>
+                    <p class="section-description">Kami siap membantu Anda. Hubungi kami melalui form di bawah atau kontak
+                        langsung.</p>
                 </div>
 
-                <div class="row">
+                <div class="row g-4">
                     <div class="col-lg-4" data-aos="fade-right" data-aos-delay="100">
-                        <div class="info">
-                            <div class="address">
-                                <i class="bi bi-geo-alt"></i>
-                                <h4>Kantor kami:</h4>
-                                <p>Jl. Sisingamaraja, Kebayoran Baru, Jakarta Selatan 12110.</p>
+                        <div class="contact-card">
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <i class="bi bi-geo-alt"></i>
+                                </div>
+                                <div class="contact-info">
+                                    <h4>Alamat Kantor</h4>
+                                    <p>Jl. Sisingamaraja, Kebayoran Baru, Jakarta Selatan 12110</p>
+                                </div>
                             </div>
 
-                            <div class="email">
-                                <i class="bi bi-envelope"></i>
-                                <h4>Email:</h4>
-                                <p>taarufonline2023@gmail.com</p>
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <i class="bi bi-envelope"></i>
+                                </div>
+                                <div class="contact-info">
+                                    <h4>Email</h4>
+                                    <p>taarufonline2023@gmail.com</p>
+                                </div>
                             </div>
 
-                            <div class="phone">
-                                <i class="bi bi-phone"></i>
-                                <h4>Telp:</h4>
-                                <p>(021) 727-83683 / 739-7267</p>
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <i class="bi bi-phone"></i>
+                                </div>
+                                <div class="contact-info">
+                                    <h4>Telepon</h4>
+                                    <p>(021) 727-83683<br>(021) 739-7267</p>
+                                </div>
                             </div>
-
                         </div>
-
                     </div>
 
-                    <div class="col-lg-8 mt-5 mt-lg-0" data-aos="fade-left" data-aos-delay="200">
+                    <div class="col-lg-8" data-aos="fade-left" data-aos-delay="200">
+                        <div class="contact-form">
+                            <form action="/kirimpertanyaan" method="post">
+                                <div class="row g-3">
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <input type="email" name="email_tanya" class="form-control-modern"
+                                                placeholder="Email Anda" required>
+                                        </div>
+                                    </div>
 
-                        <!-- Pesan berhasil -->
-                        <form action="https://masjidagungalazhar.com/taaruf/public/index.php/Home/pertanyaan"
-                            enctype="multipart/form-data" method="post" accept-charset="utf-8">
-                            <div class="form-group php-email-form" role="form">
-                                <div class="row">
-                                    <div class="col-md-6 form-group">
-                                        <input type="text" name="id_tanya" class="form-control" id="id_tanya"
-                                            placeholder="" hidden>
-                                        <input type="text" name="nm_tanya" class="form-control" id="nm_tanya"
-                                            placeholder="Your Name" required>
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <textarea name="isi_tanya" class="form-control-modern" placeholder="Pesan Anda..." required></textarea>
+                                        </div>
                                     </div>
-                                    <div class="col-md-6 form-group mt-3 mt-md-0">
-                                        <input type="email" class="form-control" name="email_tanya" id="email_tanya"
-                                            placeholder="Your Email" required>
+                                    <div class="col-12">
+                                        <button type="submit" class="submit-button">
+                                            Kirim Pesan
+                                        </button>
                                     </div>
                                 </div>
-                                <div class="form-group mt-3">
-                                    <input type="text" class="form-control" name="judul_tanya" id="judul_tanya"
-                                        placeholder="Subject" required>
-                                </div>
-                                <div class="form-group mt-3">
-                                    <textarea class="form-control" name="isi_tanya" rows="5" placeholder="Message" required></textarea>
-                                </div>
-                                <div class="my-3">
-                                    <div class="loading">Loading</div>
-                                    <div class="error-message"></div>
-                                    <div class="sent-message">Your message has been sent. Thank you!</div>
-                                </div>
-                                <div class="text-center"><button type="submit">Send Message</button></div>
-                        </form>
+                            </form>
+                        </div>
                     </div>
-
                 </div>
-
             </div>
-        </section><!-- End Contact Section -->
-
-    </main><!-- End #main -->
+        </section>
+    </main>
 @endsection

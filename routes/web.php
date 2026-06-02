@@ -8,6 +8,7 @@ use App\Http\Controllers\MasterInputanController;
 use App\Http\Controllers\ProgressController;
 use App\Http\Controllers\TaarufContoller;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\DB;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,7 +23,13 @@ use Illuminate\Support\Facades\Route;
 // ROUTE TAMU/PENGGUNA TANPA LOGIN
 Route::middleware(['guest:karyawan'])->group(function () {
     Route::get('/', function () {
-        return view('auth.beranda');
+        $datapria = DB::table('karyawan')->where('jenkel', 'pria')->count();
+        $datawanita = DB::table('karyawan')->where('jenkel', 'wanita')->count();
+        $totalproses = DB::table('proses')->count();
+        $totalprogress = DB::table('progress')->count();
+
+
+        return view('auth.beranda', compact('datapria', 'datawanita', 'totalproses', 'totalprogress'));
     })->name('/');
     Route::get('/daftar', function () {
         return view('auth.daftar');
@@ -66,6 +73,9 @@ Route::middleware(['auth:karyawan'])->group(function () {
     // Chat
     Route::get('/chat/{id}', [ChatController::class, 'chat'])->name('chat');
     Route::post('/chat/{id}/store', [ChatController::class, 'store'])->name('store');
+    // Realtime chat fetch (AJAX)
+Route::get('/chat/{id}/fetch', [ChatController::class, 'fetch'])->name('chat.fetch');
+
 
     // berita
     Route::get('/masterberita/berita/1', [MasterInputanController::class, 'berita1'])->name('berita1');
@@ -83,6 +93,7 @@ Route::middleware(['auth:user'])->group(function () {
     Route::get('/proseslogoutadmin', [AuthController::class, 'proseslogoutadmin']);
     Route::get('/masterkaryawan', [MasterInputanController::class, 'masterkaryawan'])->name('masterkaryawan');
     Route::get('/masterkaryawan/{id_karyawan}/verifikasi', [MasterInputanController::class, 'verifikasi'])->name('verifikasi');
+    Route::post('/masterkaryawan/viewkaryawan', [MasterInputanController::class, 'viewkaryawan'])->name('viewkaryawan');
 
     Route::get('/masterberita', [MasterInputanController::class, 'masterberita'])->name('masterberita');
     Route::post('/masterberita/editberita', [MasterInputanController::class, 'editberita'])->name('editberita');

@@ -168,7 +168,7 @@
     @yield('content')
 </div>
 
-@extends('dashboard.dashlayouts.footer')
+@extends('dashboard.dashlayouts.footerberita')
 @extends('dashboard.dashlayouts.script')
 </body>
 

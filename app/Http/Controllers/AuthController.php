@@ -11,6 +11,17 @@ use Illuminate\Support\Facades\Redirect;
 
 class AuthController extends Controller
 {
+
+    public function hitungdataapp()
+    {
+        $result = DB::table('karyawan')
+            ->select('jenkel', DB::raw('COUNT(*) as jumlah'))
+            ->groupBy('jenkel')
+            ->get();
+
+        return $result;
+    }
+
     public function prosesdaftar(Request $request)
     {
         $nip = $request->nip;

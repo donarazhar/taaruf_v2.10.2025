@@ -1,247 +1,185 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="id">
 <head>
-    <meta charset="utf-8">
-    <title>Cetak Proses Ta'aruf</title>
+  <meta charset="utf-8">
+  <title>Cetak Proses Ta'aruf</title>
 
-    <!-- Normalize or reset CSS with your favorite library -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css">
+  <!-- Normalize dan paper.css -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paper-css/0.4.1/paper.css">
 
-    <!-- Load paper.css for happy printing -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paper-css/0.4.1/paper.css">
+  <style>
+    @page { size: A4; margin: 15mm; }
+    body { font-family: "Times New Roman", Times, serif; color: #222; }
 
-    <!-- Set page size here: A5, A4 or A3 -->
-    <!-- Set also "landscape" if you need -->
-    <style>
-        @page {
-            size: A4
-        }
+    /* Header */
+    .kop-surat {
+      display: flex;
+      align-items: center;
+      border-bottom: 3px double #00783e;
+      padding-bottom: 6px;
+      margin-bottom: 10px;
+    }
 
-        #alamat {
-            font-family: 'Times New Roman', Times, serif;
-            font-size: 12px;
-            color: hsl(125, 100%, 36%);
-        }
+    .kop-logo img {
+      width: 90px;
+    }
 
-        #title {
-            font-family: 'Times New Roman', Times, serif;
-            font-size: 16px;
-            font-weight: bold;
-            color: hsl(125, 100%, 36%);
-        }
+    .kop-info {
+      flex: 1;
+      text-align: center;
+      color: #00783e;
+    }
 
-        h2#subjudul {
-            font-family: 'Times New Roman', Times, serif;
-            font-size: 30px;
-            font-weight: bold;
-            color: hsl(125, 100%, 36%);
+    .kop-info h1 {
+      font-size: 18px;
+      margin: 0;
+      font-weight: bold;
+    }
 
-        }
+    .kop-info h2 {
+      font-size: 26px;
+      margin: 2px 0;
+      font-weight: bold;
+    }
 
-        table {
-            border-collapse: collapse;
-            width: 100%;
-        }
+    .kop-info p {
+      font-size: 12px;
+      margin: 0;
+      color: #00783e;
+    }
 
-        th,
-        td {
-            /* border: 1px solid black; */
-            padding: 8px;
-            text-align: left;
-        }
+    hr.garis-tipis {
+      border: none;
+      height: 1px;
+      background: #00783e;
+      margin: 1px 0;
+    }
 
-        td img {
-            display: block;
-            /* Menghilangkan whitespace di sekitar gambar */
-        }
+    /* Konten surat */
+    .konten {
+      font-size: 14px;
+      line-height: 1.6;
+      text-align: justify;
+      margin-top: 10px;
+    }
 
-        td#title {
-            text-align: center;
-            line-height: 10%;
-        }
+    .konten p {
+      margin: 8px 0;
+    }
 
-        hr {
-            margin: 2px 0;
-            border: none;
-            height: 0.5px;
-            background-color: hsl(125, 100%, 36%);
-            border: 1px solid hsl(125, 100%, 36%);
-        }
+    /* Tanggal */
+    .tanggal {
+      text-align: right;
+      margin-top: 10px;
+      margin-bottom: 15px;
+    }
 
-        hr#tebal {
-            margin: 5px 0;
-            border: none;
-            height: 2px;
-            background-color: hsl(125, 100%, 36%);
-            border: 1.2px solid hsl(125, 100%, 36%);
-        }
+    /* Tanda tangan */
+    .ttd {
+      margin-top: 30px;
+      text-align: right;
+    }
 
-        p {
-            font-family: 'Times New Roman', Times, serif;
-            margin: 2px 0;
-            line-height: 130%;
-            font-size: 14px;
-            color: hsl(0, 0%, 0%);
-        }
+    /* Gambar pasangan */
+    .pasangan {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      margin-top: 20px;
+    }
 
-        p#jumlah {
-            font-family: 'Times New Roman', Times, serif;
-            font-size: 18px;
-            color: hsl(0, 0%, 0%);
-        }
-    </style>
+    .pasangan img {
+      width: 100px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+
+    /* Warna dan highlight */
+    .hijau { color: #00783e; }
+
+    /* Garis footer */
+    .footer {
+      border-top: 2px solid #00783e;
+      margin-top: 40px;
+      padding-top: 4px;
+      font-size: 11px;
+      text-align: center;
+      color: #555;
+    }
+  </style>
 </head>
 
 <body class="A4 potrait">
-    <section class="sheet padding-10mm">
-        <table>
-            <tr>
-                <td style="width: 10px; text-align:center;">
-                    <img src="{{ asset('assets/img/logo.png') }}" width="130%">
-                </td>
-                <td id="title" style="width: 60px;">
-                    <span id="title">
-                        Yayasan Pesantren Islam Al Azhar<br>
-                        <h2 id="subjudul">Direktorat Dakwah dan Sosial</h2>
-                    </span><br>
-                    <span>
-                        <small id="alamat">Jl. Sisingamangaraja Kebayoran Baru Jakarta Selatan 12110 Telp.
-                            021-72783683</small>
-                    </span>
-                    <br> <br> <br> <br> <br><br><br><br><span><small id="alamat">Website :
-                            www.masjidagungalazhar.com | Email : masjidagungalazhar@gmail.com</small></span>
-                </td>
-            </tr>
-        </table>
-        <hr>
-        <hr id="tebal">
-        <br>
-        <table>
-            <tr>
-                <td style="width: 2%;"></td>
-                <td style="width: 10%; text-align:left;">
+  <section class="sheet padding-15mm">
 
-                </td>
-                <td style="width: 65%; text-align:left;">
+    <!-- Kop Surat -->
+    <div class="kop-surat">
+      <div class="kop-logo">
+        <img src="{{ asset('assets/img/logo.png') }}" alt="Logo Al Azhar">
+      </div>
+      <div class="kop-info">
+        <h1>Yayasan Pesantren Islam Al Azhar</h1>
+        <h2>Direktorat Dakwah dan Sosial</h2>
+        <p>Jl. Sisingamangaraja, Kebayoran Baru, Jakarta Selatan 12110 | Telp. 021-72783683</p>
+        <p>Website: www.masjidagungalazhar.com | Email: masjidagungalazhar@gmail.com</p>
+      </div>
+    </div>
 
-                </td>
+    <!-- Tanggal -->
+    <div class="tanggal">
+      <p><b>Jakarta, {{ \Carbon\Carbon::parse(now())->isoFormat('DD MMMM YYYY') }}</b></p>
+    </div>
 
-                <td style="width: 25%; text-align:right">
-                    <p><b>Jakarta, {{ \Carbon\Carbon::parse(now())->isoFormat('DD/MM/YYYY') }}
-                    </p>
-                </td>
-                <td style="width: 2%;"></td>
-            </tr>
-        </table>
-        <table>
-            <tr>
-                <td style="width: 2%;"></td>
-                <td style="width: 96%; text-align:left;">
-                    <p><i>Assalamualaikum Warrahmatullahi Wabarakatuh,</p>
-                </td>
-                <td style="width: 2%;"></td>
-            </tr>
-        </table>
-        <table>
-            <tr>
-                <td style="width: 2%;"></td>
-                <td style="width: 96%; text-align:justify;">
-                    <p>Salam ta'zim kami sampaikan semoga Allah SWT senantiasa melimpahkan rahmat, taufiq dan
-                        hidayahNya serta memberikan kesehatan kepada kita semua sehingga dapat menjalankan tugas
-                        dan aktifitas sehari-hari.
-                    </p>
-                </td>
-                <td style="width: 2%;"></td>
-            </tr>
-        </table>
-        <table>
-            <tr>
-                <td style="width: 2%;"></td>
-                <td style="width: 96%; text-align:justify;">
-                    @foreach ($allDataProgress as $data)
-                        <p>Direktorat YPI Al Azhar memberikan rekomendasi atas pasangan
-                            <b>{{ $data->nama_auth }}</b>
-                            dan <b>{{ $data->nama_profile }}</b> yang
-                            telah ditetapkan dalam aplikasi taaruf. Kami berharap pasangan ini memiliki tujuan
-                            yang sama
-                            untuk segera melangkah ke jenjang pernikahan..
-                        </p>
-                    @endforeach
+    <!-- Salam pembuka -->
+    <div class="konten">
+      <p><i>Assalamu’alaikum Warahmatullahi Wabarakatuh,</i></p>
+      <p>Salam ta'zim kami sampaikan, semoga Allah SWT senantiasa melimpahkan rahmat, taufiq, dan hidayah-Nya kepada kita semua dalam menjalankan aktivitas sehari-hari.</p>
 
-                </td>
-                <td style="width: 2%;"></td>
-            </tr>
-        </table>
-        <table>
-            <tr class="text-center">
-                @foreach ($allDataProgress as $data)
-                    <td style="width: 20%"></td>
-                    <td style="width: 30%">
-                        @php
-                            $path = Storage::url('uploads/karyawan/img/' . $data->foto_auth);
-                        @endphp
-                        <img src="{{ $path }}" style="height:80px">
-                    </td>
-                    <td style="width: 30%">
-                        @php
-                            $path = Storage::url('uploads/karyawan/img/' . $data->foto_profile);
-                        @endphp
-                        <img src="{{ $path }}" style="height:80px">
-                    </td>
-                    <td style="width: 20%"></td>
-                @endforeach
-            </tr>
-        </table>
-        <table>
-            <tr>
-                <td style="width: 2%;"></td>
-                <td style="width: 96%; text-align:justify;">
-                    <p>Maka untuk melanjutkan proses taaruf ini, kami jadwalkan konsultasi/bimbingan untuk pasangan ini
-                        pada hari ......., .............. pukul ..... WIB di Ruang Takmir Masjid Agung Al Azhar.
-                        <br><br>Untuk informasi lebih lanjut pasangan dapat menghubungi Whatsapp Center kami
-                        0882-1211-4771.<br><br> Semoga Allah SWT memberkahi dan memudahkan jalannya perjalanan hidup
-                        pasangan ini.<br><br>
-                        Wassalamu'alaikum Warahmatullahi Wabarakatuh
+      @foreach ($allDataProgress as $data)
+      <p>Direktorat YPI Al Azhar memberikan rekomendasi atas pasangan <b>{{ $data->nama_auth }}</b> dan <b>{{ $data->nama_profile }}</b> yang telah ditetapkan dalam aplikasi Ta’aruf. Kami berharap pasangan ini memiliki tujuan yang sama untuk segera melangkah ke jenjang pernikahan.</p>
+      @endforeach
+    </div>
 
-                    </p>
-                </td>
-                <td style="width: 2%;"></td>
-            </tr>
-        </table>
-        <table>
-            <tr>
-                <td style="width: 2%;"></td>
-                <td style="width: 96%; text-align:justify;">
-                    <p>Demikian ini kami sampaikan, Atas perhatiannya kami ucapkan terima kasih.
-                    </p>
-                </td>
-                <td style="width: 2%;"></td>
-            </tr>
-        </table>
-        <table>
-            <tr>
-                <td style="width: 2%;"></td>
-                <td style="width: 96%; text-align:justify;">
-                    <p><i>Billahit Taufiq wal Hidayah</i>
-                    <p><i>Wassalamualaikum Warrahmatullahi Wabarakatuh</i>
-                    </p>
-                </td>
-                <td style="width: 2%;"></td>
-            </tr>
-        </table><br>
-        <table>
-            <tr>
-                <td style="width: 2%;"></td>
-                <td style="width: 96%; text-align:justify;">
+    <!-- Foto pasangan -->
+    <div class="pasangan">
+      @foreach ($allDataProgress as $data)
+      <div>
+        @php $path = Storage::url('uploads/karyawan/img/' . $data->foto_auth); @endphp
+        <img src="{{ $path }}" alt="{{ $data->nama_auth }}">
+      </div>
+      <div>
+        @php $path = Storage::url('uploads/karyawan/img/' . $data->foto_profile); @endphp
+        <img src="{{ $path }}" alt="{{ $data->nama_profile }}">
+      </div>
+      @endforeach
+    </div>
 
-                </td>
-                <td style="width: 2%;"></td>
-            </tr>
-        </table>
+    <!-- Isi surat -->
+    <div class="konten">
+      <p>Untuk melanjutkan proses Ta’aruf ini, kami jadwalkan sesi konsultasi/bimbingan bagi pasangan tersebut pada hari ..........., tanggal .............. pukul ....... WIB di Ruang Takmir Masjid Agung Al Azhar.</p>
+      <p>Untuk informasi lebih lanjut, pasangan dapat menghubungi Whatsapp Center kami di nomor <b>0882-1211-4771</b>.</p>
+      <p>Semoga Allah SWT memberkahi dan memudahkan perjalanan hidup pasangan ini.</p>
 
-    </section>
+      <p><i>Wassalamu’alaikum Warahmatullahi Wabarakatuh.</i></p>
+    </div>
 
+    <!-- Tanda tangan -->
+    <div class="ttd">
+      <p>Hormat kami,</p>
+      <p><b>Dirat Daksos YPI Al Azhar</b></p>
+      <br><br>
+      <p>(.................................)<br>
+      <span class="hijau">Ka. Dirat Daksos</span></p>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <p>Dicetak otomatis oleh Sistem Informasi Ta’aruf - Masjid Agung Al Azhar</p>
+    </div>
+
+  </section>
 </body>
-
 </html>

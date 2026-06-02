@@ -67,7 +67,7 @@ class ProgressController extends Controller
         $emailAuth = Auth::guard('karyawan')->user()->email;
 
         // Proses update atau insert
-        DB::table('LikeDislike')->updateOrInsert(
+        DB::table('likedislike')->updateOrInsert(
             ['id_progress' => $id, 'emailAct' => $emailAuth],
             ['status' => 1]
         );
