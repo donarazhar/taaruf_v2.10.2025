@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="shortcut icon" href="{{ asset('logo.png') }}" type="image/x-icon" />
+    <link rel="shortcut icon" href="{{ asset('assets/img/logo.png') }}" type="image/x-icon" />
     <title>Ta'aruf Admin - Dashboard</title>
 
     <!-- Fonts -->
@@ -583,7 +583,7 @@
         <!-- Sidebar Brand -->
         <a class="sidebar-brand" href="/dashboardadmin">
             <div class="sidebar-brand-icon" style="background: transparent;">
-                <img src="{{ asset('logo.png') }}" alt="Logo" style="width: 100%; height: 100%; object-fit: contain;">
+                <img src="{{ asset('assets/img/logo.png') }}" alt="Logo" style="width: 100%; height: 100%; object-fit: contain;">
             </div>
             <div class="sidebar-brand-text">Ta'aruf <sup>v.2.0</sup></div>
         </a>
