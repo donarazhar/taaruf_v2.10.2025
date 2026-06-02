@@ -13,8 +13,8 @@
 
         .page-title {
             font-size: 1.75rem;
-            font-weight: 800;
-            color: var(--black);
+            font-weight: 700;
+            color: var(--text-main);
             margin: 0;
             letter-spacing: -0.02em;
         }
@@ -29,12 +29,13 @@
 
         .employee-card {
             background: var(--white);
-            border: 2px solid var(--gray-200);
+            border: 1px solid var(--gray-200);
             border-radius: var(--radius-lg);
             padding: 20px;
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
+            box-shadow: var(--shadow-sm);
         }
 
         .employee-card::before {
@@ -44,7 +45,7 @@
             left: 0;
             width: 4px;
             height: 100%;
-            background: var(--black);
+            background: var(--accent);
             transform: scaleY(0);
             transition: transform 0.3s ease;
         }
@@ -52,7 +53,7 @@
         .employee-card:hover {
             transform: translateY(-4px);
             box-shadow: var(--shadow-lg);
-            border-color: var(--black);
+            border-color: var(--accent);
         }
 
         .employee-card:hover::before {
@@ -74,30 +75,35 @@
         .employee-nip {
             font-size: 0.75rem;
             font-weight: 600;
-            color: var(--gray-600);
+            color: var(--primary);
             text-transform: uppercase;
             letter-spacing: 0.5px;
             margin-bottom: 4px;
+            background: var(--primary-light);
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
         }
 
         .employee-ref {
             font-size: 0.7rem;
-            color: var(--gray-500);
-            margin-top: 2px;
+            color: var(--text-muted);
+            margin-top: 4px;
+            display: block;
         }
 
         .employee-name {
             font-size: 1.1rem;
             font-weight: 700;
-            color: var(--black);
-            margin: 8px 0;
+            color: var(--text-main);
+            margin: 10px 0 6px;
             line-height: 1.3;
         }
 
         .employee-criteria {
-            font-size: 0.8rem;
-            color: var(--gray-600);
-            line-height: 1.4;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.5;
         }
 
         .employee-avatar {
@@ -105,8 +111,9 @@
             height: 60px;
             border-radius: var(--radius-md);
             object-fit: cover;
-            border: 2px solid var(--gray-200);
+            border: 2px solid var(--gray-100);
             flex-shrink: 0;
+            box-shadow: var(--shadow-sm);
         }
 
         /* ===== PAGINATION ===== */
@@ -116,111 +123,31 @@
             justify-content: center;
         }
 
-        /* ===== CHART CARDS ===== */
-        .chart-section {
-            margin-bottom: 32px;
-        }
-
-        .chart-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 24px;
-            margin-bottom: 32px;
-        }
-
-        .chart-card {
-            background: var(--white);
-            border: 2px solid var(--gray-200);
-            border-radius: var(--radius-lg);
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .chart-card:hover {
-            border-color: var(--black);
-            box-shadow: var(--shadow-md);
-        }
-
-        .chart-header {
-            padding: 20px 24px;
-            border-bottom: 2px solid var(--gray-200);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: var(--gray-50);
-        }
-
-        .chart-title {
-            font-size: 1rem;
-            font-weight: 700;
-            color: var(--black);
-            margin: 0;
-        }
-
-        .chart-menu {
-            color: var(--gray-600);
-            cursor: pointer;
-            padding: 4px 8px;
-            border-radius: var(--radius-sm);
-            transition: all 0.3s ease;
-        }
-
-        .chart-menu:hover {
-            background: var(--gray-200);
-            color: var(--black);
-        }
-
-        .chart-body {
-            padding: 24px;
-        }
-
-        .chart-legend {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 16px;
-            justify-content: center;
-            margin-top: 20px;
-        }
-
-        .legend-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.85rem;
-            color: var(--gray-700);
-        }
-
-        .legend-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            flex-shrink: 0;
-        }
-
         /* ===== DATA TABLE ===== */
         .table-card {
             background: var(--white);
-            border: 2px solid var(--gray-200);
+            border: 1px solid var(--gray-200);
             border-radius: var(--radius-lg);
             overflow: hidden;
             margin-bottom: 32px;
+            box-shadow: var(--shadow-sm);
         }
 
         .table-header {
             padding: 20px 24px;
-            border-bottom: 2px solid var(--gray-200);
-            background: var(--gray-50);
+            border-bottom: 1px solid var(--gray-200);
+            background: var(--white);
         }
 
         .table-title {
-            font-size: 1rem;
-            font-weight: 700;
-            color: var(--black);
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-main);
             margin: 0;
         }
 
         .table-body {
-            padding: 24px;
+            padding: 0;
         }
 
         .table-responsive {
@@ -234,31 +161,26 @@
         }
 
         .modern-table thead {
-            background: var(--black);
-            color: var(--white);
+            background: var(--gray-50);
+            color: var(--text-muted);
         }
 
         .modern-table thead th {
             padding: 16px 20px;
-            font-size: 0.85rem;
-            font-weight: 700;
-            text-align: center;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-align: left;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            border: none;
-        }
-
-        .modern-table thead th:first-child {
-            border-radius: var(--radius-md) 0 0 0;
-        }
-
-        .modern-table thead th:last-child {
-            border-radius: 0 var(--radius-md) 0 0;
+            border-bottom: 1px solid var(--gray-200);
         }
 
         .modern-table tbody tr {
-            border-bottom: 1px solid var(--gray-200);
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
+        }
+
+        .modern-table tbody tr:not(:last-child) td {
+            border-bottom: 1px solid var(--gray-100);
         }
 
         .modern-table tbody tr:hover {
@@ -267,49 +189,46 @@
 
         .modern-table tbody td {
             padding: 16px 20px;
-            text-align: center;
-            color: var(--gray-700);
+            text-align: left;
+            color: var(--text-main);
             font-size: 0.9rem;
+            vertical-align: middle;
         }
 
         .table-avatar {
-            width: 32px;
-            height: 32px;
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
             object-fit: cover;
             vertical-align: middle;
-            margin-right: 8px;
-            border: 2px solid var(--gray-200);
+            margin-right: 12px;
+            border: 2px solid var(--white);
+            box-shadow: var(--shadow-sm);
         }
 
         .btn-view {
-            padding: 8px 20px;
-            background: var(--black);
-            color: var(--white);
+            padding: 8px 16px;
+            background: var(--primary-light);
+            color: var(--primary);
             border: none;
-            border-radius: var(--radius-md);
+            border-radius: var(--radius-sm);
             font-weight: 600;
             font-size: 0.85rem;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
             text-decoration: none;
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
         }
 
         .btn-view:hover {
-            background: var(--gray-900);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
+            background: var(--primary);
             color: var(--white);
+            transform: translateY(-1px);
         }
 
         /* ===== RESPONSIVE ===== */
-        @media (max-width: 1024px) {
-            .chart-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
         @media (max-width: 768px) {
             .page-title {
                 font-size: 1.5rem;
@@ -319,18 +238,14 @@
                 grid-template-columns: 1fr;
             }
 
-            .chart-body {
-                padding: 16px;
-            }
-
             .table-body {
-                padding: 16px;
+                padding: 0;
             }
 
             .modern-table thead th,
             .modern-table tbody td {
-                padding: 12px 10px;
-                font-size: 0.8rem;
+                padding: 12px 16px;
+                font-size: 0.85rem;
             }
         }
 
@@ -338,18 +253,20 @@
         .empty-state {
             text-align: center;
             padding: 60px 20px;
-            color: var(--gray-500);
+            color: var(--text-muted);
         }
 
         .empty-state i {
-            font-size: 4rem;
+            font-size: 3rem;
             margin-bottom: 16px;
-            opacity: 0.3;
+            opacity: 0.5;
+            color: var(--primary);
         }
 
         .empty-state p {
             font-size: 1.1rem;
             margin: 0;
+            font-weight: 500;
         }
 
         /* ===== PAGINATION ===== */
@@ -375,63 +292,48 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            min-width: 40px;
-            height: 40px;
+            min-width: 36px;
+            height: 36px;
             padding: 8px 12px;
             background: var(--white);
-            color: var(--gray-700);
-            border: 2px solid var(--gray-200);
-            border-radius: var(--radius-md);
+            color: var(--text-muted);
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius-sm);
             text-decoration: none;
-            font-weight: 600;
+            font-weight: 500;
             font-size: 0.9rem;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
         }
 
         .pagination-wrapper .page-link:hover {
-            background: var(--gray-100);
-            border-color: var(--black);
-            color: var(--black);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-sm);
+            background: var(--gray-50);
+            border-color: var(--primary);
+            color: var(--primary);
         }
 
         .pagination-wrapper .page-item.active .page-link {
-            background: var(--black);
+            background: var(--primary);
             color: var(--white);
-            border-color: var(--black);
-            box-shadow: var(--shadow-md);
+            border-color: var(--primary);
         }
 
         .pagination-wrapper .page-item.disabled .page-link {
-            background: var(--gray-100);
+            background: var(--gray-50);
             color: var(--gray-400);
             border-color: var(--gray-200);
             cursor: not-allowed;
             opacity: 0.6;
         }
 
-        .pagination-wrapper .page-item.disabled .page-link:hover {
-            transform: none;
-            box-shadow: none;
-        }
-
-        /* Pagination arrows */
-        .pagination-wrapper .page-link[rel="prev"],
-        .pagination-wrapper .page-link[rel="next"] {
-            font-weight: 700;
-        }
-
         @media (max-width: 576px) {
             .pagination-wrapper .page-link {
-                min-width: 36px;
-                height: 36px;
-                padding: 6px 10px;
+                min-width: 32px;
+                height: 32px;
+                padding: 4px 8px;
                 font-size: 0.85rem;
             }
-
             .pagination-wrapper .pagination {
-                gap: 6px;
+                gap: 4px;
             }
         }
     </style>
