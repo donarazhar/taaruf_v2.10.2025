@@ -613,10 +613,10 @@
                     <form action="{{ route('masterkaryawan') }}" method="GET" style="display: flex; gap: 12px; align-items: center; margin: 0; flex-wrap: wrap;">
                         <div style="display: flex; gap: 8px; align-items: center;">
                             <label for="gender" style="font-size: 0.85rem; font-weight: 600; color: var(--gray-700); margin: 0;">Gender:</label>
-                            <select name="gender" id="gender" class="form-control" style="width: auto; display: inline-block; padding: 6px 12px; font-size: 0.9rem; border-radius: var(--radius-md); border: 1px solid var(--gray-300); height: auto;" onchange="this.form.submit()">
-                                <option value="">Semua</option>
-                                <option value="P" {{ (isset($gender) && $gender == 'P') ? 'selected' : '' }}>Pria</option>
-                                <option value="W" {{ (isset($gender) && $gender == 'W') ? 'selected' : '' }}>Wanita</option>
+                            <select class="form-select" name="gender" id="gender" style="width: auto; display: inline-block; padding: 6px 12px; font-size: 0.9rem; border-radius: var(--radius-md); border: 1px solid var(--gray-300);" onchange="this.form.submit()">
+                                <option value="">Semua Gender</option>
+                                <option value="pria" {{ request('gender') == 'pria' ? 'selected' : '' }}>Pria</option>
+                                <option value="wanita" {{ request('gender') == 'wanita' ? 'selected' : '' }}>Wanita</option>
                             </select>
                         </div>
                         <div style="display: flex; gap: 8px; align-items: center;">
@@ -667,8 +667,9 @@
                                             <div style="color: var(--gray-500); font-size: 0.85rem;"><i class="fas fa-envelope" style="font-size: 0.75rem; margin-right: 4px;"></i>{{ $d->email }}</div>
                                         </td>
                                         <td>
-                                            <span class="gender-badge {{ $d->jenkel == 'P' ? 'gender-male' : 'gender-female' }}">
-                                                {{ $d->jenkel == 'P' ? 'P' : 'W' }}
+                                            <span class="gender-badge {{ $d->jenkel == 'pria' ? 'male' : 'female' }}">
+                                                <i class="fas {{ $d->jenkel == 'pria' ? 'fa-mars' : 'fa-venus' }}"></i>
+                                                {{ $d->jenkel == 'pria' ? 'Pria' : 'Wanita' }}
                                             </span>
                                         </td>
                                         <td>

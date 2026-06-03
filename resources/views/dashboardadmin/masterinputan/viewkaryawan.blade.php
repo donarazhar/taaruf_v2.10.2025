@@ -366,9 +366,9 @@
                             <div class="info-content">
                                 <div class="info-label">Jenis Kelamin</div>
                                 <div class="info-value">
-                                    <span class="gender-badge {{ $karyawan->jenkel == 'P' ? 'male' : 'female' }}">
-                                        <i class="fas {{ $karyawan->jenkel == 'P' ? 'fa-mars' : 'fa-venus' }}"></i>
-                                        {{ $karyawan->jenkel == 'P' ? 'Pria' : 'Wanita' }}
+                                    <span class="gender-badge {{ $karyawan->jenkel == 'pria' ? 'male' : 'female' }}">
+                                        <i class="fas {{ $karyawan->jenkel == 'pria' ? 'fa-mars' : 'fa-venus' }}"></i>
+                                        {{ $karyawan->jenkel == 'pria' ? 'Pria' : 'Wanita' }}
                                     </span>
                                 </div>
                             </div>

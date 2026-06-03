@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('nip')->unique();
             $table->string('nama');
             $table->string('email')->unique();
-            $table->enum('jenkel', ['L', 'P']);
+            $table->enum('jenkel', ['pria', 'wanita']);
             $table->string('password');
             $table->string('referensi')->nullable();
             $table->text('referensi_detail')->nullable();
