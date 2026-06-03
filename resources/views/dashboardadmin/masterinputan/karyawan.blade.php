@@ -623,9 +623,8 @@
                             <label for="statusnikah" style="font-size: 0.85rem; font-weight: 600; color: var(--gray-700); margin: 0;">Status Nikah:</label>
                             <select name="statusnikah" id="statusnikah" class="form-control" style="width: auto; display: inline-block; padding: 6px 12px; font-size: 0.9rem; border-radius: var(--radius-md); border: 1px solid var(--gray-300); height: auto;" onchange="this.form.submit()">
                                 <option value="">Semua</option>
-                                @foreach($listStatusNikah as $status)
-                                    <option value="{{ $status }}" {{ (isset($statusnikah) && $statusnikah == $status) ? 'selected' : '' }}>{{ $status }}</option>
-                                @endforeach
+                                <option value="Lajang" {{ (isset($statusnikah) && $statusnikah == 'Lajang') ? 'selected' : '' }}>Lajang</option>
+                                <option value="Duda/Janda" {{ (isset($statusnikah) && $statusnikah == 'Duda/Janda') ? 'selected' : '' }}>Duda/Janda</option>
                             </select>
                         </div>
                     </form>
