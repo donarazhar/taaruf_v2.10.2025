@@ -892,6 +892,12 @@
         function setVerifiedUser(name, email, picture) {
             isVerified = true;
 
+            // Save to sessionStorage
+            sessionStorage.setItem('gAuthName', name);
+            sessionStorage.setItem('gAuthEmail', email);
+            if (picture) sessionStorage.setItem('gAuthPicture', picture);
+            else sessionStorage.removeItem('gAuthPicture');
+
             const emailInput = document.getElementById('email');
             const nameInput = document.getElementById('nama');
             
@@ -910,6 +916,8 @@
 
             if (picture) {
                 document.getElementById('verifiedAvatar').innerHTML = '<img src="' + picture + '" alt="Avatar" style="width: 100%; height: 100%; object-fit: cover;">';
+            } else {
+                document.getElementById('verifiedAvatar').innerHTML = '<i class="bi bi-person-fill" style="font-size: 1.5rem; color: #10b981;"></i>';
             }
 
             document.getElementById('google-popup').style.display = 'none';
@@ -921,6 +929,10 @@
 
         function changeAccount() {
             isVerified = false;
+            sessionStorage.removeItem('gAuthName');
+            sessionStorage.removeItem('gAuthEmail');
+            sessionStorage.removeItem('gAuthPicture');
+
             const emailInput = document.getElementById('email');
             const nameInput = document.getElementById('nama');
             
@@ -952,7 +964,14 @@
         }
 
         document.addEventListener('DOMContentLoaded', function() {
-            if (!isVerified) {
+            // Restore from session storage if exists
+            const savedEmail = sessionStorage.getItem('gAuthEmail');
+            const savedName = sessionStorage.getItem('gAuthName');
+            const savedPicture = sessionStorage.getItem('gAuthPicture');
+            
+            if (savedEmail && savedName) {
+                setVerifiedUser(savedName, savedEmail, savedPicture);
+            } else if (!isVerified) {
                 document.getElementById('google-popup').style.display = 'flex';
             }
             

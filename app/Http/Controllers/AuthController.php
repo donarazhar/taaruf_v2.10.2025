@@ -45,10 +45,10 @@ class AuthController extends Controller
 
             $simpan = DB::table('karyawan')->insert($data);
             if ($simpan) {
-                return Redirect::back()->with(['success' => 'Berhasil Mendaftar !!!, Mohon menunggu email konfirmasi untuk LOGIN.']);
+                return redirect('/login')->with(['success' => 'Berhasil Mendaftar !!!, Mohon menunggu email konfirmasi untuk LOGIN.']);
             }
         } catch (\Exception $e) {
-            return Redirect::back()->with(['warning' => 'Maaf ada kesalahan inputan']);
+            return Redirect::back()->with(['warning' => 'Maaf ada kesalahan inputan: ' . $e->getMessage()]);
         }
     }
 
