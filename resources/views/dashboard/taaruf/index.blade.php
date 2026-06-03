@@ -529,7 +529,7 @@
 
         @php
             $authUser = Auth::guard('karyawan')->user();
-            $oppositeGender = $authUser->jenkel == 'pria' ? 'wanita' : 'pria';
+            $oppositeGender = $authUser->jenkel == 'L' ? 'P' : 'L';
             $users = DB::table('karyawan')
                 ->where('jenkel', $oppositeGender)
                 ->where('status', '1') // Only verified users
@@ -544,7 +544,7 @@
                 <span class="stat-label">Total Profil</span>
             </div>
             <div class="stat-card">
-                <span class="stat-number">{{ $authUser->jenkel == 'pria' ? 'Wanita' : 'Pria' }}</span>
+                <span class="stat-number">{{ $authUser->jenkel == 'L' ? 'Wanita' : 'Pria' }}</span>
                 <span class="stat-label">Gender</span>
             </div>
             <div class="stat-card">
@@ -582,7 +582,7 @@
                                 <div class="profile-image-wrapper">
                                     @php
                                         $path = !empty($user->foto) ? Storage::url('uploads/karyawan/img/' . $user->foto) : '';
-                                        $defaultAvatar = $user->jenkel === 'pria' ? 'avatar.jpg' : 'avatarwanita.jpg';
+                                        $defaultAvatar = $user->jenkel === 'L' ? 'avatar.jpg' : 'avatarwanita.jpg';
                                     @endphp
                                     <img class="profile-image" 
                                          src="{{ !empty($path) ? url($path) : asset('assets/img/' . $defaultAvatar) }}"
@@ -648,7 +648,7 @@
                 <div class="empty-state">
                     <div class="empty-state-icon">💔</div>
                     <h3>Belum Ada Profil</h3>
-                    <p>Saat ini belum ada profil {{ $authUser->jenkel == 'pria' ? 'wanita' : 'pria' }} yang tersedia</p>
+                    <p>Saat ini belum ada profil {{ $authUser->jenkel == 'L' ? 'wanita' : 'pria' }} yang tersedia</p>
                 </div>
             @endif
         </div>
