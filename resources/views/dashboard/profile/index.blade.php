@@ -835,7 +835,7 @@
                                         <small class="form-text">Format: JPG, PNG, JPEG (Maks: 2MB)</small>
                                     </div>
 
-                                    <div class="preview-container" id="preview-container">
+                                    <div class="preview-container" id="preview-container" style="display: none;">
                                         <img class="preview-image" id="preview-image"
                                             src="{{ asset('assets/img/preview.png') }}" alt="Preview" />
                                     </div>
