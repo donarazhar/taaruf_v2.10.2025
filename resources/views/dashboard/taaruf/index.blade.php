@@ -544,7 +544,7 @@
                 <span class="stat-label">Total Profil</span>
             </div>
             <div class="stat-card">
-                <span class="stat-number">{{ $authUser->jenkel == 'L' ? 'Wanita' : 'Pria' }}</span>
+                <span class="stat-number">{{ $authUser->jenkel == 'L' ? 'P' : 'L' }}</span>
                 <span class="stat-label">Gender</span>
             </div>
             <div class="stat-card">
@@ -648,7 +648,7 @@
                 <div class="empty-state">
                     <div class="empty-state-icon">💔</div>
                     <h3>Belum Ada Profil</h3>
-                    <p>Saat ini belum ada profil {{ $authUser->jenkel == 'L' ? 'wanita' : 'pria' }} yang tersedia</p>
+                    <p>Saat ini belum ada profil {{ $authUser->jenkel == 'L' ? 'P' : 'L' }} yang tersedia</p>
                 </div>
             @endif
         </div>

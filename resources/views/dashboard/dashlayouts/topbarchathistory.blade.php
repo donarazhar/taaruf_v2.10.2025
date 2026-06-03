@@ -479,7 +479,7 @@
                             @php
                                 $avatarPath = !empty($chatPartner->foto) 
                                     ? Storage::url('uploads/karyawan/img/' . $chatPartner->foto)
-                                    : asset('assets/img/' . ($chatPartner->jenkel === 'pria' ? 'avatar.jpg' : 'avatarwanita.jpg'));
+                                    : asset('assets/img/' . ($chatPartner->jenkel === 'L' ? 'avatar.jpg' : 'avatarwanita.jpg'));
                             @endphp
                             <img src="{{ url($avatarPath) }}" alt="{{ $chatPartner->nama }}">
                         </div>

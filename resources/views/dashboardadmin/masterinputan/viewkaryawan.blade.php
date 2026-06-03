@@ -356,8 +356,8 @@
                             <div class="info-content">
                                 <div class="info-label">Jenis Kelamin</div>
                                 <div class="info-value">
-                                    <span class="gender-badge {{ $karyawan->jenkel == 'pria' ? 'male' : 'female' }}">
-                                        <i class="fas {{ $karyawan->jenkel == 'pria' ? 'fa-mars' : 'fa-venus' }}"></i>
+                                    <span class="gender-badge {{ $karyawan->jenkel == 'L' ? 'male' : 'female' }}">
+                                        <i class="fas {{ $karyawan->jenkel == 'L' ? 'fa-mars' : 'fa-venus' }}"></i>
                                         {{ ucfirst($karyawan->jenkel) }}
                                     </span>
                                 </div>
