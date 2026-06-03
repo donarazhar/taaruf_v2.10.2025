@@ -1102,17 +1102,13 @@
                                     <!-- Age Range -->
                                     <div class="form-group mb-4">
                                         <label class="form-label mb-3">
-                                            <i class="bi bi-calendar-range"></i> Rentang Umur
+                                            <i class="bi bi-calendar-range"></i> Rentang Umur (Tahun)
                                         </label>
-                                        <div class="range-wrapper">
-                                            <div class="range-labels">
-                                                <div class="range-label" id="umurAwalLabel">17</div>
-                                                <div class="range-label" id="umurAkhirLabel">60</div>
-                                            </div>
-                                            <input type="range" class="form-range" min="17" max="60"
-                                                id="customRange2" value="60">
-                                            <input type="hidden" class="form-control" id="umurRange"
-                                                name="umurRange" value="{{ $dataprofilelengkap->kriteriaumur }}">
+                                        <div class="input-group">
+                                            <input type="number" class="form-control" id="umurMin" placeholder="Minimal" value="20" min="17" required>
+                                            <span class="input-group-text bg-light border-start-0 border-end-0">s/d</span>
+                                            <input type="number" class="form-control" id="umurMax" placeholder="Maksimal" value="35" max="60" required>
+                                            <input type="hidden" id="umurRange" name="umurRange" value="{{ $dataprofilelengkap->kriteriaumur }}">
                                         </div>
                                     </div>
 
@@ -1123,16 +1119,11 @@
                                             <label class="form-label mb-3">
                                                 <i class="bi bi-arrows-vertical"></i> Rentang Tinggi (cm)
                                             </label>
-                                            <div class="range-wrapper">
-                                                <div class="range-labels">
-                                                    <div class="range-label" id="tinggiAwalLabel">100</div>
-                                                    <div class="range-label" id="tinggiAkhirLabel">200</div>
-                                                </div>
-                                                <input type="range" class="form-range" min="100"
-                                                    max="200" id="customRange3" value="200">
-                                                <input type="hidden" class="form-control" id="tinggiRange"
-                                                    name="tinggiRange"
-                                                    value="{{ $dataprofilelengkap->kriteriatinggi }}">
+                                            <div class="input-group">
+                                                <input type="number" class="form-control" id="tinggiMin" placeholder="Minimal" value="150" min="100" required>
+                                                <span class="input-group-text bg-light border-start-0 border-end-0">s/d</span>
+                                                <input type="number" class="form-control" id="tinggiMax" placeholder="Maksimal" value="180" max="250" required>
+                                                <input type="hidden" id="tinggiRange" name="tinggiRange" value="{{ $dataprofilelengkap->kriteriatinggi }}">
                                             </div>
                                         </div>
 
@@ -1141,16 +1132,11 @@
                                             <label class="form-label mb-3">
                                                 <i class="bi bi-speedometer"></i> Rentang Berat (kg)
                                             </label>
-                                            <div class="range-wrapper">
-                                                <div class="range-labels">
-                                                    <div class="range-label" id="beratAwalLabel">25</div>
-                                                    <div class="range-label" id="beratAkhirLabel">100</div>
-                                                </div>
-                                                <input type="range" class="form-range" min="25"
-                                                    max="100" id="customRange4" value="100">
-                                                <input type="hidden" class="form-control" id="beratRange"
-                                                    name="beratRange"
-                                                    value="{{ $dataprofilelengkap->kriteriaberat }}">
+                                            <div class="input-group">
+                                                <input type="number" class="form-control" id="beratMin" placeholder="Minimal" value="45" min="30" required>
+                                                <span class="input-group-text bg-light border-start-0 border-end-0">s/d</span>
+                                                <input type="number" class="form-control" id="beratMax" placeholder="Maksimal" value="75" max="150" required>
+                                                <input type="hidden" id="beratRange" name="beratRange" value="{{ $dataprofilelengkap->kriteriaberat }}">
                                             </div>
                                         </div>
                                     </div>
@@ -1275,52 +1261,32 @@
         }
     }
 
-    // Range Sliders
-    const customRange2 = document.getElementById('customRange2');
-    const customRange3 = document.getElementById('customRange3');
-    const customRange4 = document.getElementById('customRange4');
+    // Manual Range Inputs
+    function setupRangeInputs(minId, maxId, hiddenId) {
+        const minInput = document.getElementById(minId);
+        const maxInput = document.getElementById(maxId);
+        const hiddenInput = document.getElementById(hiddenId);
 
-    const umurRangeInput = document.getElementById('umurRange');
-    const umurAwalLabel = document.getElementById('umurAwalLabel');
-    const umurAkhirLabel = document.getElementById('umurAkhirLabel');
+        // Parse existing value e.g. "20 - 35"
+        if (hiddenInput.value) {
+            const parts = hiddenInput.value.split('-');
+            if (parts.length === 2) {
+                minInput.value = parts[0].trim();
+                maxInput.value = parts[1].trim();
+            }
+        }
 
-    const tinggiRangeInput = document.getElementById('tinggiRange');
-    const tinggiAwalLabel = document.getElementById('tinggiAwalLabel');
-    const tinggiAkhirLabel = document.getElementById('tinggiAkhirLabel');
+        function updateHidden() {
+            hiddenInput.value = `${minInput.value} - ${maxInput.value}`;
+        }
 
-    const beratRangeInput = document.getElementById('beratRange');
-    const beratAwalLabel = document.getElementById('beratAwalLabel');
-    const beratAkhirLabel = document.getElementById('beratAkhirLabel');
-
-    customRange2.addEventListener('input', updateUmurRange);
-    customRange3.addEventListener('input', updateTinggiRange);
-    customRange4.addEventListener('input', updateBeratRange);
-
-    function updateUmurRange() {
-        const umurAwal = customRange2.min;
-        const umurAkhir = customRange2.value;
-        umurRangeInput.value = `${umurAwal} - ${umurAkhir}`;
-        umurAwalLabel.textContent = umurAwal;
-        umurAkhirLabel.textContent = umurAkhir;
+        minInput.addEventListener('input', updateHidden);
+        maxInput.addEventListener('input', updateHidden);
     }
 
-    function updateTinggiRange() {
-        const tinggiAwal = customRange3.min;
-        const tinggiAkhir = customRange3.value;
-        tinggiRangeInput.value = `${tinggiAwal} - ${tinggiAkhir}`;
-        tinggiAwalLabel.textContent = tinggiAwal;
-        tinggiAkhirLabel.textContent = tinggiAkhir;
-    }
-
-    function updateBeratRange() {
-        const beratAwal = customRange4.min;
-        const beratAkhir = customRange4.value;
-        beratRangeInput.value = `${beratAwal} - ${beratAkhir}`;
-        beratAwalLabel.textContent = beratAwal;
-        beratAkhirLabel.textContent = beratAkhir;
-    }
-
-    // Checkbox for Suku
+    setupRangeInputs('umurMin', 'umurMax', 'umurRange');
+    setupRangeInputs('tinggiMin', 'tinggiMax', 'tinggiRange');
+    setupRangeInputs('beratMin', 'beratMax', 'beratRange');
     const checkboxes = document.querySelectorAll('.form-check-input[type="checkbox"]');
     const sukupilihanInput = document.getElementById('sukupilihan');
 
@@ -1335,11 +1301,6 @@
             .join(', ');
         sukupilihanInput.value = sukupilihan;
     }
-
-    // Initialize ranges on load
-    updateUmurRange();
-    updateTinggiRange();
-    updateBeratRange();
 </script>
 
 <script>
