@@ -615,8 +615,8 @@
                             <label for="gender" style="font-size: 0.85rem; font-weight: 600; color: var(--gray-700); margin: 0;">Gender:</label>
                             <select name="gender" id="gender" class="form-control" style="width: auto; display: inline-block; padding: 6px 12px; font-size: 0.9rem; border-radius: var(--radius-md); border: 1px solid var(--gray-300); height: auto;" onchange="this.form.submit()">
                                 <option value="">Semua</option>
-                                <option value="L" {{ (isset($gender) && $gender == 'L') ? 'selected' : '' }}>Laki-laki</option>
-                                <option value="P" {{ (isset($gender) && $gender == 'P') ? 'selected' : '' }}>Perempuan</option>
+                                <option value="P" {{ (isset($gender) && $gender == 'P') ? 'selected' : '' }}>Pria</option>
+                                <option value="W" {{ (isset($gender) && $gender == 'W') ? 'selected' : '' }}>Wanita</option>
                             </select>
                         </div>
                         <div style="display: flex; gap: 8px; align-items: center;">
@@ -667,8 +667,8 @@
                                             <div style="color: var(--gray-500); font-size: 0.85rem;"><i class="fas fa-envelope" style="font-size: 0.75rem; margin-right: 4px;"></i>{{ $d->email }}</div>
                                         </td>
                                         <td>
-                                            <span class="gender-badge {{ $d->jenkel == 'L' ? 'gender-male' : 'gender-female' }}">
-                                                {{ $d->jenkel == 'L' ? 'L' : 'P' }}
+                                            <span class="gender-badge {{ $d->jenkel == 'P' ? 'gender-male' : 'gender-female' }}">
+                                                {{ $d->jenkel == 'P' ? 'P' : 'W' }}
                                             </span>
                                         </td>
                                         <td>

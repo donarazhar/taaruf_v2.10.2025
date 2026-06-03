@@ -30,16 +30,16 @@ class MasterInputanController extends Controller
             ->orderBy('karyawan.status', 'asc')
             ->orderBy('karyawan.nama', 'asc');
         
-        if ($gender && in_array($gender, ['L', 'P'])) {
+        if ($gender && in_array($gender, ['P', 'W'])) {
             $query->where('karyawan.jenkel', $gender);
         }
 
         if ($statusnikah == 'Lajang') {
             $query->where('biodata.statusnikah', 'Lajang');
         } elseif ($statusnikah == 'Duda/Janda') {
-            if ($gender == 'L') {
+            if ($gender == 'P') {
                 $query->whereIn('biodata.statusnikah', ['Duda', 'Duda/Janda']);
-            } elseif ($gender == 'P') {
+            } elseif ($gender == 'W') {
                 $query->whereIn('biodata.statusnikah', ['Janda', 'Duda/Janda']);
             } else {
                 $query->whereIn('biodata.statusnikah', ['Duda', 'Janda', 'Duda/Janda']);
