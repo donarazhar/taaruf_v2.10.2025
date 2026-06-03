@@ -610,13 +610,24 @@
                 
                 <!-- Filter Section -->
                 <div>
-                    <form action="{{ route('masterkaryawan') }}" method="GET" style="display: flex; gap: 8px; align-items: center; margin: 0;">
-                        <label for="gender" style="font-size: 0.85rem; font-weight: 600; color: var(--gray-700); margin: 0;">Filter Gender:</label>
-                        <select name="gender" id="gender" class="form-control" style="width: auto; display: inline-block; padding: 6px 12px; font-size: 0.9rem; border-radius: var(--radius-md); border: 1px solid var(--gray-300); height: auto;" onchange="this.form.submit()">
-                            <option value="">Semua (L/P)</option>
-                            <option value="L" {{ (isset($gender) && $gender == 'L') ? 'selected' : '' }}>Laki-laki (L)</option>
-                            <option value="P" {{ (isset($gender) && $gender == 'P') ? 'selected' : '' }}>Perempuan (P)</option>
-                        </select>
+                    <form action="{{ route('masterkaryawan') }}" method="GET" style="display: flex; gap: 12px; align-items: center; margin: 0; flex-wrap: wrap;">
+                        <div style="display: flex; gap: 8px; align-items: center;">
+                            <label for="gender" style="font-size: 0.85rem; font-weight: 600; color: var(--gray-700); margin: 0;">Gender:</label>
+                            <select name="gender" id="gender" class="form-control" style="width: auto; display: inline-block; padding: 6px 12px; font-size: 0.9rem; border-radius: var(--radius-md); border: 1px solid var(--gray-300); height: auto;" onchange="this.form.submit()">
+                                <option value="">Semua</option>
+                                <option value="L" {{ (isset($gender) && $gender == 'L') ? 'selected' : '' }}>Laki-laki</option>
+                                <option value="P" {{ (isset($gender) && $gender == 'P') ? 'selected' : '' }}>Perempuan</option>
+                            </select>
+                        </div>
+                        <div style="display: flex; gap: 8px; align-items: center;">
+                            <label for="statusnikah" style="font-size: 0.85rem; font-weight: 600; color: var(--gray-700); margin: 0;">Status Nikah:</label>
+                            <select name="statusnikah" id="statusnikah" class="form-control" style="width: auto; display: inline-block; padding: 6px 12px; font-size: 0.9rem; border-radius: var(--radius-md); border: 1px solid var(--gray-300); height: auto;" onchange="this.form.submit()">
+                                <option value="">Semua</option>
+                                @foreach($listStatusNikah as $status)
+                                    <option value="{{ $status }}" {{ (isset($statusnikah) && $statusnikah == $status) ? 'selected' : '' }}>{{ $status }}</option>
+                                @endforeach
+                            </select>
+                        </div>
                     </form>
                 </div>
             </div>

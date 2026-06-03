@@ -22,6 +22,14 @@ class MasterInputanController extends Controller
         $datauser = DB::table('users')->where('email', $user)->first();
         
         $gender = $request->input('gender');
+        $statusnikah = $request->input('statusnikah');
+        
+        // Ambil daftar status nikah yang unik untuk dropdown filter
+        $listStatusNikah = DB::table('biodata')
+                            ->whereNotNull('statusnikah')
+                            ->where('statusnikah', '!=', '')
+                            ->distinct()
+                            ->pluck('statusnikah');
         
         $query = DB::table('karyawan')
             ->leftJoin('biodata', 'karyawan.email', '=', 'biodata.email')
@@ -31,14 +39,22 @@ class MasterInputanController extends Controller
         if ($gender && in_array($gender, ['L', 'P'])) {
             $query->where('karyawan.jenkel', $gender);
         }
+
+        if ($statusnikah) {
+            $query->where('biodata.statusnikah', $statusnikah);
+        }
         
         $karyawan = $query->paginate(10); // 10 data per halaman
         
-        if ($gender) {
-            $karyawan->appends(['gender' => $gender]);
+        $appends = [];
+        if ($gender) $appends['gender'] = $gender;
+        if ($statusnikah) $appends['statusnikah'] = $statusnikah;
+        
+        if (!empty($appends)) {
+            $karyawan->appends($appends);
         }
 
-        return view('dashboardadmin.masterinputan.karyawan', compact('datauser', 'karyawan', 'gender'));
+        return view('dashboardadmin.masterinputan.karyawan', compact('datauser', 'karyawan', 'gender', 'statusnikah', 'listStatusNikah'));
     }
 
 
