@@ -14,18 +14,28 @@ use Illuminate\Support\Str;
 
 class MasterInputanController extends Controller
 {
-    public function masterkaryawan()
+    public function masterkaryawan(Request $request)
     {
         // Mendapatkan AUTH
         $user = Auth::guard('user')->user()->email;
         // Mendapatkan data user berdasarkan email
         $datauser = DB::table('users')->where('email', $user)->first();
-        // SESUDAH
-        $karyawan = DB::table('karyawan')
-            ->orderBy('nama', 'asc')
-            ->paginate(10); // 10 data per halaman
+        
+        $gender = $request->input('gender');
+        
+        $query = DB::table('karyawan')->orderBy('nama', 'asc');
+        
+        if ($gender && in_array($gender, ['L', 'P'])) {
+            $query->where('jenkel', $gender);
+        }
+        
+        $karyawan = $query->paginate(10); // 10 data per halaman
+        
+        if ($gender) {
+            $karyawan->appends(['gender' => $gender]);
+        }
 
-        return view('dashboardadmin.masterinputan.karyawan', compact('datauser', 'karyawan'));
+        return view('dashboardadmin.masterinputan.karyawan', compact('datauser', 'karyawan', 'gender'));
     }
 
 
