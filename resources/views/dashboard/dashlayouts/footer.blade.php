@@ -138,12 +138,9 @@
     }
 
     /* Desktop Wide Screen */
-    @media (min-width: 1200px) {
+    @media (min-width: 769px) {
         .footer-nav-area {
-            max-width: 600px;
-            left: 50%;
-            transform: translateX(-50%);
-            border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+            display: none !important;
         }
     }
 </style>

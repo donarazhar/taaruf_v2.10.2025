@@ -301,6 +301,55 @@
         a:focus {
             outline-offset: 4px;
         }
+        /* ===== DESKTOP NAVBAR STYLES ===== */
+        .desktop-navbar {
+            display: none;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .desktop-navbar a {
+            color: var(--gray-600);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .desktop-navbar a:hover,
+        .desktop-navbar a.active {
+            color: var(--black);
+        }
+
+        .desktop-navbar a.active {
+            position: relative;
+        }
+        
+        .desktop-navbar a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--black);
+            border-radius: 2px;
+        }
+
+        @media (min-width: 769px) {
+            .desktop-navbar {
+                display: flex;
+            }
+            body {
+                padding-bottom: 20px; /* Reset padding for desktop since footer is hidden */
+            }
+            .header-content {
+                justify-content: space-between;
+            }
+        }
     </style>
 </head>
 
