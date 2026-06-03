@@ -608,6 +608,14 @@
                 </a>
             </li>
 
+            <!-- Nav Item - Data Admin -->
+            <li class="nav-item {{ request()->is(['masteradmin']) ? 'active' : '' }}">
+                <a class="nav-link" href="/masteradmin">
+                    <i class="fas fa-user-shield"></i>
+                    <span>Data Admin</span>
+                </a>
+            </li>
+
             <!-- Nav Item - Proses Ta'aruf -->
             <li class="nav-item {{ request()->is(['prosestaaruf']) ? 'active' : '' }}">
                 <a class="nav-link" href="/prosestaaruf">

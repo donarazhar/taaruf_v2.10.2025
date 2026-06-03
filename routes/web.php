@@ -99,6 +99,12 @@ Route::middleware(['auth:user'])->group(function () {
     Route::post('/masterkaryawan/viewkaryawan', [MasterInputanController::class, 'viewkaryawan'])->name('viewkaryawan');
     Route::post('/masterkaryawan/resetpassword', [MasterInputanController::class, 'resetPassword'])->name('resetpassword');
 
+    // Manajemen Admin
+    Route::get('/masteradmin', [\App\Http\Controllers\AdminUserController::class, 'index'])->name('masteradmin');
+    Route::post('/masteradmin/store', [\App\Http\Controllers\AdminUserController::class, 'store'])->name('masteradmin.store');
+    Route::post('/masteradmin/update', [\App\Http\Controllers\AdminUserController::class, 'update'])->name('masteradmin.update');
+    Route::get('/masteradmin/delete/{id}', [\App\Http\Controllers\AdminUserController::class, 'destroy'])->name('masteradmin.delete');
+
     Route::get('/masterberita', [MasterInputanController::class, 'masterberita'])->name('masterberita');
     Route::post('/masterberita/editberita', [MasterInputanController::class, 'editberita'])->name('editberita');
     Route::post('/masterberita/{id}/updateberita', [MasterInputanController::class, 'updateberita'])->name('updateberita');
