@@ -532,18 +532,12 @@
 
         @php
             $authUser = Auth::guard('karyawan')->user();
-            $oppositeGender = $authUser->jenkel == 'L' ? 'P' : 'L';
-            $users = DB::table('karyawan')
-                ->where('jenkel', $oppositeGender)
-                ->where('status', '1') // Only verified users
-                ->get();
-            $totalUsers = $users->count();
         @endphp
 
         <!-- Stats Bar -->
         <div class="stats-bar">
             <div class="stat-card">
-                <span class="stat-number">{{ $totalUsers }}</span>
+                <span class="stat-number">{{ $users->total() }}</span>
                 <span class="stat-label">Total Profil</span>
             </div>
             <div class="stat-card">
@@ -563,18 +557,20 @@
                 Filter & Pencarian
             </div>
             <div class="filter-controls">
-                <div class="search-box">
+                <form action="{{ route('taaruf') }}" method="GET" class="search-box m-0 w-100">
                     <input type="text" 
+                           name="search"
                            id="searchInput" 
+                           value="{{ request('search') }}"
                            placeholder="🔍 Cari berdasarkan nama atau NIP..." 
-                           onkeyup="filterProfiles()">
-                </div>
+                           onchange="this.form.submit()">
+                </form>
             </div>
         </div>
 
         <!-- Profile Grid -->
         <div class="blog-wrapper">
-            @if($totalUsers > 0)
+            @if($users->total() > 0)
                 <div class="row g-3" id="profileGrid">
                     @foreach ($users as $user)
                         <div class="col-6 col-sm-6 col-md-4 col-lg-3 profile-item" 
@@ -637,9 +633,14 @@
                         </div>
                     @endforeach
                 </div>
+                
+                <!-- Pagination -->
+                <div class="mt-4 d-flex justify-content-center">
+                    {{ $users->links('vendor.pagination.bootstrap-5') }}
+                </div>
 
                 <!-- No Results Message (Hidden by default) -->
-                <div id="noResults" style="display: none;">
+                <div id="noResults" style="display: {{ $users->count() == 0 ? 'block' : 'none' }};">
                     <div class="empty-state">
                         <div class="empty-state-icon">🔍</div>
                         <h3>Tidak Ada Hasil</h3>
@@ -661,33 +662,6 @@
 
 @push('myscript')
 <script>
-    // Filter Profiles Function
-    function filterProfiles() {
-        const searchValue = document.getElementById('searchInput').value.toLowerCase();
-        const profileItems = document.querySelectorAll('.profile-item');
-        const noResults = document.getElementById('noResults');
-        let visibleCount = 0;
-
-        profileItems.forEach(item => {
-            const name = item.getAttribute('data-name');
-            const nip = item.getAttribute('data-nip');
-            
-            if (name.includes(searchValue) || nip.includes(searchValue)) {
-                item.style.display = 'block';
-                visibleCount++;
-            } else {
-                item.style.display = 'none';
-            }
-        });
-
-        // Show/hide no results message
-        if (visibleCount === 0 && searchValue !== '') {
-            noResults.style.display = 'block';
-        } else {
-            noResults.style.display = 'none';
-        }
-    }
-
     // Like button animation
     document.addEventListener('DOMContentLoaded', function() {
         const likeButtons = document.querySelectorAll('.btn-like');

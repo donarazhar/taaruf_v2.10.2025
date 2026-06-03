@@ -90,18 +90,32 @@ class DashboardController extends Controller
         return view('dashboard.profile.index', compact('dataprofile', 'dataprofilelengkap', 'menuAktif'));
     }
 
-    public function taaruf()
+    public function taaruf(Request $request)
     {
         // Mendapatkan AUTH
         $email = Auth::guard('karyawan')->user()->email;
         // Mendapatkan data profile berdasarkan email
         $dataprofile = DB::table('karyawan')->where('email', $email)->first();
-        // Membaca jenis kelamin dari data profile
-        $jenisKelamin = $dataprofile->jenkel;
-        // Mendapatkan semua data karyawan dengan jenis kelamin yang berbeda
-        $users = DB::table('karyawan')
-            ->where('jenkel', '!=', $jenisKelamin) // Mengambil data dengan jenis kelamin berbeda
-            ->get();
+        
+        // Membaca jenis kelamin dari data profile (L/P), lalu cari lawan jenis
+        $oppositeGender = $dataprofile->jenkel == 'L' ? 'P' : 'L';
+        
+        // Setup query utama
+        $query = DB::table('karyawan')
+            ->where('jenkel', $oppositeGender)
+            ->where('status', '1');
+
+        // Fitur Pencarian
+        if ($request->has('search') && $request->search != '') {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('nama', 'like', "%{$search}%")
+                  ->orWhere('nip', 'like', "%{$search}%");
+            });
+        }
+
+        // Pagination per 10 data
+        $users = $query->paginate(10)->appends($request->all());
 
         $cekemail = DB::table('karyawan')
             ->leftJoin('biodata', 'karyawan.email', '=', 'biodata.email')
