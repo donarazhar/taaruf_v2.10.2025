@@ -23,10 +23,13 @@ class MasterInputanController extends Controller
         
         $gender = $request->input('gender');
         
-        $query = DB::table('karyawan')->orderBy('nama', 'asc');
+        $query = DB::table('karyawan')
+            ->leftJoin('biodata', 'karyawan.email', '=', 'biodata.email')
+            ->select('karyawan.*', 'biodata.statusnikah')
+            ->orderBy('karyawan.nama', 'asc');
         
         if ($gender && in_array($gender, ['L', 'P'])) {
-            $query->where('jenkel', $gender);
+            $query->where('karyawan.jenkel', $gender);
         }
         
         $karyawan = $query->paginate(10); // 10 data per halaman

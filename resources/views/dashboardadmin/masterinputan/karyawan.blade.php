@@ -631,6 +631,7 @@
                                     <th style="width: 70px;">Foto</th>
                                     <th>Info Pengguna</th>
                                     <th style="width: 70px;">Gender</th>
+                                    <th style="width: 100px;">Status Nikah</th>
                                     <th style="width: 120px;">Referensi</th>
                                     <th style="width: 80px;">Status</th>
                                     <th style="width: 80px;">Email</th>
@@ -659,6 +660,11 @@
                                         <td>
                                             <span class="gender-badge {{ $d->jenkel == 'L' ? 'gender-male' : 'gender-female' }}">
                                                 {{ $d->jenkel == 'L' ? 'L' : 'P' }}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span style="font-size: 0.85rem; font-weight: 600; color: var(--gray-700); background: var(--gray-100); padding: 4px 8px; border-radius: 4px; white-space: nowrap;">
+                                                {{ $d->statusnikah ?? '-' }}
                                             </span>
                                         </td>
                                         <td>
