@@ -614,10 +614,8 @@
                             <thead>
                                 <tr>
                                     <th style="width: 50px;">No</th>
-                                    <th style="width: 100px;">NIP</th>
                                     <th style="width: 70px;">Foto</th>
-                                    <th style="width: 150px;">Nama</th>
-                                    <th style="width: 180px;">Email</th>
+                                    <th>Info Pengguna</th>
                                     <th style="width: 70px;">Gender</th>
                                     <th style="width: 120px;">Referensi</th>
                                     <th style="width: 80px;">Status</th>
@@ -629,7 +627,6 @@
                                 @foreach ($karyawan as $d)
                                     <tr>
                                         <td><strong>{{ $karyawan->firstItem() + $loop->index }}</strong></td>
-                                        <td><span class="table-nip">{{ $d->nip }}</span></td>
                                         <td>
                                             @if ($d->foto == null)
                                                 <img src="{{ asset('assets/img/nophoto.png') }}" alt="avatar" class="table-avatar">
@@ -640,8 +637,11 @@
                                                 <img src="{{ $path }}" alt="{{ $d->nama }}" class="table-avatar">
                                             @endif
                                         </td>
-                                        <td><span class="table-name">{{ $d->nama }}</span></td>
-                                        <td><span class="table-email">{{ $d->email }}</span></td>
+                                        <td style="text-align: left; padding: 12px;">
+                                            <div style="font-weight: 700; color: var(--gray-900); font-size: 1rem; margin-bottom: 2px;">{{ $d->nama }}</div>
+                                            <div style="font-family: monospace; font-weight: 600; color: #0284c7; font-size: 0.85rem; background: #e6f0fa; display: inline-block; padding: 2px 6px; border-radius: 4px; margin-bottom: 4px;">{{ $d->nip }}</div>
+                                            <div style="color: var(--gray-500); font-size: 0.85rem;"><i class="fas fa-envelope" style="font-size: 0.75rem; margin-right: 4px;"></i>{{ $d->email }}</div>
+                                        </td>
                                         <td>
                                             <span class="gender-badge {{ $d->jenkel == 'L' ? 'gender-male' : 'gender-female' }}">
                                                 {{ $d->jenkel == 'L' ? 'L' : 'P' }}
