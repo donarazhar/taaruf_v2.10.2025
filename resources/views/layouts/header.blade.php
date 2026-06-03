@@ -10,7 +10,12 @@
             <li><a class="nav-link scrollto active" href="/">Beranda</a></li>
             <li><a class="nav-link scrollto" href="/#about">Tentang</a></li>
             <li><a class="nav-link scrollto" href="/#details">Informasi</a></li>
-            <li><a class="nav-link scrollto" href="/daftar"><span>Daftar</span></a></li>
+            <li class="dropdown"><a href="#"><span>Daftar</span> <i class="bi bi-chevron-down"></i></a>
+                <ul>
+                    <li><a href="/daftar-email">via Email</a></li>
+                    <li><a href="/daftar">via API</a></li>
+                </ul>
+            </li>
             <li><a class="nav-link scrollto" href="/login">Login</a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>

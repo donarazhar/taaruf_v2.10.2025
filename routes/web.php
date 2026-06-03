@@ -34,6 +34,9 @@ Route::middleware(['guest:karyawan'])->group(function () {
     Route::get('/daftar', function () {
         return view('auth.daftar');
     })->name('daftar');
+    Route::get('/daftar-email', function () {
+        return view('auth.daftar_email');
+    })->name('daftar.email');
     Route::get('/login', function () {
         return view('auth.login');
     })->name('login');
