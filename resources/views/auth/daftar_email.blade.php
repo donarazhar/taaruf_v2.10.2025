@@ -731,8 +731,8 @@
                                     <label class="form-label-modern">Jenis Kelamin</label>
                                     <select class="form-select-modern" name="jenkel" id="jenkel" required>
                                         <option value="">Pilih jenis kelamin</option>
-                                        <option value="pria">Pria</option>
-                                        <option value="wanita">Wanita</option>
+                                        <option value="L">Pria</option>
+                                        <option value="P">Wanita</option>
                                     </select>
                                 </div>
 
