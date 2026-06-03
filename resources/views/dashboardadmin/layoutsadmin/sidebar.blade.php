@@ -593,10 +593,26 @@
 
         <!-- Nav Item - Dashboard -->
         <ul style="list-style: none; padding: 0; margin: 0;">
-            <li class="nav-item active">
+            <li class="nav-item {{ request()->is(['dashboardadmin']) || request()->is('/') ? 'active' : '' }}">
                 <a class="nav-link" href="/dashboardadmin">
                     <i class="fas fa-home"></i>
                     <span>Dashboard</span>
+                </a>
+            </li>
+
+            <!-- Nav Item - Data Karyawan -->
+            <li class="nav-item {{ request()->is(['masterkaryawan']) ? 'active' : '' }}">
+                <a class="nav-link" href="/masterkaryawan">
+                    <i class="fas fa-users"></i>
+                    <span>Data Karyawan</span>
+                </a>
+            </li>
+
+            <!-- Nav Item - Proses Ta'aruf -->
+            <li class="nav-item {{ request()->is(['prosestaaruf']) ? 'active' : '' }}">
+                <a class="nav-link" href="/prosestaaruf">
+                    <i class="fas fa-hands-helping"></i>
+                    <span>Proses Ta'aruf</span>
                 </a>
             </li>
 
@@ -604,40 +620,28 @@
             <hr class="sidebar-divider">
 
             <!-- Heading -->
-            <div class="sidebar-heading">Interface</div>
+            <div class="sidebar-heading">Manajemen Konten</div>
 
             <!-- Nav Item - Master Data -->
-            <li class="nav-item {{ request()->is(['masterberita', 'masteryoutube', 'masterkaryawan']) ? 'active' : '' }}">
+            <li class="nav-item {{ request()->is(['masterberita', 'masteryoutube']) ? 'active' : '' }}">
                 <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseMaster">
-                    <i class="fas fa-cog"></i>
-                    <span>Master Data</span>
+                    <i class="fas fa-database"></i>
+                    <span>Data Master</span>
                 </a>
-                <div id="collapseMaster" class="collapse {{ request()->is(['masterberita', 'masteryoutube', 'masterkaryawan']) ? 'show' : '' }}">
+                <div id="collapseMaster" class="collapse {{ request()->is(['masterberita', 'masteryoutube']) ? 'show' : '' }}">
                     <div class="collapse-inner">
-                        <h6 class="collapse-header">Data Inputan</h6>
+                        <h6 class="collapse-header">Konten Web</h6>
                         <a class="collapse-item {{ request()->is(['masterberita']) ? 'active' : '' }}" href="/masterberita">Artikel & Berita</a>
                         <a class="collapse-item {{ request()->is(['masteryoutube']) ? 'active' : '' }}" href="/masteryoutube">Youtube</a>
-                        <a class="collapse-item {{ request()->is(['masterkaryawan']) ? 'active' : '' }}" href="/masterkaryawan">Data Karyawan</a>
                     </div>
                 </div>
             </li>
 
-            <!-- Divider -->
-            <hr class="sidebar-divider">
-
             <!-- Nav Item - Q&A -->
             <li class="nav-item {{ request()->is(['daftartanya']) ? 'active' : '' }}">
                 <a class="nav-link" href="/daftartanya">
-                    <i class="fas fa-envelope"></i>
+                    <i class="fas fa-envelope-open-text"></i>
                     <span>Daftar Q n A</span>
-                </a>
-            </li>
-
-            <!-- Nav Item - Proses Ta'aruf -->
-            <li class="nav-item {{ request()->is(['prosestaaruf']) ? 'active' : '' }}">
-                <a class="nav-link" href="/prosestaaruf">
-                    <i class="fas fa-table"></i>
-                    <span>Proses Ta'aruf</span>
                 </a>
             </li>
 
