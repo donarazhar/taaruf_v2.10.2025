@@ -114,7 +114,7 @@
         }
 
         .modern-table thead {
-            background: var(--black);
+            background: var(--primary);
             color: var(--white);
             position: sticky;
             top: 0;
@@ -271,7 +271,7 @@
             justify-content: center;
             width: 36px;
             height: 36px;
-            background: var(--black);
+            background: var(--primary);
             color: var(--white);
             border: none;
             border-radius: 50%;
@@ -281,7 +281,7 @@
         }
 
         .btn-action:hover {
-            background: var(--gray-900);
+            background: var(--primary-dark);
             transform: scale(1.1);
             box-shadow: var(--shadow-md);
             color: var(--white);
@@ -365,7 +365,7 @@
         }
 
         .modal-close:hover {
-            background: var(--black);
+            background: var(--primary);
             color: var(--white);
             transform: rotate(90deg);
         }
@@ -406,7 +406,7 @@
             width: 40px;
             height: 40px;
             border: 4px solid var(--gray-200);
-            border-top-color: var(--black);
+            border-top-color: var(--primary);
             border-radius: 50%;
             animation: spin 0.8s linear infinite;
         }
