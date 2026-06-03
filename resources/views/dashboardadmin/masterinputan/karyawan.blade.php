@@ -697,7 +697,7 @@
                                                 <a href="#" class="btn-action reset-btn" data-id="{{ $d->id }}" data-nama="{{ $d->nama }}" title="Reset Password" style="background: var(--gray-700);">
                                                     <i class="fas fa-key"></i>
                                                 </a>
-                                                <a href="/masterkaryawan/delete/{{ $d->id }}" class="btn-action delete" title="Hapus Pengguna" style="background: #ef4444;" onclick="return confirm('Apakah Anda yakin ingin menghapus pengguna ini secara permanen? Data biodata dan kriteria yang terkait juga akan ikut terhapus.');">
+                                                <a href="#" class="btn-action delete-btn" data-id="{{ $d->id }}" data-nama="{{ $d->nama }}" title="Hapus Pengguna" style="background: #ef4444;">
                                                     <i class="fas fa-trash"></i>
                                                 </a>
                                             </div>
@@ -774,6 +774,29 @@
             </form>
         </div>
     </div>
+
+    <!-- Modal Delete Karyawan -->
+    <div class="modal-modern" id="modal-deleteKaryawan">
+        <div class="modal-dialog-modern" style="max-width: 450px;">
+            <div class="modal-header-modern">
+                <h5 class="modal-title-modern">Konfirmasi Hapus Data</h5>
+                <button type="button" class="modal-close" data-dismiss="modal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body-modern" style="text-align: center; padding-top: 40px; padding-bottom: 40px;">
+                <div style="width: 80px; height: 80px; background: rgba(239, 68, 68, 0.1); color: #ef4444; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 36px; margin: 0 auto 24px auto;">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <h4 style="font-size: 1.25rem; font-weight: 700; color: var(--black); margin-bottom: 12px;">Hapus Permanen?</h4>
+                <p style="color: var(--gray-600); margin-bottom: 0;">Anda yakin ingin menghapus pengguna <strong id="delete-nama" style="color: var(--black);"></strong>? Semua data biodata dan kriteria yang terkait juga akan ikut terhapus secara permanen dan tidak dapat dikembalikan.</p>
+            </div>
+            <div style="padding: 20px 28px; border-top: 2px solid var(--gray-200); background: var(--gray-50); display: flex; justify-content: flex-end; gap: 12px; border-radius: 0 0 var(--radius-xl) var(--radius-xl);">
+                <button type="button" class="btn" style="padding: 10px 20px; border-radius: var(--radius-md); font-weight: 600; background: var(--gray-200); color: var(--gray-700); border: none; cursor: pointer;" data-dismiss="modal">Batal</button>
+                <a href="#" id="delete-confirm-btn" class="btn" style="padding: 10px 20px; border-radius: var(--radius-md); font-weight: 600; background: #ef4444; color: var(--white); text-decoration: none; display: inline-flex; align-items: center; justify-content: center;">Hapus Permanen</a>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @push('myscript')
@@ -828,6 +851,18 @@
                 $('#new_password').val('');
                 
                 $("#modal-resetPassword").addClass('show');
+            });
+
+            // Delete button click handler
+            $(".delete-btn").click(function(e) {
+                e.preventDefault();
+                var id = $(this).data('id');
+                var nama = $(this).data('nama');
+                
+                $('#delete-nama').text(nama);
+                $('#delete-confirm-btn').attr('href', '/masterkaryawan/delete/' + id);
+                
+                $("#modal-deleteKaryawan").addClass('show');
             });
 
             // Close modal handler
