@@ -1,5 +1,6 @@
-@extends('dashboard.dashlayouts.topbartaaruf')
+@extends('dashboard.dashlayouts.style')
 
+@push('styles')
 <style>
     /* ===== COLOR VARIABLES ===== */
     :root {
@@ -518,7 +519,9 @@
         box-shadow: 0 8px 25px rgba(0, 83, 197, 0.4);
     }
 </style>
+@endpush
 
+@section('content')
 <!-- Login Wrapper Area-->
 <div class="login-wrapper d-flex align-items-center justify-content-center">
     <div class="container">
@@ -731,7 +734,4 @@
         </div>
     </div>
 </div>
-
-@extends('dashboard.dashlayouts.footer')
-@extends('dashboard.dashlayouts.script')
-@extends('dashboard.dashlayouts.header')
+@endsection

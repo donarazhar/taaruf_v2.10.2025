@@ -1,5 +1,6 @@
 @extends('dashboard.dashlayouts.style')
 
+@push('styles')
 <style>
     /* ===== COLOR VARIABLES ===== */
     :root {
@@ -516,7 +517,9 @@
     .profile-card:nth-child(3) { animation-delay: 0.3s; }
     .profile-card:nth-child(4) { animation-delay: 0.4s; }
 </style>
+@endpush
 
+@section('content')
 <div class="page-content-wrapper">
     <div class="container">
         
@@ -654,6 +657,7 @@
         </div>
     </div>
 </div>
+@endsection
 
 @push('myscript')
 <script>
