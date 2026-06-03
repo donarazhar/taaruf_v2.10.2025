@@ -141,6 +141,23 @@ class MasterInputanController extends Controller
         return view('dashboardadmin.masterinputan.viewkaryawan', compact('datakaryawan'));
     }
 
+    public function resetPassword(Request $request)
+    {
+        $request->validate([
+            'id' => 'required',
+            'new_password' => 'required|min:6'
+        ]);
+
+        try {
+            DB::table('karyawan')->where('id', $request->id)->update([
+                'password' => Hash::make($request->new_password)
+            ]);
+            return redirect()->back()->with('success', 'Password pengguna berhasil direset!');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Terjadi kesalahan saat mereset password.');
+        }
+    }
+
     public function masterberita()
     {
         // Mendapatkan AUTH

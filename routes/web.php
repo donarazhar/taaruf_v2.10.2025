@@ -97,6 +97,7 @@ Route::middleware(['auth:user'])->group(function () {
     Route::get('/masterkaryawan', [MasterInputanController::class, 'masterkaryawan'])->name('masterkaryawan');
     Route::get('/masterkaryawan/{id_karyawan}/verifikasi', [MasterInputanController::class, 'verifikasi'])->name('verifikasi');
     Route::post('/masterkaryawan/viewkaryawan', [MasterInputanController::class, 'viewkaryawan'])->name('viewkaryawan');
+    Route::post('/masterkaryawan/resetpassword', [MasterInputanController::class, 'resetPassword'])->name('resetpassword');
 
     Route::get('/masterberita', [MasterInputanController::class, 'masterberita'])->name('masterberita');
     Route::post('/masterberita/editberita', [MasterInputanController::class, 'editberita'])->name('editberita');

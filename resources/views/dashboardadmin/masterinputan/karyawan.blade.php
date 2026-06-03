@@ -645,7 +645,7 @@
                                     <th style="width: 120px;">Referensi</th>
                                     <th style="width: 80px;">Status</th>
                                     <th style="width: 80px;">Email</th>
-                                    <th style="width: 70px;">Aksi</th>
+                                    <th style="width: 100px;">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -696,9 +696,14 @@
                                             </span>
                                         </td>
                                         <td>
-                                            <a href="#" class="btn-action view" id="{{ $d->id }}" title="Lihat Detail">
-                                                <i class="fas fa-eye"></i>
-                                            </a>
+                                            <div style="display: flex; gap: 8px; justify-content: center;">
+                                                <a href="#" class="btn-action view" id="{{ $d->id }}" title="Lihat Detail">
+                                                    <i class="fas fa-eye"></i>
+                                                </a>
+                                                <a href="#" class="btn-action reset-btn" data-id="{{ $d->id }}" data-nama="{{ $d->nama }}" title="Reset Password" style="background: var(--gray-700);">
+                                                    <i class="fas fa-key"></i>
+                                                </a>
+                                            </div>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -739,6 +744,37 @@
                     <div class="spinner"></div>
                 </div>
             </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Reset Password -->
+    <div class="modal-modern" id="modal-resetPassword">
+        <div class="modal-dialog-modern" style="max-width: 500px;">
+            <div class="modal-header-modern">
+                <h5 class="modal-title-modern">Reset Password Pengguna</h5>
+                <button type="button" class="modal-close" data-dismiss="modal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form action="{{ route('resetpassword') }}" method="POST">
+                @csrf
+                <div class="modal-body-modern">
+                    <input type="hidden" name="id" id="reset-id">
+                    <div class="alert-modern alert-warning-modern" style="margin-bottom: 20px;">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <span>Anda akan mengubah password untuk pengguna: <strong id="reset-nama"></strong></span>
+                    </div>
+                    <div class="form-group" style="margin-bottom: 20px;">
+                        <label for="new_password" style="font-weight: 600; color: var(--gray-700); margin-bottom: 8px; display: block;">Password Baru</label>
+                        <input type="text" name="new_password" id="new_password" class="form-control" style="border: 2px solid var(--gray-200); border-radius: var(--radius-md); padding: 12px; font-size: 1rem; width: 100%; box-sizing: border-box;" required minlength="6" placeholder="Masukkan password baru (min. 6 karakter)">
+                    </div>
+                </div>
+                <div style="padding: 20px 28px; border-top: 2px solid var(--gray-200); background: var(--gray-50); display: flex; justify-content: flex-end; gap: 12px; border-radius: 0 0 var(--radius-xl) var(--radius-xl);">
+                    <button type="button" class="btn" style="padding: 10px 20px; border-radius: var(--radius-md); font-weight: 600; background: var(--gray-200); color: var(--gray-700); border: none; cursor: pointer;" data-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn" style="padding: 10px 20px; border-radius: var(--radius-md); font-weight: 600; background: var(--primary); color: var(--white); border: none; cursor: pointer;">Simpan Password</button>
+                </div>
+            </form>
         </div>
     </div>
 @endsection
@@ -784,13 +820,26 @@
                 });
             });
 
+            // Reset Password button click handler
+            $(".reset-btn").click(function(e) {
+                e.preventDefault();
+                var id = $(this).data('id');
+                var nama = $(this).data('nama');
+                
+                $('#reset-id').val(id);
+                $('#reset-nama').text(nama);
+                $('#new_password').val('');
+                
+                $("#modal-resetPassword").addClass('show');
+            });
+
             // Close modal handler
             $('[data-dismiss="modal"]').click(function() {
-                $("#modal-viewKaryawan").removeClass('show');
+                $(".modal-modern").removeClass('show');
             });
 
             // Close modal when clicking outside
-            $("#modal-viewKaryawan").click(function(e) {
+            $(".modal-modern").click(function(e) {
                 if (e.target === this) {
                     $(this).removeClass('show');
                 }
@@ -799,7 +848,7 @@
             // Close modal with ESC key
             $(document).keyup(function(e) {
                 if (e.key === "Escape") {
-                    $("#modal-viewKaryawan").removeClass('show');
+                    $(".modal-modern").removeClass('show');
                 }
             });
         });
