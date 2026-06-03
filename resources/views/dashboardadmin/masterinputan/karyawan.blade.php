@@ -640,8 +640,8 @@
                                         <td><span class="table-name">{{ $d->nama }}</span></td>
                                         <td><span class="table-email">{{ $d->email }}</span></td>
                                         <td>
-                                            <span class="gender-badge {{ $d->jenkel == 'pria' ? 'gender-male' : 'gender-female' }}">
-                                                {{ $d->jenkel == 'pria' ? 'P' : 'W' }}
+                                            <span class="gender-badge {{ $d->jenkel == 'L' ? 'gender-male' : 'gender-female' }}">
+                                                {{ $d->jenkel == 'L' ? 'L' : 'P' }}
                                             </span>
                                         </td>
                                         <td>
