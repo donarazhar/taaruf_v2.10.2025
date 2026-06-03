@@ -1,6 +1,9 @@
 @extends('dashboardadmin.layoutsadmin.sidebar')
 @section('content')
     <style>
+        :root {
+            --black: #0f172a;
+        }
         /* ===== MODERN TABLE STYLES ===== */
         .page-header {
             margin-bottom: 32px;
