@@ -1,5 +1,6 @@
 @extends('dashboard.dashlayouts.style')
 
+@push('styles')
 <style>
     /* ===== MODERN PROFILE STYLES ===== */
     :root {
@@ -717,7 +718,9 @@
         }
     }
 </style>
+@endpush
 
+@section('content')
 <div class="page-content-wrapper">
     <div class="container">
         <!-- User Information Card -->
@@ -1214,8 +1217,10 @@
         </div>
     </div>
 </div>
+@endsection
 
 <!-- JavaScript -->
+@push('myscript')
 <script>
     // Image Preview
     function previewImage() {
@@ -1322,9 +1327,8 @@
     updateBeratRange();
 </script>
 
-@push('myscript')
-    <script>
-        $(function() {
+<script>
+    $(function() {
             $('#nohp').mask('0000000000000');
             $('#tinggi').mask('000');
             $('#berat').mask('000');
