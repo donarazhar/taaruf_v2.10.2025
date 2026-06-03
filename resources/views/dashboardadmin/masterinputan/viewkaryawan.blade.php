@@ -5,7 +5,7 @@
     <style>
         /* ===== MODERN VIEW KARYAWAN STYLES ===== */
         :root {
-            --black: #000000;
+            --black: #1A1A1A;
             --gray-900: #1A1A1A;
             --gray-800: #2D2D2D;
             --gray-700: #404040;
@@ -82,7 +82,7 @@
             align-items: center;
             gap: 6px;
             padding: 6px 12px;
-            background: var(--black);
+            background: var(--primary);
             color: var(--white);
             border-radius: 50px;
             font-size: 0.75rem;
@@ -125,13 +125,13 @@
             padding: 12px;
             background: var(--gray-50);
             border-radius: var(--radius-md);
-            border-left: 3px solid var(--black);
+            border-left: 3px solid var(--primary);
         }
 
         .info-icon {
             width: 32px;
             height: 32px;
-            background: var(--black);
+            background: var(--primary);
             color: var(--white);
             border-radius: 50%;
             display: flex;
@@ -186,7 +186,7 @@
         .section-icon {
             width: 40px;
             height: 40px;
-            background: var(--black);
+            background: var(--primary);
             color: var(--white);
             border-radius: 50%;
             display: flex;
@@ -346,6 +346,16 @@
                             <div class="info-content">
                                 <div class="info-label">Email</div>
                                 <div class="info-value">{{ $karyawan->email }}</div>
+                            </div>
+                        </div>
+
+                        <div class="info-item">
+                            <div class="info-icon">
+                                <i class="fas fa-lock"></i>
+                            </div>
+                            <div class="info-content">
+                                <div class="info-label">Password</div>
+                                <div class="info-value">******** (Terenkripsi)</div>
                             </div>
                         </div>
 
