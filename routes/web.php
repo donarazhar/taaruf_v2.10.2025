@@ -98,6 +98,7 @@ Route::middleware(['auth:user'])->group(function () {
     Route::get('/masterkaryawan/{id_karyawan}/verifikasi', [MasterInputanController::class, 'verifikasi'])->name('verifikasi');
     Route::post('/masterkaryawan/viewkaryawan', [MasterInputanController::class, 'viewkaryawan'])->name('viewkaryawan');
     Route::post('/masterkaryawan/resetpassword', [MasterInputanController::class, 'resetPassword'])->name('resetpassword');
+    Route::get('/masterkaryawan/delete/{id}', [MasterInputanController::class, 'deletekaryawan'])->name('deletekaryawan');
 
     // Manajemen Admin
     Route::get('/masteradmin', [\App\Http\Controllers\AdminUserController::class, 'index'])->name('masteradmin');

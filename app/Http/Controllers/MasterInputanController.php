@@ -158,6 +158,23 @@ class MasterInputanController extends Controller
         }
     }
 
+    public function deletekaryawan($id)
+    {
+        try {
+            $karyawan = DB::table('karyawan')->where('id', $id)->first();
+            if ($karyawan) {
+                DB::table('biodata')->where('email', $karyawan->email)->delete();
+                DB::table('kriteriapasangan')->where('email', $karyawan->email)->delete();
+                DB::table('karyawan')->where('id', $id)->delete();
+                
+                return redirect()->back()->with('success', 'Data pengguna berhasil dihapus!');
+            }
+            return redirect()->back()->with('error', 'Data pengguna tidak ditemukan.');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Terjadi kesalahan saat menghapus data pengguna.');
+        }
+    }
+
     public function masterberita()
     {
         // Mendapatkan AUTH

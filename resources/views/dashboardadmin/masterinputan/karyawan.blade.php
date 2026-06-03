@@ -645,7 +645,7 @@
                                     <th style="width: 120px;">Referensi</th>
                                     <th style="width: 80px;">Status</th>
                                     <th style="width: 80px;">Email</th>
-                                    <th style="width: 100px;">Aksi</th>
+                                    <th style="width: 140px; text-align: center;">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -702,6 +702,9 @@
                                                 </a>
                                                 <a href="#" class="btn-action reset-btn" data-id="{{ $d->id }}" data-nama="{{ $d->nama }}" title="Reset Password" style="background: var(--gray-700);">
                                                     <i class="fas fa-key"></i>
+                                                </a>
+                                                <a href="/masterkaryawan/delete/{{ $d->id }}" class="btn-action delete" title="Hapus Pengguna" style="background: #ef4444;" onclick="return confirm('Apakah Anda yakin ingin menghapus pengguna ini secara permanen? Data biodata dan kriteria yang terkait juga akan ikut terhapus.');">
+                                                    <i class="fas fa-trash"></i>
                                                 </a>
                                             </div>
                                         </td>
