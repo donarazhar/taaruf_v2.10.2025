@@ -27,6 +27,7 @@ class MasterInputanController extends Controller
         $query = DB::table('karyawan')
             ->leftJoin('biodata', 'karyawan.email', '=', 'biodata.email')
             ->select('karyawan.*', 'biodata.statusnikah')
+            ->orderBy('karyawan.status', 'asc')
             ->orderBy('karyawan.nama', 'asc');
         
         if ($gender && in_array($gender, ['L', 'P'])) {
