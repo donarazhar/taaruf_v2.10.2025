@@ -20,10 +20,10 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->enum('jenkel', ['pria', 'wanita']);
             $table->string('password');
-            $table->string('referensi')->nullable();
+            $table->enum('referensi', ['1', '2', '', ''])->nullable();
             $table->text('referensi_detail')->nullable();
             $table->string('foto')->nullable();
-            $table->enum('status', ['1', '2', ''])->nullable()->default('');
+            $table->integer('status')->nullable();
             $table->string('email_verification_token')->nullable();
             $table->timestamps();
         });
