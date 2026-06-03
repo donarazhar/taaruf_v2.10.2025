@@ -571,9 +571,9 @@
         <!-- Profile Grid -->
         <div class="blog-wrapper">
             @if($users->total() > 0)
-                <div class="row g-3" id="profileGrid">
+                <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-5 g-3" id="profileGrid">
                     @foreach ($users as $user)
-                        <div class="col-6 col-sm-6 col-md-4 col-lg-3 profile-item" 
+                        <div class="col profile-item" 
                              data-name="{{ strtolower($user->nama) }}" 
                              data-nip="{{ strtolower($user->nip) }}">
                             <div class="profile-card">
