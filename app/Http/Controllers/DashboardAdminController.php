@@ -16,16 +16,9 @@ class DashboardAdminController extends Controller
         $email = Auth::guard('user')->user()->email;
         // Mendapatkan data profile berdasarkan email
         $datauser = DB::table('users')->where('email', $email)->first();
-        $datakaryawan = Karyawan::select(
-            'karyawan.*',
-            'biodata.*',
-            'kriteriapasangan.*',
-            'karyawan.id as id_karyawan'
-        )
-            ->leftJoin('biodata', 'karyawan.email', '=', 'biodata.email')
-            ->leftJoin('kriteriapasangan', 'karyawan.email', '=', 'kriteriapasangan.email')
-            ->orderBy('id_karyawan', 'asc')
-            ->paginate(10); // Sesuaikan nilai paginate sesuai kebutuhan
+        $totalLaki = Karyawan::where('jenkel', 'L')->count();
+        $totalPerempuan = Karyawan::where('jenkel', 'P')->count();
+        $belumVerifikasi = Karyawan::where('status', '!=', '1')->orWhereNull('status')->count();
 
         $pendidikan = Biodata::selectRaw('pendidikan, COUNT(*) as count')
             ->groupBy('pendidikan')
@@ -102,7 +95,7 @@ class DashboardAdminController extends Controller
             ];
         }
 
-        return view('dashboardadmin.index', compact('datauser', 'datakaryawan', 'pendidikan', 'suku', 'resultChat'));
+        return view('dashboardadmin.index', compact('datauser', 'totalLaki', 'totalPerempuan', 'belumVerifikasi', 'pendidikan', 'suku', 'resultChat'));
     }
 
     public function daftartanya()

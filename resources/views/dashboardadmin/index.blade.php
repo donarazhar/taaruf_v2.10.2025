@@ -343,65 +343,55 @@
         <h1 class="page-title">Data Karyawan</h1>
     </div>
 
-    <!-- Employee Data Table -->
-    <div class="table-card">
-        <div class="table-header">
-            <h6 class="table-title">Daftar Karyawan</h6>
-        </div>
-        <div class="table-body">
-            <div class="table-responsive">
-                @if($datakaryawan->count() > 0)
-                    <table class="modern-table">
-                        <thead>
-                            <tr>
-                                <th style="width: 60px;">No.</th>
-                                <th>Profil</th>
-                                <th>NIP</th>
-                                <th>Kriteria Umum</th>
-                                <th>Referensi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($datakaryawan as $key => $d)
-                                <tr>
-                                    <td><strong>{{ $datakaryawan->firstItem() + $key }}</strong></td>
-                                    <td>
-                                        <div style="display: flex; align-items: center; gap: 12px;">
-                                            @if ($d->foto == null)
-                                                <img src="{{ asset('assets/img/nophoto.png') }}" alt="avatar" class="table-avatar" style="margin: 0;">
-                                            @else
-                                                @php
-                                                    $path = Storage::url('uploads/karyawan/img/' . $d->foto);
-                                                @endphp
-                                                <img src="{{ $path }}" alt="{{ $d->nama }}" class="table-avatar" style="margin: 0;">
-                                            @endif
-                                            <strong>{{ $d->nama }}</strong>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <span style="background: var(--primary-light); color: var(--primary); padding: 4px 8px; border-radius: 4px; font-weight: 600; font-size: 0.85rem;">
-                                            {{ $d->nip }}
-                                        </span>
-                                    </td>
-                                    <td>{{ $d->kriteriaumum }}</td>
-                                    <td>{{ $d->referensi_detail ?? '-' }}</td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                @else
-                    <div class="empty-state">
-                        <i class="fas fa-users"></i>
-                        <p>Belum ada data karyawan</p>
-                    </div>
-                @endif
+    <!-- Dashboard Cards -->
+    <div class="employee-grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
+        <!-- Laki-laki Card -->
+        <div class="employee-card" style="border-left: 4px solid var(--primary);">
+            <div class="employee-header" style="margin-bottom: 0;">
+                <div class="employee-info">
+                    <h5 style="color: var(--text-muted); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 600;">Laki-laki</h5>
+                    <div style="font-size: 2.5rem; font-weight: 800; color: var(--text-main); margin-top: 8px;">{{ $totalLaki }}</div>
+                </div>
+                <div style="width: 60px; height: 60px; border-radius: var(--radius-md); background: var(--primary-light); display: flex; align-items: center; justify-content: center; color: var(--primary); font-size: 1.8rem;">
+                    <i class="fas fa-male"></i>
+                </div>
+            </div>
+            <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 16px; border-top: 1px solid var(--gray-100); padding-top: 12px;">
+                <i class="fas fa-chart-line text-success"></i> Total pendaftar Laki-laki
             </div>
         </div>
-    </div>
 
-    <!-- Pagination -->
-    <div class="pagination-wrapper">
-        {{ $datakaryawan->links('vendor.pagination.bootstrap-5') }}
+        <!-- Perempuan Card -->
+        <div class="employee-card" style="border-left: 4px solid #e11d48;">
+            <div class="employee-header" style="margin-bottom: 0;">
+                <div class="employee-info">
+                    <h5 style="color: var(--text-muted); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 600;">Perempuan</h5>
+                    <div style="font-size: 2.5rem; font-weight: 800; color: var(--text-main); margin-top: 8px;">{{ $totalPerempuan }}</div>
+                </div>
+                <div style="width: 60px; height: 60px; border-radius: var(--radius-md); background: #ffe4e6; display: flex; align-items: center; justify-content: center; color: #e11d48; font-size: 1.8rem;">
+                    <i class="fas fa-female"></i>
+                </div>
+            </div>
+            <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 16px; border-top: 1px solid var(--gray-100); padding-top: 12px;">
+                <i class="fas fa-chart-line text-success"></i> Total pendaftar Perempuan
+            </div>
+        </div>
+
+        <!-- Belum Terverifikasi Card -->
+        <div class="employee-card" style="border-left: 4px solid var(--warning);">
+            <div class="employee-header" style="margin-bottom: 0;">
+                <div class="employee-info">
+                    <h5 style="color: var(--text-muted); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 600;">Belum Verifikasi</h5>
+                    <div style="font-size: 2.5rem; font-weight: 800; color: var(--text-main); margin-top: 8px;">{{ $belumVerifikasi }}</div>
+                </div>
+                <div style="width: 60px; height: 60px; border-radius: var(--radius-md); background: #fef3c7; display: flex; align-items: center; justify-content: center; color: var(--warning); font-size: 1.8rem;">
+                    <i class="fas fa-user-clock"></i>
+                </div>
+            </div>
+            <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 16px; border-top: 1px solid var(--gray-100); padding-top: 12px;">
+                <i class="fas fa-info-circle text-warning"></i> Akun menunggu persetujuan Admin
+            </div>
+        </div>
     </div>
 
     <!-- Charts Section -->
