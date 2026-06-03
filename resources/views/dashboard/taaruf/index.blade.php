@@ -541,7 +541,7 @@
                 <span class="stat-label">Total Profil</span>
             </div>
             <div class="stat-card">
-                <span class="stat-number">{{ $authUser->jenkel == 'L' ? 'P' : 'L' }}</span>
+                <span class="stat-number">{{ $authUser->jenkel == 'P' ? 'W' : 'P' }}</span>
                 <span class="stat-label">Gender</span>
             </div>
             <div class="stat-card">
@@ -581,7 +581,7 @@
                                 <div class="profile-image-wrapper">
                                     @php
                                         $path = !empty($user->foto) ? Storage::url('uploads/karyawan/img/' . $user->foto) : '';
-                                        $defaultAvatar = $user->jenkel === 'L' ? 'avatar.jpg' : 'avatarwanita.jpg';
+                                        $defaultAvatar = $user->jenkel === 'P' ? 'avatar.jpg' : 'avatarwanita.jpg';
                                     @endphp
                                     <img class="profile-image" 
                                          src="{{ !empty($path) ? url($path) : asset('assets/img/' . $defaultAvatar) }}"

@@ -23,8 +23,8 @@ use Illuminate\Support\Facades\DB;
 // ROUTE TAMU/PENGGUNA TANPA LOGIN
 Route::middleware(['guest:karyawan'])->group(function () {
     Route::get('/', function () {
-        $datapria = DB::table('karyawan')->where('jenkel', 'pria')->count();
-        $datawanita = DB::table('karyawan')->where('jenkel', 'wanita')->count();
+        $datapria = DB::table('karyawan')->where('jenkel', 'P')->count();
+        $datawanita = DB::table('karyawan')->where('jenkel', 'W')->count();
         $totalproses = DB::table('proses')->count();
         $totalprogress = DB::table('progress')->count();
 

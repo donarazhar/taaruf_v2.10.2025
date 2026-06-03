@@ -97,8 +97,8 @@ class DashboardController extends Controller
         // Mendapatkan data profile berdasarkan email
         $dataprofile = DB::table('karyawan')->where('email', $email)->first();
         
-        // Membaca jenis kelamin dari data profile (L/P), lalu cari lawan jenis
-        $oppositeGender = $dataprofile->jenkel == 'L' ? 'P' : 'L';
+        // Membaca jenis kelamin dari data profile (P/W), lalu cari lawan jenis
+        $oppositeGender = $dataprofile->jenkel == 'P' ? 'W' : 'P';
         
         // Setup query utama
         $query = DB::table('karyawan')
