@@ -1075,12 +1075,10 @@
             <div class="footer-main">
                 <div class="footer-simple-flex">
                     <div class="footer-simple-left">
-                        <div class="footer-contact-inline">
-                            <strong>Kontak:</strong> <br>
-                            <i class="fas fa-map-marker-alt" style="margin-left: 0;"></i> Komplek Masjid Agung Al Azhar Jl. Sisingamangaraja, Kebayoran Baru, Jakarta Selatan 12110 <br>
-                            <i class="fas fa-envelope"></i> info@al-azhar.or.id
-                            <br>
-                            <strong>Jam Operasional:</strong> Senin - Jumat: 08:00 - 16:00 | Sabtu - Ahad: Libur
+                        <div class="footer-contact-inline" style="font-size: 1rem;">
+                            <strong>Copyright © 2024</strong><br>
+                            Direktorat Dakwah Sosial YPI Al Azhar<br>
+                            <small style="opacity: 0.8;">Created by DAL Army</small>
                         </div>
                     </div>
 
@@ -1109,9 +1107,7 @@
         </div>
     </footer>
     <div style="height: 4px; width: 100%; background: linear-gradient(90deg, var(--primary-color) 0%, #10b981 33%, #f59e0b 66%, #ef4444 100%);"></div>
-    <div class="footer-white-bar">
-        Copyright &copy;{{ date('Y') }} | Direktorat Dakwah Sosial YPI Al Azhar by <a href="https://www.instagram.com/donsiyos/" target="_blank" rel="noopener" style="color: inherit; text-decoration: none; font-weight: 600;">DAL Army</a>
-    </div>
+
 </div>
 @endsection
 
