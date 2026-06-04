@@ -228,6 +228,28 @@
             transform: translateY(-1px);
         }
 
+        .btn-delete {
+            padding: 8px 16px;
+            background: #ffe4e6;
+            color: #e11d48;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-delete:hover {
+            background: #e11d48;
+            color: var(--white);
+            transform: translateY(-1px);
+        }
+
         /* ===== RESPONSIVE ===== */
         @media (max-width: 768px) {
             .page-title {
@@ -469,9 +491,14 @@
                                         <strong>{{ $data['data'][0]['nama_profile'] }}</strong>
                                     </td>
                                     <td>
-                                        <a href="{{ route('historychat', ['id' => $data['id_progress']]) }}" class="btn-view">
-                                            <i class="fas fa-eye"></i> Lihat
-                                        </a>
+                                        <div style="display: flex; gap: 8px;">
+                                            <a href="{{ route('historychat', ['id' => $data['id_progress']]) }}" class="btn-view">
+                                                <i class="fas fa-eye"></i> Lihat
+                                            </a>
+                                            <a href="{{ route('deletehistorychat', ['id' => $data['id_progress']]) }}" class="btn-delete" onclick="return confirm('Apakah Anda yakin ingin menghapus history chat ini?')">
+                                                <i class="fas fa-trash"></i> Hapus
+                                            </a>
+                                        </div>
                                     </td>
                                 </tr>
                             @endforeach

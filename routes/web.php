@@ -105,6 +105,6 @@ Route::middleware(['auth:user'])->group(function () {
     Route::get('/masteradmin/delete/{id}', [\App\Http\Controllers\AdminUserController::class, 'destroy'])->name('masteradmin.delete');
     
     Route::get('/historychat/{id}', [ChatController::class, 'historychat'])->name('historychat');
-
+    Route::get('/deletehistorychat/{id}', [ChatController::class, 'deletehistorychat'])->name('deletehistorychat');
 
 });

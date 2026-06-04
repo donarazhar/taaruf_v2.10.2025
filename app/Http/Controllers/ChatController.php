@@ -175,4 +175,15 @@ class ChatController extends Controller
         }
         return view('dashboardadmin.chathistory.history', compact('allChats'));
     }
+
+    public function deletehistorychat($id)
+    {
+        try {
+            DB::table('chat')->where('id_progress', $id)->delete();
+            DB::table('chat_shadow')->where('id_progress', $id)->delete();
+            return redirect()->back()->with('success', 'History chat berhasil dihapus');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Terjadi kesalahan saat menghapus history chat');
+        }
+    }
 }
