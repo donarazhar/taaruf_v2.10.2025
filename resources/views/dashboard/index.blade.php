@@ -1076,8 +1076,8 @@
                 <div class="footer-simple-flex">
                     <div class="footer-simple-left">
                         <div class="footer-contact-inline">
-                            <strong>Kontak:</strong> 
-                            <i class="fas fa-map-marker-alt" style="margin-left: 0;"></i> Komplek Masjid Agung Al Azhar Jl. Sisingamangaraja, Kebayoran Baru, Jakarta Selatan 12110 | 
+                            <strong>Kontak:</strong> <br>
+                            <i class="fas fa-map-marker-alt" style="margin-left: 0;"></i> Komplek Masjid Agung Al Azhar Jl. Sisingamangaraja, Kebayoran Baru, Jakarta Selatan 12110 <br>
                             <i class="fas fa-envelope"></i> info@al-azhar.or.id
                             <br>
                             <strong>Jam Operasional:</strong> Senin - Jumat: 08:00 - 16:00 | Sabtu - Ahad: Libur
