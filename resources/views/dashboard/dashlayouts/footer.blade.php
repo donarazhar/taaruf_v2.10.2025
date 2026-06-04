@@ -88,12 +88,12 @@
     .footer-nav li.center-item a .center-btn-inner {
         width: 54px;
         height: 54px;
-        background: var(--white);
+        background: var(--primary-color);
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
-        color: var(--primary-color);
+        color: var(--white);
         box-shadow: 0 4px 10px rgba(0, 83, 197, 0.4);
         transition: transform 0.2s ease;
     }
@@ -101,7 +101,7 @@
     .footer-nav li.center-item a .center-btn-inner svg {
         width: 24px;
         height: 24px;
-        color: var(--primary-color);
+        color: var(--white);
     }
 
     .footer-nav li.center-item a:active .center-btn-inner {
