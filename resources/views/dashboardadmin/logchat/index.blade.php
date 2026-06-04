@@ -2,7 +2,7 @@
 @section('content')
     <style>
         /* ===== MODERN LOG CHAT PAGE STYLES ===== */
-        :root {
+        .content-area {
             --primary: #0053C5;
             --black: #000000;
             --gray-900: #1A1A1A;
