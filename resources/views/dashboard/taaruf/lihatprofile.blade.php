@@ -556,7 +556,7 @@
                                         $path = !empty($karyawan->foto)
                                             ? Storage::url('uploads/karyawan/img/' . $karyawan->foto)
                                             : '';
-                                        $defaultAvatar = $karyawan->jenkel === 'pria' ? 'avatar.jpg' : 'avatarwanita.jpg';
+                                        'no-photo.jpg';
                                     @endphp
                                     <img src="{{ !empty($path) ? url($path) : asset('assets/img/' . $defaultAvatar) }}"
                                          alt="{{ $karyawan->nama }}">

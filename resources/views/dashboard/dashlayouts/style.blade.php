@@ -9,7 +9,7 @@
                 @php
                     $user = Auth::guard('karyawan')->user();
                     $path = !empty($user->foto) ? Storage::url('uploads/karyawan/img/' . $user->foto) : '';
-                    $defaultAvatar = $user->jenkel === 'pria' ? 'avatar.jpg' : 'avatarwanita.jpg';
+                    'no-photo.jpg';
                 @endphp
                 <a href="/dashboard">
                     <img src="{{ !empty($path) ? url($path) : asset('assets/img/' . $defaultAvatar) }}"

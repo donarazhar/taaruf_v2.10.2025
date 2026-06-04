@@ -485,9 +485,7 @@
                     $pathAuth = isset($dataAuth) && !empty($dataAuth->foto) 
                         ? Storage::url('uploads/karyawan/img/' . $dataAuth->foto) 
                         : '';
-                    $defaultAvatarAuth = isset($dataAuth) && $dataAuth->jenkel === 'pria' 
-                        ? 'avatar.jpg' 
-                        : 'avatarwanita.jpg';
+                    'no-photo.jpg';
 
                     // Data berdasarkan email_profile (Pasangan)
                     $dataProfile = DB::table('karyawan')
@@ -500,9 +498,7 @@
                     $pathProfile = isset($dataProfile) && !empty($dataProfile->foto) 
                         ? Storage::url('uploads/karyawan/img/' . $dataProfile->foto) 
                         : '';
-                    $defaultAvatarProfile = isset($dataProfile) && $dataProfile->jenkel === 'pria' 
-                        ? 'avatar.jpg' 
-                        : 'avatarwanita.jpg';
+                    'no-photo.jpg';
 
                     // Status dari likedislike
                     $likedislikeStatus = $likedislike

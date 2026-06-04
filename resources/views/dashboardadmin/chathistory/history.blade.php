@@ -609,7 +609,7 @@
                             @php
                                 $pathchat = !empty($d->foto_sender) 
                                     ? Storage::url('uploads/karyawan/img/' . $d->foto_sender)
-                                    : asset('assets/img/avatar.jpg');
+                                    : asset('assets/img/no-photo.jpg');
                             @endphp
                             <img class="user-avatar" src="{{ url($pathchat) }}" alt="{{ $d->nama_sender }}"
                                  title="{{ $d->nama_sender }}">
