@@ -90,6 +90,7 @@ Route::middleware(['auth:user'])->group(function () {
     Route::get('/dashboardadmin', [DashboardAdminController::class, 'index'])->name('dashboardadmin');
     Route::get('/daftartanya', [DashboardAdminController::class, 'daftartanya'])->name('daftartanya');
     Route::get('/prosestaaruf', [DashboardAdminController::class, 'prosestaaruf'])->name('prosestaaruf');
+    Route::get('/deleteprogress/{id}/{source}', [DashboardAdminController::class, 'deleteprogress'])->name('deleteprogress');
     Route::get('/prosescetak/{id}', [DashboardAdminController::class, 'prosescetak'])->name('prosescetak');
     Route::get('/proseslogoutadmin', [AuthController::class, 'proseslogoutadmin']);
     Route::get('/masterkaryawan', [MasterInputanController::class, 'masterkaryawan'])->name('masterkaryawan');

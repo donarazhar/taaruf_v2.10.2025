@@ -131,7 +131,8 @@ class DashboardAdminController extends Controller
                 'authKaryawan.foto as foto_auth',
                 'profileKaryawan.foto as foto_profile',
                 'authLike.status as authStatus',
-                'profileLike.status as profileStatus'
+                'profileLike.status as profileStatus',
+                DB::raw("'progress' as source_table")
             )
             ->orderBy('progress.progress_tgl', 'desc')
             ->get(); // Temporarily get all for merging
@@ -156,7 +157,8 @@ class DashboardAdminController extends Controller
                 'authKaryawan.foto as foto_auth',
                 'profileKaryawan.foto as foto_profile',
                 DB::raw('CASE WHEN authLike.status IN (0, 1) THEN authLike.status ELSE null END AS authStatus'),
-                DB::raw('CASE WHEN profileLike.status IN (0, 1) THEN profileLike.status ELSE null END AS profileStatus')
+                DB::raw('CASE WHEN profileLike.status IN (0, 1) THEN profileLike.status ELSE null END AS profileStatus'),
+                DB::raw("'progress_shadow' as source_table")
             )
             ->orderBy('progress_shadow.progress_tgl', 'desc')
             ->get();
@@ -216,7 +218,8 @@ class DashboardAdminController extends Controller
                 'authKaryawan.foto as foto_auth',
                 'profileKaryawan.foto as foto_profile',
                 'authLike.status as authStatus',
-                'profileLike.status as profileStatus'
+                'profileLike.status as profileStatus',
+                DB::raw("'progress' as source_table")
             )
             ->orderBy('progress.progress_tgl', 'desc')
             ->get();
@@ -240,7 +243,8 @@ class DashboardAdminController extends Controller
                 'authKaryawan.foto as foto_auth',
                 'profileKaryawan.foto as foto_profile',
                 DB::raw('CASE WHEN authLike.status IN (0, 1) THEN authLike.status ELSE null END AS authStatus'),
-                DB::raw('CASE WHEN profileLike.status IN (0, 1) THEN profileLike.status ELSE null END AS profileStatus')
+                DB::raw('CASE WHEN profileLike.status IN (0, 1) THEN profileLike.status ELSE null END AS profileStatus'),
+                DB::raw("'progress_shadow' as source_table")
             )
             ->orderBy('progress_shadow.progress_tgl', 'desc')
             ->get();
@@ -431,5 +435,23 @@ class DashboardAdminController extends Controller
             return redirect()->back()->with(['error' => 'Data tidak ditemukan.']);
         }
         return view('dashboardadmin.proses.cetak', compact('allDataProgress', 'datauser'));
+    }
+
+    public function deleteprogress($id, $source)
+    {
+        try {
+            if ($source == 'progress') {
+                DB::table('progress')->where('id', $id)->delete();
+                DB::table('likedislike')->where('id_progress', $id)->delete();
+                DB::table('chat')->where('id_progress', $id)->delete();
+            } else {
+                DB::table('progress_shadow')->where('id', $id)->delete();
+                DB::table('likedislike_shadow')->where('id_progress', $id)->delete();
+                DB::table('chat_shadow')->where('id_progress', $id)->delete();
+            }
+            return redirect()->back()->with('success', 'Progress Ta\'aruf berhasil dihapus');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Terjadi kesalahan saat menghapus progress');
+        }
     }
 }

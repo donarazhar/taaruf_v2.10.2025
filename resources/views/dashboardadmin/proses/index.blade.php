@@ -767,20 +767,25 @@
                                                 </span>
                                             @endif
                                         </td>
-                                        <td>
+                                        <td style="display: flex; gap: 8px; justify-content: center;">
                                             @if($data->profileStatus == 1 && $data->authStatus == 1)
                                                 <a href="{{ route('prosescetak', ['id' => $data->id]) }}" 
                                                    target="_blank" 
-                                                   class="btn-action-modern">
+                                                   class="btn-action-modern"
+                                                   style="padding: 8px 12px;">
                                                     <i class="fas fa-print"></i>
-                                                    Cetak
                                                 </a>
                                             @else
-                                                <button class="btn-action-modern disabled" disabled>
+                                                <button class="btn-action-modern disabled" disabled style="padding: 8px 12px;">
                                                     <i class="fas fa-lock"></i>
-                                                    Proses
                                                 </button>
                                             @endif
+                                            <a href="{{ route('deleteprogress', ['id' => $data->id, 'source' => $data->source_table]) }}" 
+                                               class="btn-action-modern" 
+                                               style="background: #ef4444; padding: 8px 12px;"
+                                               onclick="return confirm('Apakah Anda yakin ingin menghapus progress ini?')">
+                                                <i class="fas fa-trash"></i>
+                                            </a>
                                         </td>
                                     </tr>
                                 @endforeach
