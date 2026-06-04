@@ -252,16 +252,11 @@
         }
 
         .modern-table tbody tr {
-            border-bottom: 1px solid var(--gray-200);
             transition: all 0.3s ease;
         }
 
-        .modern-table tbody tr:hover {
+        .modern-table tbody tr:hover td {
             background: var(--gray-50);
-        }
-
-        .modern-table tbody tr:last-child {
-            border-bottom: none;
         }
 
         .modern-table tbody td {
@@ -269,6 +264,11 @@
             text-align: center;
             color: var(--gray-700);
             vertical-align: middle;
+            border-bottom: 1px solid var(--gray-300);
+        }
+
+        .modern-table tbody tr:last-child td {
+            border-bottom: none;
         }
 
         .modern-table tbody td:first-child {
@@ -739,9 +739,9 @@
                                                 $pasangan = [$laki, $perempuan];
                                             @endphp
 
-                                            <div style="display: flex; flex-direction: column; gap: 12px; align-items: flex-start; text-align: left;">
-                                                @foreach($pasangan as $p)
-                                                    <div style="display: flex; align-items: center; gap: 12px;">
+                                            <div style="display: flex; flex-direction: column; text-align: left;">
+                                                @foreach($pasangan as $index => $p)
+                                                    <div style="display: flex; align-items: center; gap: 12px; {{ $index === 0 ? 'padding-bottom: 12px; border-bottom: 1px dashed var(--gray-300);' : 'padding-top: 12px;' }}">
                                                         <img src="{{ $p['foto'] }}" alt="{{ $p['nama'] }}" style="width: 45px; height: 45px; border-radius: 50%; object-fit: cover; border: 2px solid var(--gray-200); box-shadow: var(--shadow-sm);">
                                                         <div style="display: flex; align-items: center; gap: 8px;">
                                                             <div style="font-weight: 700; color: var(--gray-900); font-size: 0.95rem;">{{ $p['nama'] }}</div>
