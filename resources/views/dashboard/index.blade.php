@@ -120,7 +120,7 @@
 
     .feature-grid {
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(6, 1fr);
         gap: 20px;
     }
 
@@ -501,17 +501,21 @@
         }
 
         .feature-grid {
-            grid-template-columns: repeat(2, 1fr);
             gap: 12px;
         }
 
+        .feature-card-modern {
+            padding: 12px 8px;
+            gap: 8px;
+        }
+
         .feature-icon {
-            width: 60px;
-            height: 60px;
+            width: 45px;
+            height: 45px;
         }
 
         .feature-name {
-            font-size: 0.75rem;
+            font-size: 0.7rem;
         }
 
         .news-grid {
@@ -564,6 +568,7 @@
         .desc-mobile { display: block !important; }
 
         .feature-grid {
+            grid-template-columns: repeat(3, 1fr);
             gap: 10px;
         }
 
