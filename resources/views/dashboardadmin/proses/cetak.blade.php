@@ -147,11 +147,11 @@
     <div class="pasangan">
       @foreach ($allDataProgress as $data)
       <div>
-        @php $path = Storage::url('uploads/karyawan/img/' . $data->foto_auth); @endphp
+        @php $path = !empty($data->foto_auth) ? Storage::url('uploads/karyawan/img/' . $data->foto_auth) : 'https://ui-avatars.com/api/?name=' . urlencode($data->nama_auth) . '&background=random&color=fff&size=200'; @endphp
         <img src="{{ $path }}" alt="{{ $data->nama_auth }}">
       </div>
       <div>
-        @php $path = Storage::url('uploads/karyawan/img/' . $data->foto_profile); @endphp
+        @php $path = !empty($data->foto_profile) ? Storage::url('uploads/karyawan/img/' . $data->foto_profile) : 'https://ui-avatars.com/api/?name=' . urlencode($data->nama_profile) . '&background=random&color=fff&size=200'; @endphp
         <img src="{{ $path }}" alt="{{ $data->nama_profile }}">
       </div>
       @endforeach

@@ -321,7 +321,7 @@
                 <div class="avatar-card">
                     <div class="avatar-wrapper">
                         @if ($karyawan->foto == null)
-                            <img src="{{ asset('assets/img/nophoto.png') }}" alt="avatar" class="avatar-image">
+                            <img src="{{ 'https://ui-avatars.com/api/?name=' . urlencode($karyawan->nama) . '&background=random&color=fff&size=200' }}" alt="{{ $karyawan->nama }}" class="avatar-image">
                         @else
                             @php
                                 $path = Storage::url('uploads/karyawan/img/' . $karyawan->foto);

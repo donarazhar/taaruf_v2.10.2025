@@ -653,7 +653,7 @@
                                         <td><strong>{{ $karyawan->firstItem() + $loop->index }}</strong></td>
                                         <td>
                                             @if ($d->foto == null)
-                                                <img src="{{ asset('assets/img/nophoto.png') }}" alt="avatar" class="table-avatar">
+                                                <img src="{{ 'https://ui-avatars.com/api/?name=' . urlencode($d->nama) . '&background=random&color=fff&size=200' }}" alt="{{ $d->nama }}" class="table-avatar">
                                             @else
                                                 @php
                                                     $path = Storage::url('uploads/karyawan/img/' . $d->foto);

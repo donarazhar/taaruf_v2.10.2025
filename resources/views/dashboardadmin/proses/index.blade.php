@@ -707,7 +707,7 @@
                                                 // Auth
                                                 $authData = [
                                                     'nama' => $data->nama_auth,
-                                                    'foto' => $data->foto_auth ? Storage::url('uploads/karyawan/img/' . $data->foto_auth) : asset('assets/img/nophoto.png'),
+                                                    'foto' => $data->foto_auth ? Storage::url('uploads/karyawan/img/' . $data->foto_auth) : 'https://ui-avatars.com/api/?name=' . urlencode($data->nama_auth) . '&background=random&color=fff&size=200',
                                                     'status' => $data->authStatus,
                                                     'jenkel' => strtolower($data->jenkel_auth ?? '')
                                                 ];
@@ -721,7 +721,7 @@
                                                 // Profile
                                                 $profileData = [
                                                     'nama' => $data->nama_profile,
-                                                    'foto' => $data->foto_profile ? Storage::url('uploads/karyawan/img/' . $data->foto_profile) : asset('assets/img/nophoto.png'),
+                                                    'foto' => $data->foto_profile ? Storage::url('uploads/karyawan/img/' . $data->foto_profile) : 'https://ui-avatars.com/api/?name=' . urlencode($data->nama_profile) . '&background=random&color=fff&size=200',
                                                     'status' => $data->profileStatus,
                                                     'jenkel' => strtolower($data->jenkel_profile ?? '')
                                                 ];
