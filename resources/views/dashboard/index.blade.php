@@ -107,7 +107,7 @@
 
     /* ===== FEATURE CARDS ===== */
     .feature-section {
-        margin-bottom: 40px;
+        margin-bottom: 70px;
     }
 
     .feature-section-title {
@@ -125,10 +125,9 @@
     }
 
     .feature-card-modern {
-        background: var(--white);
-        border: 2px solid var(--gray-200);
-        border-radius: var(--radius-lg);
-        padding: 20px;
+        background: transparent;
+        border: none;
+        padding: 10px;
         text-align: center;
         transition: all 0.3s ease;
         text-decoration: none;
@@ -140,28 +139,25 @@
 
     .feature-card-modern:hover {
         transform: translateY(-4px);
-        box-shadow: var(--shadow-lg);
-        border-color: var(--primary-color);
     }
 
     .feature-icon {
         width: 70px;
         height: 70px;
-        border-radius: 50%;
-        overflow: hidden;
-        border: 3px solid var(--gray-200);
         transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     .feature-card-modern:hover .feature-icon {
-        border-color: var(--primary-color);
-        transform: scale(1.05);
+        transform: scale(1.1);
     }
 
     .feature-icon img {
         width: 100%;
         height: 100%;
-        object-fit: cover;
+        object-fit: contain;
     }
 
     .feature-name {
