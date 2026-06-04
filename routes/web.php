@@ -82,11 +82,7 @@ Route::middleware(['auth:karyawan'])->group(function () {
 Route::get('/chat/{id}/fetch', [ChatController::class, 'fetch'])->name('chat.fetch');
 
 
-    // berita
-    Route::get('/masterberita/berita/1', [MasterInputanController::class, 'berita1'])->name('berita1');
-    Route::get('/masterberita/berita/2', [MasterInputanController::class, 'berita2'])->name('berita2');
-    Route::get('/masterberita/berita/3', [MasterInputanController::class, 'berita3'])->name('berita3');
-    Route::get('/masterberita/berita/4', [MasterInputanController::class, 'berita4'])->name('berita4');
+
 });
 
 
@@ -107,14 +103,8 @@ Route::middleware(['auth:user'])->group(function () {
     Route::post('/masteradmin/store', [\App\Http\Controllers\AdminUserController::class, 'store'])->name('masteradmin.store');
     Route::post('/masteradmin/update', [\App\Http\Controllers\AdminUserController::class, 'update'])->name('masteradmin.update');
     Route::get('/masteradmin/delete/{id}', [\App\Http\Controllers\AdminUserController::class, 'destroy'])->name('masteradmin.delete');
-
-    Route::get('/masterberita', [MasterInputanController::class, 'masterberita'])->name('masterberita');
-    Route::post('/masterberita/editberita', [MasterInputanController::class, 'editberita'])->name('editberita');
-    Route::post('/masterberita/{id}/updateberita', [MasterInputanController::class, 'updateberita'])->name('updateberita');
-
+    
     Route::get('/historychat/{id}', [ChatController::class, 'historychat'])->name('historychat');
 
-    Route::get('/masteryoutube', [MasterInputanController::class, 'masteryoutube'])->name('masteryoutube');
-    Route::post('/masteryoutube/edityoutube', [MasterInputanController::class, 'edityoutube'])->name('edityoutube');
-    Route::post('/masteryoutube/{id}/updateyoutube', [MasterInputanController::class, 'updateyoutube'])->name('updateyoutube');
+
 });
