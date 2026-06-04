@@ -554,6 +554,9 @@
             line-height: 1.4;
         }
 
+        .desc-desktop { display: none !important; }
+        .desc-mobile { display: block !important; }
+
         .feature-grid {
             gap: 10px;
         }
@@ -601,6 +604,8 @@
             transform: translateY(0);
         }
     }
+    
+    .desc-mobile { display: none; }
 </style>
 
 <div class="section">
@@ -616,7 +621,8 @@
                         <div class="slide-content h-100 d-flex align-items-center text-center">
                             <div class="container">
                                 <h4>{{ $layanan['name'] ?? 'Layanan Masjid' }}</h4>
-                                <p>{{ Str::words(strip_tags($layanan['description'] ?? ''), 8, '...') }}</p>
+                                <p class="desc-desktop">{{ Str::limit(strip_tags($layanan['description'] ?? ''), 150) }}</p>
+                                <p class="desc-mobile">{{ Str::words(strip_tags($layanan['description'] ?? ''), 8, '...') }}</p>
                                 <a class="btn-hero" href="/dashboard/layanan/{{ $layanan['slug'] ?? '#' }}">
                                     <i class="fa fa-arrow-right"></i>
                                     Selengkapnya
@@ -630,7 +636,8 @@
                         <div class="slide-content h-100 d-flex align-items-center text-center">
                             <div class="container">
                                 <h4>Ta'aruf Jodohku v.2.0</h4>
-                                <p>Temukan pasangan sempurna anda diantara karyawan YPI Al Azhar melalui aplikasi ini.</p>
+                                <p class="desc-desktop">Temukan pasangan sempurna anda diantara karyawan YPI Al Azhar melalui aplikasi ini.</p>
+                                <p class="desc-mobile">Temukan pasangan sempurna anda diantara...</p>
                                 <a class="btn-hero" href="/taaruf">
                                     <i class="fa fa-heart"></i>
                                     Lanjutkan
