@@ -378,10 +378,47 @@
     .top-info-card.featured .top-info-card-title {
         font-size: 1.15rem;
     }
-    @media (min-width: 769px) {
-        .top-info-card:nth-child(n+4) {
-            display: none !important;
-        }
+    .top-info-card:nth-child(n+4) {
+        display: none !important;
+    }
+    .top-info-slider-wrapper {
+        position: relative;
+    }
+    .top-info-btn {
+        background: var(--white);
+        border: 1px solid #e5e7eb;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s;
+        color: #1f2937;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 10;
+    }
+    .top-info-btn.prev-btn {
+        left: -20px;
+    }
+    .top-info-btn.next-btn {
+        right: -20px;
+    }
+    .top-info-btn:hover {
+        background: var(--primary-color);
+        color: var(--white);
+        border-color: var(--primary-color);
+        transform: translateY(-50%) scale(1.1);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+    @media (max-width: 768px) {
+        .top-info-btn.prev-btn { left: -10px; }
+        .top-info-btn.next-btn { right: -10px; }
+        .top-info-btn { width: 30px; height: 30px; font-size: 12px; }
     }
     @media (max-width: 900px) {
         .top-info-card-img {
@@ -872,8 +909,13 @@
     @if(isset($dataslider) && $dataslider->count() > 0)
     <div class="container">
         <div class="top-info-section">
-            <div class="top-info-grid">
-                @foreach ($dataslider as $index => $slider)
+            <div class="top-info-slider-wrapper" style="position: relative;">
+                <div class="top-info-nav">
+                    <button class="top-info-btn prev-btn"><i class="fa fa-chevron-left"></i></button>
+                    <button class="top-info-btn next-btn"><i class="fa fa-chevron-right"></i></button>
+                </div>
+                <div class="top-info-grid" id="topInfoGrid">
+                    @foreach ($dataslider as $index => $slider)
                     @php
                         $bannerImage = $slider->image ? env('MAA_WEB_URL', 'http://localhost:8001') . '/storage/' . $slider->image : asset('apk/assets/img/bg-img/maa.jpg');
                     @endphp
@@ -889,6 +931,7 @@
                         </div>
                     </a>
                 @endforeach
+                </div>
             </div>
         </div>
     </div>
@@ -986,3 +1029,70 @@
     </div>
 </div>
 @endsection
+
+@push('myscript')
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const topInfoGrid = document.getElementById('topInfoGrid');
+        const desktopPrevBtn = document.querySelector('.top-info-nav .prev-btn');
+        const desktopNextBtn = document.querySelector('.top-info-nav .next-btn');
+
+        if (topInfoGrid && desktopPrevBtn && desktopNextBtn) {
+            let isAnimating = false;
+
+            function rotateTopInfo(direction) {
+                if (isAnimating) return;
+                isAnimating = true;
+
+                const cards = Array.from(topInfoGrid.querySelectorAll('.top-info-card'));
+                if (cards.length < 4) {
+                    isAnimating = false;
+                    return;
+                }
+
+                // Fade out
+                cards.forEach(card => {
+                    card.style.transition = 'opacity 0.4s ease';
+                    card.style.opacity = '0';
+                });
+                
+                setTimeout(() => {
+                    // Reorder DOM
+                    if (direction === 'next') {
+                        topInfoGrid.appendChild(cards[0]);
+                    } else {
+                        topInfoGrid.prepend(cards[cards.length - 1]);
+                    }
+
+                    // Update featured class
+                    const newCards = Array.from(topInfoGrid.querySelectorAll('.top-info-card'));
+                    newCards.forEach(card => card.classList.remove('featured'));
+                    newCards[1].classList.add('featured');
+
+                    // Small delay to allow DOM to recalculate before fading in
+                    setTimeout(() => {
+                        newCards.forEach(card => card.style.opacity = '1');
+                        isAnimating = false;
+                    }, 50);
+                }, 400); // Wait for fade out
+            }
+
+            desktopNextBtn.addEventListener('click', () => rotateTopInfo('next'));
+            desktopPrevBtn.addEventListener('click', () => rotateTopInfo('prev'));
+            
+            // Auto-play
+            let topInfoInterval = setInterval(() => {
+                rotateTopInfo('next');
+            }, 6000);
+
+            // Pause on hover
+            topInfoGrid.addEventListener('mouseenter', () => clearInterval(topInfoInterval));
+            topInfoGrid.addEventListener('mouseleave', () => {
+                topInfoInterval = setInterval(() => {
+                    rotateTopInfo('next');
+                }, 6000);
+            });
+        }
+    });
+</script>
+@endpush
