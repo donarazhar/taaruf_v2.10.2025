@@ -300,28 +300,35 @@
         text-decoration: none;
     }
 
-    /* ===== HADITS CARD ===== */
-    .hadits-card {
-        background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+    /* ===== BANNER CAROUSEL ===== */
+    .banner-carousel-wrapper {
         border-radius: var(--radius-lg);
-        padding: 32px;
-        margin-bottom: 32px;
+        overflow: hidden;
         box-shadow: var(--shadow-lg);
+        margin-bottom: 32px;
     }
-
-    .hadits-title {
-        font-size: 1.5rem;
-        font-weight: 800;
-        color: var(--white);
-        margin-bottom: 16px;
+    .banner-slide {
+        position: relative;
+        height: 300px;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
     }
-
-    .hadits-content {
-        font-size: 1rem;
-        color: var(--white);
-        line-height: 1.8;
-        text-align: justify;
-        font-style: italic;
+    .banner-slide::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: linear-gradient(135deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.2) 100%);
+    }
+    .banner-slide-content {
+        position: relative;
+        z-index: 2;
+        padding: 40px 20px;
+    }
+    @media (max-width: 480px) {
+        .banner-slide {
+            height: 200px;
+        }
     }
 
     /* ===== YOUTUBE SECTION ===== */
@@ -530,9 +537,7 @@
             font-size: 1.25rem;
         }
 
-        .hadits-card {
-            padding: 24px;
-        }
+
 
         .contact-section {
             padding: 32px 0;
@@ -753,17 +758,37 @@
         @endif
     </div>
 
-    <!-- Hadits Section -->
+    <!-- Banner Section -->
+    @if(isset($dataslider) && $dataslider->count() > 0)
     <div class="container">
-        <div class="hadits-card">
-            <h2 class="hadits-title">Hadits Harian</h2>
-            <p class="hadits-content">
-                "Rasulullah Shallallahu 'alaihi Wasallam bersabda: Semoga Allah merahmati seorang laki-laki yang bangun di malam hari lalu dia melaksanakan shalat (malam), kemudian dia membangunkan istrinya, kalau istrinya enggan maka dia akan memercikkan air pada wajahnya."
-                <br><br>
-                <small>(HR Abu Dawud (no. 1308) dan Ibnu Majah (no. 1336), dinyatakan shahih oleh Syaikh al-Albani)</small>
-            </p>
+        <div class="banner-carousel-wrapper">
+            <div class="owl-carousel owl-carousel-one">
+                @foreach ($dataslider as $slider)
+                    @php
+                        $bannerImage = $slider->image ? env('MAA_WEB_URL', 'http://localhost:8001') . '/storage/' . $slider->image : asset('apk/assets/img/bg-img/maa.jpg');
+                    @endphp
+                    <div class="banner-slide" style="background-image: url('{{ $bannerImage }}');">
+                        <div class="banner-slide-content h-100 d-flex align-items-center text-center">
+                            <div class="container">
+                                @if(isset($slider->title) && $slider->title)
+                                    <h4 style="color: white; font-weight: 800; margin-bottom: 8px;">{{ $slider->title }}</h4>
+                                @endif
+                                @if(isset($slider->description) && $slider->description)
+                                    <p style="color: white; font-size: 0.95rem; margin-bottom: 16px;">{{ Str::words(strip_tags($slider->description), 15, '...') }}</p>
+                                @endif
+                                @if(isset($slider->button_link) && $slider->button_text)
+                                    <a class="btn-hero" href="{{ $slider->button_link }}" target="_blank">
+                                        {{ $slider->button_text }}
+                                    </a>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
         </div>
     </div>
+    @endif
 
     <!-- YouTube Section -->
     @if($datayoutube->count() > 0)

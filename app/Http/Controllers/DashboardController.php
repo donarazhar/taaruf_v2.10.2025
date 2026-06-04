@@ -56,6 +56,17 @@ class DashboardController extends Controller
             // Ignore error
         }
 
+        // Get Data Slider
+        $dataslider = collect();
+        try {
+            $responseSlider = \Illuminate\Support\Facades\Http::timeout(5)->get(env('MAA_WEB_URL', 'http://localhost:8001') . '/api/sliders');
+            if ($responseSlider->successful() && isset($responseSlider->json()['data'])) {
+                $dataslider = collect(json_decode(json_encode($responseSlider->json()['data'])));
+            }
+        } catch (\Exception $e) {
+            // Ignore error
+        }
+
         $cekemail = DB::table('karyawan')
             ->leftJoin('biodata', 'karyawan.email', '=', 'biodata.email')
             ->leftJoin('kriteriapasangan', 'karyawan.email', '=', 'kriteriapasangan.email')
@@ -82,7 +93,7 @@ class DashboardController extends Controller
             $menuAktif = false;
         }
 
-        return view('dashboard.index', compact('dataprofile', 'databerita', 'datayoutube', 'menuAktif', 'datalayanan'));
+        return view('dashboard.index', compact('dataprofile', 'databerita', 'datayoutube', 'menuAktif', 'datalayanan', 'dataslider'));
     }
 
     public function showBerita($slug)
