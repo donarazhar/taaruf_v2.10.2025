@@ -225,7 +225,7 @@
         }
 
         .modern-table thead {
-            background: var(--black);
+            background: var(--primary);
             color: var(--white);
             position: sticky;
             top: 0;
@@ -379,7 +379,7 @@
             justify-content: center;
             gap: 8px;
             padding: 10px 20px;
-            background: var(--success);
+            background: var(--primary);
             color: var(--white);
             border: none;
             border-radius: var(--radius-md);
@@ -391,7 +391,7 @@
         }
 
         .btn-action-modern:hover {
-            background: #16a34a;
+            background: var(--primary-dark);
             transform: translateY(-2px);
             box-shadow: var(--shadow-md);
             color: var(--white);
@@ -767,25 +767,29 @@
                                                 </span>
                                             @endif
                                         </td>
-                                        <td style="display: flex; gap: 8px; justify-content: center;">
-                                            @if($data->profileStatus == 1 && $data->authStatus == 1)
-                                                <a href="{{ route('prosescetak', ['id' => $data->id]) }}" 
-                                                   target="_blank" 
-                                                   class="btn-action-modern"
-                                                   style="padding: 8px 12px;">
-                                                    <i class="fas fa-print"></i>
+                                        <td>
+                                            <div style="display: flex; gap: 8px; justify-content: center;">
+                                                @if($data->profileStatus == 1 && $data->authStatus == 1)
+                                                    <a href="{{ route('prosescetak', ['id' => $data->id]) }}" 
+                                                       target="_blank" 
+                                                       class="btn-action-modern"
+                                                       style="padding: 8px 12px;"
+                                                       title="Cetak Progress">
+                                                        <i class="fas fa-print"></i>
+                                                    </a>
+                                                @else
+                                                    <button class="btn-action-modern disabled" disabled style="padding: 8px 12px;" title="Belum Cocok">
+                                                        <i class="fas fa-lock"></i>
+                                                    </button>
+                                                @endif
+                                                <a href="{{ route('deleteprogress', ['id' => $data->id, 'source' => $data->source_table]) }}" 
+                                                   class="btn-action-modern btn-delete" 
+                                                   style="background: #ef4444; padding: 8px 12px;"
+                                                   title="Hapus Progress"
+                                                   onclick="return confirm('Apakah Anda yakin ingin menghapus progress ini?')">
+                                                    <i class="fas fa-trash"></i>
                                                 </a>
-                                            @else
-                                                <button class="btn-action-modern disabled" disabled style="padding: 8px 12px;">
-                                                    <i class="fas fa-lock"></i>
-                                                </button>
-                                            @endif
-                                            <a href="{{ route('deleteprogress', ['id' => $data->id, 'source' => $data->source_table]) }}" 
-                                               class="btn-action-modern" 
-                                               style="background: #ef4444; padding: 8px 12px;"
-                                               onclick="return confirm('Apakah Anda yakin ingin menghapus progress ini?')">
-                                                <i class="fas fa-trash"></i>
-                                            </a>
+                                            </div>
                                         </td>
                                     </tr>
                                 @endforeach
