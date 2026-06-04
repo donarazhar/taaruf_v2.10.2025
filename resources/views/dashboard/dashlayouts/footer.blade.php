@@ -1,20 +1,21 @@
 <style>
-    /* ===== MODERN FOOTER NAVIGATION ===== */
+    /* ===== MODERN FOOTER NAVIGATION (MAA-WEB STYLE) ===== */
     .footer-nav-area {
         position: fixed;
         bottom: 0;
         left: 0;
         right: 0;
-        height: var(--footer-height);
-        background: var(--white);
-        border-top: 2px solid var(--gray-200);
+        height: 70px;
+        background: linear-gradient(90deg, var(--primary-color) 0%, var(--primary-dark) 100%);
         z-index: 999;
-        box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.08);
+        box-shadow: 0 -2px 10px rgba(0,0,0,0.15);
+        border-top-left-radius: 12px;
+        border-top-right-radius: 12px;
     }
 
     .footer-nav {
         height: 100%;
-        padding: 0;
+        padding: 0 10px;
     }
 
     .footer-nav ul {
@@ -40,85 +41,86 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        gap: 4px;
+        gap: 5px;
         text-decoration: none;
-        color: var(--gray-600);
-        transition: all 0.3s ease;
-        padding: 8px 12px;
-        border-radius: var(--radius-md);
+        color: rgba(255, 255, 255, 0.7);
+        transition: color 0.3s;
         width: 100%;
         height: 100%;
-        position: relative;
     }
 
     .footer-nav li a svg {
-        width: 24px;
-        height: 24px;
+        width: 20px;
+        height: 20px;
         transition: all 0.3s ease;
     }
 
     .footer-nav li a span {
         font-size: 0.75rem;
-        font-weight: 600;
         transition: all 0.3s ease;
     }
 
     /* Hover State */
     .footer-nav li a:hover {
-        color: var(--black);
-    }
-
-    .footer-nav li a:hover svg {
-        transform: translateY(-2px);
+        color: #ffffff;
     }
 
     /* Active State */
     .footer-nav li.active a {
-        color: var(--black);
+        color: #ffffff;
         font-weight: 700;
-    }
-
-    .footer-nav li.active a::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 40px;
-        height: 3px;
-        background: var(--black);
-        border-radius: 0 0 3px 3px;
     }
 
     .footer-nav li.active a svg {
         transform: scale(1.1);
     }
 
-    /* Ripple Effect */
-    .footer-nav li a::after {
-        content: '';
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        border-radius: var(--radius-md);
-        background: var(--black);
-        opacity: 0;
-        transition: opacity 0.3s ease;
+    /* Center Button Style */
+    .footer-nav li.center-item {
+        position: relative;
+        top: -10px;
     }
 
-    .footer-nav li a:active::after {
-        opacity: 0.1;
+    .footer-nav li.center-item a {
+        color: transparent !important;
+    }
+
+    .footer-nav li.center-item a .center-btn-inner {
+        width: 54px;
+        height: 54px;
+        background: var(--white);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--primary-color);
+        box-shadow: 0 4px 10px rgba(0, 83, 197, 0.4);
+        transition: transform 0.2s ease;
+    }
+
+    .footer-nav li.center-item a .center-btn-inner svg {
+        width: 24px;
+        height: 24px;
+        color: var(--primary-color);
+    }
+
+    .footer-nav li.center-item a:active .center-btn-inner {
+        transform: scale(0.95);
+    }
+
+    .footer-nav li.center-item a span {
+        display: none;
+    }
+
+    body {
+        padding-bottom: 70px;
     }
 
     /* Mobile Adjustments */
     @media (max-width: 768px) {
-        .footer-nav li a {
-            padding: 6px 8px;
-        }
-
         .footer-nav li a svg {
-            width: 22px;
-            height: 22px;
+            width: 20px;
+            height: 20px;
         }
 
         .footer-nav li a span {
@@ -132,8 +134,8 @@
         }
 
         .footer-nav li a svg {
-            width: 20px;
-            height: 20px;
+            width: 18px;
+            height: 18px;
         }
     }
 
@@ -141,6 +143,9 @@
     @media (min-width: 769px) {
         .footer-nav-area {
             display: none !important;
+        }
+        body {
+            padding-bottom: 0;
         }
     }
 </style>
