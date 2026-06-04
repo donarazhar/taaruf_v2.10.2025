@@ -89,6 +89,7 @@ Route::get('/chat/{id}/fetch', [ChatController::class, 'fetch'])->name('chat.fet
 Route::middleware(['auth:user'])->group(function () {
     Route::get('/dashboardadmin', [DashboardAdminController::class, 'index'])->name('dashboardadmin');
     Route::get('/daftartanya', [DashboardAdminController::class, 'daftartanya'])->name('daftartanya');
+    Route::get('/deletetanya/{id}', [DashboardAdminController::class, 'deletetanya'])->name('deletetanya');
     Route::get('/prosestaaruf', [DashboardAdminController::class, 'prosestaaruf'])->name('prosestaaruf');
     Route::get('/deleteprogress/{id}/{source}', [DashboardAdminController::class, 'deleteprogress'])->name('deleteprogress');
     Route::get('/prosescetak/{id}', [DashboardAdminController::class, 'prosescetak'])->name('prosescetak');

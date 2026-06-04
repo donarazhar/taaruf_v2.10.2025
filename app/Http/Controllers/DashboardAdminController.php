@@ -454,4 +454,14 @@ class DashboardAdminController extends Controller
             return redirect()->back()->with('error', 'Terjadi kesalahan saat menghapus progress');
         }
     }
+
+    public function deletetanya($id)
+    {
+        try {
+            DB::table('pertanyaan')->where('id', $id)->delete();
+            return redirect()->back()->with('success', 'Pertanyaan berhasil dihapus');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Terjadi kesalahan saat menghapus pertanyaan');
+        }
+    }
 }

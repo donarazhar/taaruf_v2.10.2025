@@ -746,6 +746,12 @@
                                                    title="Lihat Detail">
                                                     <i class="fas fa-eye"></i>
                                                 </a>
+                                                <a href="{{ route('deletetanya', ['id' => $d->id]) }}" 
+                                                   class="btn-action-modern btn-delete" 
+                                                   title="Hapus Pertanyaan"
+                                                   onclick="return confirm('Apakah Anda yakin ingin menghapus pertanyaan ini?')">
+                                                    <i class="fas fa-trash"></i>
+                                                </a>
                                             </div>
                                         </td>
                                     </tr>
