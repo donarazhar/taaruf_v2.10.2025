@@ -154,17 +154,6 @@
     <div class="container px-0">
         <div class="footer-nav position-relative">
             <ul class="h-100 d-flex align-items-center justify-content-between ps-0">
-                <!-- Home -->
-                <li class="{{ request()->is('dashboard') ? 'active' : '' }}">
-                    <a href="{{ route('dashboard') }}" title="Home">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
-                            <path
-                                d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5" />
-                        </svg>
-                        <span>Home</span>
-                    </a>
-                </li>
-
                 <!-- Profile -->
                 <li class="{{ request()->is('profile') ? 'active' : '' }}">
                     <a href="{{ route('profile') }}" title="Profile">
@@ -187,7 +176,19 @@
                             <span>Ta'aruf</span>
                         </a>
                     </li>
+                @endif
 
+                <!-- Home (Center Elevated) -->
+                <li class="center-item {{ request()->is('dashboard') ? 'active' : '' }}">
+                    <a href="{{ route('dashboard') }}" title="Home">
+                        <div class="center-btn-inner">
+                            <img src="https://siap.al-azhar.id/upload/favicon.ico" alt="Logo" style="width: 26px; height: 26px; object-fit: contain; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));">
+                        </div>
+                        <span>Home</span>
+                    </a>
+                </li>
+
+                @if ($menuAktif)
                     <!-- Progress -->
                     <li class="{{ request()->is('progress') ? 'active' : '' }}">
                         <a href="{{ route('progress') }}" title="Progress">
