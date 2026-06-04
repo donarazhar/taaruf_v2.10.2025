@@ -34,12 +34,13 @@
     /* ===== HEADER SECTION ===== */
     .section.bg-info {
         background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%) !important;
-        padding: 2rem 0 1rem;
-        margin-bottom: 2rem;
+        padding: 1.5rem 0 1rem;
+        margin-bottom: 0.5rem;
     }
 
     /* ===== PAGE CONTENT ===== */
     .page-content-wrapper {
+        padding-top: 0.5rem !important;
         padding-bottom: 100px !important;
     }
 
@@ -87,7 +88,7 @@
 
     /* ===== HEADER MATCH INDICATOR ===== */
     .match-header {
-        padding: 1.5rem;
+        padding: 1rem 1.5rem;
         text-align: center;
         border-bottom: 1px solid var(--gray-200);
     }
@@ -226,7 +227,7 @@
         .profile-name { font-size: 1.1rem; }
         .btn-action { padding: 0.75rem 1rem; font-size: 0.95rem; width: 100%; justify-content: center; margin-bottom: 0.5rem; }
         .match-actions { display: flex; flex-direction: column; }
-        .section.bg-info { margin-bottom: 0.5rem; padding: 1rem 0; }
+        .section.bg-info { margin-bottom: 0; padding: 1rem 0 0.5rem; }
         .match-header { padding: 0.75rem; }
         .match-header h4 { font-size: 1.1rem; }
         .match-card { margin-bottom: 1.5rem; }
