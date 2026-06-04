@@ -293,12 +293,16 @@
 
         /* ===== FOCUS STYLES ===== */
         *:focus {
+            outline: none;
+        }
+
+        *:focus-visible {
             outline: 2px solid var(--black);
             outline-offset: 2px;
         }
 
-        button:focus,
-        a:focus {
+        button:focus-visible,
+        a:focus-visible {
             outline-offset: 4px;
         }
         /* ===== DESKTOP NAVBAR STYLES ===== */
