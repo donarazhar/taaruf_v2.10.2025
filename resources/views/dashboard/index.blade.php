@@ -300,34 +300,126 @@
         text-decoration: none;
     }
 
-    /* ===== BANNER CAROUSEL ===== */
-    .banner-carousel-wrapper {
-        border-radius: var(--radius-lg);
-        overflow: hidden;
-        box-shadow: var(--shadow-lg);
+    /* ===== BANNER SECTION (TOP INFO) ===== */
+    .top-info-section {
         margin-bottom: 80px;
     }
-    .banner-slide {
-        position: relative;
-        height: 300px;
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
+    .top-info-grid {
+        display: grid;
+        grid-template-columns: 1fr 2fr 1fr;
+        gap: 1.5rem;
+        align-items: stretch;
     }
-    .banner-slide::before {
-        content: '';
+    .top-info-card {
+        position: relative;
+        border-radius: var(--radius-lg);
+        overflow: hidden;
+        display: block;
+        text-decoration: none;
+        transition: all 0.4s ease;
+        box-shadow: 0 2px 12px rgba(0, 53, 140, 0.06);
+    }
+    .top-info-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 20px 50px rgba(0, 53, 140, 0.14);
+    }
+    .top-info-card-img {
+        width: 100%;
+        height: 100%;
+        min-height: 280px;
+        object-fit: cover;
+        display: block;
+        transition: transform 0.6s ease;
+    }
+    .top-info-card:hover .top-info-card-img {
+        transform: scale(1.04);
+    }
+    .top-info-card.featured .top-info-card-img {
+        min-height: 360px;
+    }
+    .top-info-card-overlay {
         position: absolute;
-        top: 0; left: 0; right: 0; bottom: 0;
-        background: linear-gradient(135deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.2) 100%);
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 1.5rem;
+        background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.5) 50%, rgba(0,0,0,0) 100%);
+        color: var(--white);
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
     }
-    .banner-slide-content {
-        position: relative;
-        z-index: 2;
-        padding: 40px 20px;
+    .top-info-card-categories {
+        display: flex;
+        gap: 0.4rem;
+        margin-bottom: 0.5rem;
+        flex-wrap: wrap;
     }
-    @media (max-width: 480px) {
-        .banner-slide {
-            height: 200px;
+    .top-info-card-cat {
+        display: inline-block;
+        padding: 0.2rem 0.6rem;
+        border-radius: 6px;
+        font-size: 0.68rem;
+        font-weight: 600;
+        background: var(--primary-color);
+        color: var(--white);
+    }
+    .top-info-card-title {
+        font-size: 0.95rem;
+        font-weight: 700;
+        color: var(--white);
+        line-height: 1.4;
+        margin-bottom: 0.5rem;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+    .top-info-card.featured .top-info-card-title {
+        font-size: 1.15rem;
+    }
+    @media (min-width: 769px) {
+        .top-info-card:nth-child(n+4) {
+            display: none !important;
+        }
+    }
+    @media (max-width: 900px) {
+        .top-info-card-img {
+            min-height: 200px;
+        }
+        .top-info-card.featured .top-info-card-img {
+            min-height: 250px;
+        }
+        .top-info-card-title {
+            font-size: 0.85rem;
+        }
+        .top-info-card.featured .top-info-card-title {
+            font-size: 1rem;
+        }
+    }
+    @media (max-width: 768px) {
+        .top-info-grid {
+            gap: 0.5rem;
+        }
+        .top-info-card-img {
+            min-height: 120px;
+        }
+        .top-info-card.featured .top-info-card-img {
+            min-height: 160px;
+        }
+        .top-info-card-title {
+            font-size: 0.7rem;
+            margin-bottom: 0.25rem;
+        }
+        .top-info-card.featured .top-info-card-title {
+            font-size: 0.85rem;
+        }
+        .top-info-card-overlay {
+            padding: 0.75rem;
+        }
+        .top-info-card-cat {
+            font-size: 0.5rem;
+            padding: 0.1rem 0.3rem;
         }
     }
 
@@ -546,7 +638,7 @@
         .hero-carousel-wrapper,
         .feature-section,
         .news-section,
-        .banner-carousel-wrapper,
+        .top-info-section,
         .youtube-carousel,
         .contact-section {
             margin-bottom: 60px;
@@ -600,7 +692,7 @@
         .hero-carousel-wrapper,
         .feature-section,
         .news-section,
-        .banner-carousel-wrapper,
+        .top-info-section,
         .youtube-carousel,
         .contact-section {
             margin-bottom: 40px;
@@ -779,29 +871,23 @@
     <!-- Banner Section -->
     @if(isset($dataslider) && $dataslider->count() > 0)
     <div class="container">
-        <div class="banner-carousel-wrapper">
-            <div class="owl-carousel owl-carousel-one">
-                @foreach ($dataslider as $slider)
+        <div class="top-info-section">
+            <div class="top-info-grid">
+                @foreach ($dataslider as $index => $slider)
                     @php
                         $bannerImage = $slider->image ? env('MAA_WEB_URL', 'http://localhost:8001') . '/storage/' . $slider->image : asset('apk/assets/img/bg-img/maa.jpg');
                     @endphp
-                    <div class="banner-slide" style="background-image: url('{{ $bannerImage }}');">
-                        <div class="banner-slide-content h-100 d-flex align-items-center text-center">
-                            <div class="container">
-                                @if(isset($slider->title) && $slider->title)
-                                    <h4 style="color: white; font-weight: 800; margin-bottom: 8px;">{{ $slider->title }}</h4>
-                                @endif
-                                @if(isset($slider->description) && $slider->description)
-                                    <p style="color: white; font-size: 0.95rem; margin-bottom: 16px;">{{ Str::words(strip_tags($slider->description), 15, '...') }}</p>
-                                @endif
-                                @if(isset($slider->button_link) && $slider->button_text)
-                                    <a class="btn-hero" href="{{ $slider->button_link }}" target="_blank">
-                                        {{ $slider->button_text }}
-                                    </a>
-                                @endif
+                    <a href="{{ $slider->button_link ?? '#' }}" class="top-info-card {{ $index === 1 ? 'featured' : '' }}">
+                        <img src="{{ $bannerImage }}" alt="{{ $slider->title ?? 'Banner' }}" class="top-info-card-img">
+                        <div class="top-info-card-overlay">
+                            @if(isset($slider->button_text) && $slider->button_text)
+                            <div class="top-info-card-categories">
+                                <span class="top-info-card-cat">{{ $slider->button_text }}</span>
                             </div>
+                            @endif
+                            <h3 class="top-info-card-title">{{ $slider->title ?? '' }}</h3>
                         </div>
-                    </div>
+                    </a>
                 @endforeach
             </div>
         </div>
