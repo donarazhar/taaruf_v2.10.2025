@@ -19,10 +19,10 @@
                         @php
                             $user = Auth::guard('karyawan')->user();
                             $path = !empty($user->foto) ? Storage::url('uploads/karyawan/img/' . $user->foto) : '';
-                            $defaultAvatar = $user->jenkel === 'pria' ? 'avatar.jpg' : 'avatarwanita.jpg';
+                            $defaultAvatar = $user->jenkel === 'L' ? 'avatar.jpg' : 'avatarwanita.jpg';
                         @endphp
                         <img src="{{ !empty($path) ? url($path) : asset('assets/img/' . $defaultAvatar) }}"
-                            alt="avatar" class="imaged w64 {{ $user->jenkel === 'pria' ? '' : 'img-fluid' }}"
+                            alt="avatar" class="imaged w64 {{ $user->jenkel === 'L' ? '' : 'img-fluid' }}"
                             style="height:60px">
                     </div>
                     {{-- Akhir Foto Profile --}}
@@ -77,10 +77,10 @@
                 @php
                     $user = Auth::guard('karyawan')->user();
                     $path = !empty($user->foto) ? Storage::url('uploads/karyawan/img/' . $user->foto) : '';
-                    $defaultAvatar = $user->jenkel === 'pria' ? 'avatar.jpg' : 'avatarwanita.jpg';
+                    $defaultAvatar = $user->jenkel === 'L' ? 'avatar.jpg' : 'avatarwanita.jpg';
                 @endphp
                 <img src="{{ !empty($path) ? url($path) : asset('assets/img/' . $defaultAvatar) }}" alt="avatar"
-                    class="imaged w64 {{ $user->jenkel === 'pria' ? '' : 'img-fluid' }}" style="height:60px">
+                    class="imaged w64 {{ $user->jenkel === 'L' ? '' : 'img-fluid' }}" style="height:60px">
             </div>
         </div>
         {{-- Akhir Foto Profile --}}
