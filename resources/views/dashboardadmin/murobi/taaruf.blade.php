@@ -494,7 +494,7 @@
                                  src="{{ !empty($path) ? url($path) : $defaultAvatar }}" 
                                  alt="{{ $user->nama }}" loading="lazy">
                             <div class="murobi-card-body">
-                                <div class="murobi-card-name" title="{{ $user->nama }}">{{ $user->nama }}</div>
+                                <div class="murobi-card-name" title="{{ $user->nama }}" style="{{ in_array($user->email, $inProgressEmails) ? 'color: #ef4444;' : '' }}">{{ $user->nama }}</div>
                                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
                                     <span class="murobi-card-nip" style="margin-bottom: 0;">{{ $user->nip }}</span>
                                     @if(in_array($user->email, $inProgressEmails))
@@ -538,7 +538,7 @@
                                  src="{{ !empty($path) ? url($path) : $defaultAvatar }}" 
                                  alt="{{ $user->nama }}" loading="lazy">
                             <div class="murobi-card-body">
-                                <div class="murobi-card-name" title="{{ $user->nama }}">{{ $user->nama }}</div>
+                                <div class="murobi-card-name" title="{{ $user->nama }}" style="{{ in_array($user->email, $inProgressEmails) ? 'color: #ef4444;' : '' }}">{{ $user->nama }}</div>
                                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
                                     <span class="murobi-card-nip" style="margin-bottom: 0;">{{ $user->nip }}</span>
                                     @if(in_array($user->email, $inProgressEmails))

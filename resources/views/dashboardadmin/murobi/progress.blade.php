@@ -380,7 +380,8 @@
                                 <option value="{{ $pria->email }}" 
                                         data-nama="{{ $pria->nama }}" 
                                         data-foto="{{ !empty($pria->foto) ? Storage::url('uploads/karyawan/img/' . $pria->foto) : 'https://ui-avatars.com/api/?name=' . urlencode($pria->nama) . '&background=3b82f6&color=fff&size=200' }}"
-                                        {{ $isInProgress ? 'disabled' : '' }}>
+                                        {{ $isInProgress ? 'disabled' : '' }}
+                                        style="{{ $isInProgress ? 'color: #ef4444; background-color: #fef2f2;' : '' }}">
                                     {{ $pria->nama }} ({{ $pria->nip }}) {{ $isInProgress ? '- (Sedang Progress)' : '' }}
                                 </option>
                             @endforeach
@@ -406,7 +407,8 @@
                                 <option value="{{ $wanita->email }}" 
                                         data-nama="{{ $wanita->nama }}" 
                                         data-foto="{{ !empty($wanita->foto) ? Storage::url('uploads/karyawan/img/' . $wanita->foto) : 'https://ui-avatars.com/api/?name=' . urlencode($wanita->nama) . '&background=ec4899&color=fff&size=200' }}"
-                                        {{ $isInProgress ? 'disabled' : '' }}>
+                                        {{ $isInProgress ? 'disabled' : '' }}
+                                        style="{{ $isInProgress ? 'color: #ef4444; background-color: #fef2f2;' : '' }}">
                                     {{ $wanita->nama }} ({{ $wanita->nip }}) {{ $isInProgress ? '- (Sedang Progress)' : '' }}
                                 </option>
                             @endforeach
