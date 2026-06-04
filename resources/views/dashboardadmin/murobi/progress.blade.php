@@ -374,10 +374,14 @@
                         <select name="email_pria" id="selectPria" class="custom-select" required onchange="updatePreview()">
                             <option value="">-- Pilih Karyawan Pria --</option>
                             @foreach($listPria as $pria)
+                                @php
+                                    $isInProgress = in_array($pria->email, $inProgressEmails);
+                                @endphp
                                 <option value="{{ $pria->email }}" 
                                         data-nama="{{ $pria->nama }}" 
-                                        data-foto="{{ !empty($pria->foto) ? Storage::url('uploads/karyawan/img/' . $pria->foto) : 'https://ui-avatars.com/api/?name=' . urlencode($pria->nama) . '&background=3b82f6&color=fff&size=200' }}">
-                                    {{ $pria->nama }} ({{ $pria->nip }})
+                                        data-foto="{{ !empty($pria->foto) ? Storage::url('uploads/karyawan/img/' . $pria->foto) : 'https://ui-avatars.com/api/?name=' . urlencode($pria->nama) . '&background=3b82f6&color=fff&size=200' }}"
+                                        {{ $isInProgress ? 'disabled' : '' }}>
+                                    {{ $pria->nama }} ({{ $pria->nip }}) {{ $isInProgress ? '- (Sedang Progress)' : '' }}
                                 </option>
                             @endforeach
                         </select>
@@ -396,10 +400,14 @@
                         <select name="email_wanita" id="selectWanita" class="custom-select" required onchange="updatePreview()">
                             <option value="">-- Pilih Karyawan Wanita --</option>
                             @foreach($listWanita as $wanita)
+                                @php
+                                    $isInProgress = in_array($wanita->email, $inProgressEmails);
+                                @endphp
                                 <option value="{{ $wanita->email }}" 
                                         data-nama="{{ $wanita->nama }}" 
-                                        data-foto="{{ !empty($wanita->foto) ? Storage::url('uploads/karyawan/img/' . $wanita->foto) : 'https://ui-avatars.com/api/?name=' . urlencode($wanita->nama) . '&background=ec4899&color=fff&size=200' }}">
-                                    {{ $wanita->nama }} ({{ $wanita->nip }})
+                                        data-foto="{{ !empty($wanita->foto) ? Storage::url('uploads/karyawan/img/' . $wanita->foto) : 'https://ui-avatars.com/api/?name=' . urlencode($wanita->nama) . '&background=ec4899&color=fff&size=200' }}"
+                                        {{ $isInProgress ? 'disabled' : '' }}>
+                                    {{ $wanita->nama }} ({{ $wanita->nip }}) {{ $isInProgress ? '- (Sedang Progress)' : '' }}
                                 </option>
                             @endforeach
                         </select>

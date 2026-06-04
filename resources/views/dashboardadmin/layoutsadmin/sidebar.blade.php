@@ -600,29 +600,47 @@
                 </a>
             </li>
 
-            <!-- Nav Item - Data Karyawan -->
-            <li class="nav-item {{ request()->is(['masterkaryawan']) ? 'active' : '' }}">
-                <a class="nav-link" href="/masterkaryawan">
-                    <i class="fas fa-users"></i>
-                    <span>Data Karyawan</span>
-                </a>
-            </li>
+            @if(!isset($datauser) || $datauser->role === 'admin')
+                <!-- Nav Item - Data Karyawan -->
+                <li class="nav-item {{ request()->is(['masterkaryawan']) ? 'active' : '' }}">
+                    <a class="nav-link" href="/masterkaryawan">
+                        <i class="fas fa-users"></i>
+                        <span>Data Karyawan</span>
+                    </a>
+                </li>
 
-            <!-- Nav Item - Data Admin -->
-            <li class="nav-item {{ request()->is(['masteradmin']) ? 'active' : '' }}">
-                <a class="nav-link" href="/masteradmin">
-                    <i class="fas fa-user-shield"></i>
-                    <span>Data Admin</span>
-                </a>
-            </li>
+                <!-- Nav Item - Data Master -->
+                <li class="nav-item {{ request()->is(['masteradmin']) ? 'active' : '' }}">
+                    <a class="nav-link" href="/masteradmin">
+                        <i class="fas fa-user-shield"></i>
+                        <span>Data Admin</span>
+                    </a>
+                </li>
 
-            <!-- Nav Item - Proses Ta'aruf -->
-            <li class="nav-item {{ request()->is(['prosestaaruf']) ? 'active' : '' }}">
-                <a class="nav-link" href="/prosestaaruf">
-                    <i class="fas fa-hands-helping"></i>
-                    <span>Proses Ta'aruf</span>
-                </a>
-            </li>
+                <!-- Divider -->
+                <hr class="sidebar-divider">
+
+                <!-- Heading -->
+                <div class="sidebar-heading">
+                    Proses by APP
+                </div>
+
+                <!-- Nav Item - Proses Ta'aruf -->
+                <li class="nav-item {{ request()->is(['prosestaaruf']) ? 'active' : '' }}">
+                    <a class="nav-link" href="/prosestaaruf">
+                        <i class="fas fa-hands-helping"></i>
+                        <span>Proses Ta'aruf</span>
+                    </a>
+                </li>
+
+                <!-- Divider -->
+                <hr class="sidebar-divider">
+            @endif
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Proses by Murobi
+            </div>
 
             <!-- Nav Item - Murobi (Collapse) -->
             <li class="nav-item {{ request()->is(['murobi/*']) ? 'active' : '' }}">
@@ -635,35 +653,40 @@
                 </a>
                 <div class="collapse-inner" id="murobiCollapse" style="{{ request()->is(['murobi/*']) ? 'display: block;' : 'display: none;' }}">
                     <a class="collapse-item {{ request()->is('murobi/taaruf*') ? 'active' : '' }}" href="/murobi/taaruf">
-                        <i class="fas fa-users" style="margin-right: 8px; font-size: 14px;"></i> Taaruf
+                        <i class="fas fa-users" style="margin-right: 8px; font-size: 14px;"></i> Daftar Profile
                     </a>
                     <a class="collapse-item {{ request()->is('murobi/progress*') ? 'active' : '' }}" href="/murobi/progress">
-                        <i class="fas fa-heart" style="margin-right: 8px; font-size: 14px;"></i> Progress
+                        <i class="fas fa-heart" style="margin-right: 8px; font-size: 14px;"></i> Menta'aruf
                     </a>
                 </div>
             </li>
 
-            <!-- Nav Item - Log Chat -->
-            <li class="nav-item {{ request()->is(['logchat']) ? 'active' : '' }}">
-                <a class="nav-link" href="/logchat">
-                    <i class="fas fa-comments"></i>
-                    <span>Log Chat</span>
-                </a>
-            </li>
-
             <!-- Divider -->
             <hr class="sidebar-divider">
 
-            <!-- Nav Item - Q&A -->
-            <li class="nav-item {{ request()->is(['daftartanya']) ? 'active' : '' }}">
-                <a class="nav-link" href="/daftartanya">
-                    <i class="fas fa-envelope-open-text"></i>
-                    <span>Daftar Q n A</span>
-                </a>
-            </li>
+            @if(!isset($datauser) || $datauser->role === 'admin')
+                <!-- Nav Item - Log Chat -->
+                <li class="nav-item {{ request()->is(['logchat']) ? 'active' : '' }}">
+                    <a class="nav-link" href="/logchat">
+                        <i class="fas fa-comments"></i>
+                        <span>Log Chat</span>
+                    </a>
+                </li>
 
-            <!-- Divider -->
-            <hr class="sidebar-divider">
+                <!-- Divider -->
+                <hr class="sidebar-divider">
+
+                <!-- Nav Item - Q&A -->
+                <li class="nav-item {{ request()->is(['daftartanya']) ? 'active' : '' }}">
+                    <a class="nav-link" href="/daftartanya">
+                        <i class="fas fa-envelope-open-text"></i>
+                        <span>Daftar Q n A</span>
+                    </a>
+                </li>
+
+                <!-- Divider -->
+                <hr class="sidebar-divider">
+            @endif
 
             <!-- Sidebar Toggle -->
             <div class="text-center">

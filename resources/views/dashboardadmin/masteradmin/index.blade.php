@@ -354,6 +354,7 @@
                                     <th style="width: 50px;">No</th>
                                     <th>Nama</th>
                                     <th>Email</th>
+                                    <th>Role</th>
                                     <th>Tanggal Bergabung</th>
                                     <th style="width: 120px; text-align: center;">Aksi</th>
                                 </tr>
@@ -364,6 +365,13 @@
                                         <td><strong>{{ $index + 1 }}</strong></td>
                                         <td style="font-weight: 700; color: var(--gray-900);">{{ $admin->name }}</td>
                                         <td style="color: var(--gray-600);">{{ $admin->email }}</td>
+                                        <td>
+                                            @if($admin->role === 'murobi')
+                                                <span style="background: #e0e7ff; color: #4338ca; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: 600;">Murobi</span>
+                                            @else
+                                                <span style="background: #f1f5f9; color: #475569; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: 600;">Admin</span>
+                                            @endif
+                                        </td>
                                         <td style="color: var(--gray-600);">{{ \Carbon\Carbon::parse($admin->created_at)->format('d M Y') }}</td>
                                         <td>
                                             <div style="display: flex; gap: 8px; justify-content: center;">
@@ -371,6 +379,7 @@
                                                     data-id="{{ $admin->id }}" 
                                                     data-name="{{ $admin->name }}" 
                                                     data-email="{{ $admin->email }}" 
+                                                    data-role="{{ $admin->role }}"
                                                     title="Edit Admin">
                                                     <i class="fas fa-pencil-alt"></i>
                                                 </button>
@@ -421,6 +430,13 @@
                         <input type="email" name="email" class="form-control" required placeholder="Masukkan alamat email">
                     </div>
                     <div class="form-group">
+                        <label for="role" style="font-weight: 600; color: var(--gray-700); margin-bottom: 8px; display: block;">Role</label>
+                        <select name="role" class="form-control" required>
+                            <option value="admin">Admin</option>
+                            <option value="murobi">Murobi</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
                         <label for="password" style="font-weight: 600; color: var(--gray-700); margin-bottom: 8px; display: block;">Password</label>
                         <input type="text" name="password" class="form-control" required minlength="6" placeholder="Masukkan password (min. 6 karakter)">
                     </div>
@@ -461,6 +477,13 @@
                         <input type="email" name="email" id="edit-email" class="form-control" required>
                     </div>
                     <div class="form-group">
+                        <label for="edit-role" style="font-weight: 600; color: var(--gray-700); margin-bottom: 8px; display: block;">Role</label>
+                        <select name="role" id="edit-role" class="form-control" required>
+                            <option value="admin">Admin</option>
+                            <option value="murobi">Murobi</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
                         <label for="edit-password" style="font-weight: 600; color: var(--gray-700); margin-bottom: 8px; display: block;">Ubah Password (Opsional)</label>
                         <input type="text" name="password" id="edit-password" class="form-control" minlength="6" placeholder="Ketik password baru untuk mengubahnya...">
                     </div>
@@ -490,10 +513,12 @@
                 var id = $(this).data('id');
                 var name = $(this).data('name');
                 var email = $(this).data('email');
+                var role = $(this).data('role');
                 
                 $('#edit-id').val(id);
                 $('#edit-name').val(name);
                 $('#edit-email').val(email);
+                $('#edit-role').val(role);
                 $('#edit-password').val(''); // Clear password field
                 
                 $("#modal-editAdmin").addClass('show');

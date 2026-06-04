@@ -50,13 +50,22 @@ class MurobiController extends Controller
         $totalPria = DB::table('karyawan')->where('jenkel', 'pria')->where('status', '1')->count();
         $totalWanita = DB::table('karyawan')->where('jenkel', 'wanita')->where('status', '1')->count();
 
+        // Get all emails in progress or progress_shadow
+        $progressAuth = DB::table('progress')->pluck('email_auth')->toArray();
+        $progressProfile = DB::table('progress')->pluck('email_profile')->toArray();
+        $shadowAuth = DB::table('progress_shadow')->pluck('email_auth')->toArray();
+        $shadowProfile = DB::table('progress_shadow')->pluck('email_profile')->toArray();
+
+        $inProgressEmails = array_unique(array_merge($progressAuth, $progressProfile, $shadowAuth, $shadowProfile));
+
         return view('dashboardadmin.murobi.taaruf', compact(
             'datauser',
             'pria',
             'wanita',
             'totalPria',
             'totalWanita',
-            'activeTab'
+            'activeTab',
+            'inProgressEmails'
         ));
     }
 
@@ -91,6 +100,14 @@ class MurobiController extends Controller
     {
         $email = Auth::guard('user')->user()->email;
         $datauser = DB::table('users')->where('email', $email)->first();
+
+        // Get all emails in progress or progress_shadow
+        $progressAuth = DB::table('progress')->pluck('email_auth')->toArray();
+        $progressProfile = DB::table('progress')->pluck('email_profile')->toArray();
+        $shadowAuth = DB::table('progress_shadow')->pluck('email_auth')->toArray();
+        $shadowProfile = DB::table('progress_shadow')->pluck('email_profile')->toArray();
+
+        $inProgressEmails = array_unique(array_merge($progressAuth, $progressProfile, $shadowAuth, $shadowProfile));
 
         // Ambil semua Pria terverifikasi
         $listPria = DB::table('karyawan')
@@ -128,7 +145,8 @@ class MurobiController extends Controller
             'datauser',
             'listPria',
             'listWanita',
-            'existingPairs'
+            'existingPairs',
+            'inProgressEmails'
         ));
     }
 

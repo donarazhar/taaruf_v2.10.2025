@@ -299,7 +299,78 @@
         .pagination-wrap {
             display: flex;
             justify-content: center;
-            margin-top: 1.5rem;
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .pagination-wrap nav {
+            display: block;
+            width: 100%;
+        }
+        
+        .pagination-wrap .pagination {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding-left: 0;
+            list-style: none;
+            gap: 0.5rem;
+            margin: 0;
+        }
+
+        .pagination-wrap .page-item {
+            margin: 0;
+        }
+
+        .pagination-wrap .page-link {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 36px;
+            height: 36px;
+            padding: 0 12px;
+            margin: 0;
+            color: var(--text-muted);
+            background-color: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius-md) !important;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .pagination-wrap .page-item.active .page-link,
+        .pagination-wrap .page-item.active span.page-link {
+            z-index: 3;
+            color: var(--white);
+            background-color: var(--primary);
+            border-color: var(--primary);
+            box-shadow: var(--shadow-md);
+        }
+
+        .pagination-wrap .page-item.disabled .page-link,
+        .pagination-wrap .page-item.disabled span.page-link {
+            color: var(--gray-400);
+            pointer-events: none;
+            background-color: var(--gray-50);
+            border-color: var(--gray-200);
+            box-shadow: none;
+        }
+
+        .pagination-wrap .page-link:hover {
+            z-index: 2;
+            color: var(--primary);
+            background-color: var(--gray-50);
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+        
+        .pagination-wrap .page-link:focus {
+            box-shadow: 0 0 0 0.2rem rgba(15, 76, 129, 0.25);
+            outline: 0;
         }
 
         /* Alert */
@@ -424,11 +495,22 @@
                                  alt="{{ $user->nama }}" loading="lazy">
                             <div class="murobi-card-body">
                                 <div class="murobi-card-name" title="{{ $user->nama }}">{{ $user->nama }}</div>
-                                <span class="murobi-card-nip">{{ $user->nip }}</span>
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+                                    <span class="murobi-card-nip" style="margin-bottom: 0;">{{ $user->nip }}</span>
+                                    @if(in_array($user->email, $inProgressEmails))
+                                        <span style="background: #fef2f2; color: #991b1b; padding: 3px 6px; border-radius: 4px; font-size: 0.65rem; font-weight: 700; border: 1px solid #fecaca;"><i class="fas fa-lock" style="font-size: 0.6rem;"></i> In Progress</span>
+                                    @endif
+                                </div>
                                 <div class="murobi-card-gender pria"><i class="fas fa-mars"></i> Pria</div>
-                                <a href="{{ route('murobi.lihatprofile', ['email' => $user->email]) }}" class="btn-lihat-profil">
-                                    <i class="fas fa-eye"></i> Lihat Profil
-                                </a>
+                                @if(in_array($user->email, $inProgressEmails))
+                                    <button class="btn-lihat-profil" style="background: var(--gray-300); color: var(--gray-500); cursor: not-allowed; border: none;" disabled>
+                                        <i class="fas fa-eye-slash"></i> Sedang Progress
+                                    </button>
+                                @else
+                                    <a href="{{ route('murobi.lihatprofile', ['email' => $user->email]) }}" class="btn-lihat-profil">
+                                        <i class="fas fa-eye"></i> Lihat Profil
+                                    </a>
+                                @endif
                             </div>
                         </div>
                     @endforeach
@@ -457,11 +539,22 @@
                                  alt="{{ $user->nama }}" loading="lazy">
                             <div class="murobi-card-body">
                                 <div class="murobi-card-name" title="{{ $user->nama }}">{{ $user->nama }}</div>
-                                <span class="murobi-card-nip">{{ $user->nip }}</span>
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+                                    <span class="murobi-card-nip" style="margin-bottom: 0;">{{ $user->nip }}</span>
+                                    @if(in_array($user->email, $inProgressEmails))
+                                        <span style="background: #fef2f2; color: #991b1b; padding: 3px 6px; border-radius: 4px; font-size: 0.65rem; font-weight: 700; border: 1px solid #fecaca;"><i class="fas fa-lock" style="font-size: 0.6rem;"></i> In Progress</span>
+                                    @endif
+                                </div>
                                 <div class="murobi-card-gender wanita"><i class="fas fa-venus"></i> Wanita</div>
-                                <a href="{{ route('murobi.lihatprofile', ['email' => $user->email]) }}" class="btn-lihat-profil">
-                                    <i class="fas fa-eye"></i> Lihat Profil
-                                </a>
+                                @if(in_array($user->email, $inProgressEmails))
+                                    <button class="btn-lihat-profil" style="background: var(--gray-300); color: var(--gray-500); cursor: not-allowed; border: none;" disabled>
+                                        <i class="fas fa-eye-slash"></i> Sedang Progress
+                                    </button>
+                                @else
+                                    <a href="{{ route('murobi.lihatprofile', ['email' => $user->email]) }}" class="btn-lihat-profil">
+                                        <i class="fas fa-eye"></i> Lihat Profil
+                                    </a>
+                                @endif
                             </div>
                         </div>
                     @endforeach
