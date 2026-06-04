@@ -690,7 +690,7 @@
                                 <tr>
                                     <th style="width: 60px;">No</th>
                                     <th>Pasangan Ta'aruf</th>
-                                    <th style="width: 150px;">Tanggal</th>
+                                    <th style="width: 200px;">Tanggal</th>
                                     <th style="width: 120px;">Status</th>
                                     <th style="width: 120px;">Aksi</th>
                                 </tr>
@@ -743,8 +743,8 @@
                                                 @foreach($pasangan as $p)
                                                     <div style="display: flex; align-items: center; gap: 12px;">
                                                         <img src="{{ $p['foto'] }}" alt="{{ $p['nama'] }}" style="width: 45px; height: 45px; border-radius: 50%; object-fit: cover; border: 2px solid var(--gray-200); box-shadow: var(--shadow-sm);">
-                                                        <div>
-                                                            <div style="font-weight: 700; color: var(--gray-900); font-size: 0.95rem; margin-bottom: 4px;">{{ $p['nama'] }}</div>
+                                                        <div style="display: flex; align-items: center; gap: 8px;">
+                                                            <div style="font-weight: 700; color: var(--gray-900); font-size: 0.95rem;">{{ $p['nama'] }}</div>
                                                             <span class="couple-status 
                                                                 @if($p['status'] == 1) cocok
                                                                 @elseif($p['status'] === 0) tidak-cocok
