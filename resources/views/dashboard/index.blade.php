@@ -35,7 +35,7 @@
 
     /* ===== HERO CAROUSEL MODERN ===== */
     .hero-carousel-wrapper {
-        margin-bottom: 32px;
+        margin-bottom: 80px;
         border-radius: var(--radius-lg);
         overflow: hidden;
         box-shadow: var(--shadow-md);
@@ -107,7 +107,7 @@
 
     /* ===== FEATURE CARDS ===== */
     .feature-section {
-        margin-bottom: 70px;
+        margin-bottom: 80px;
     }
 
     .feature-section-title {
@@ -169,7 +169,7 @@
 
     /* ===== NEWS SECTION ===== */
     .news-section {
-        margin-bottom: 40px;
+        margin-bottom: 80px;
     }
 
     .section-header {
@@ -305,7 +305,7 @@
         border-radius: var(--radius-lg);
         overflow: hidden;
         box-shadow: var(--shadow-lg);
-        margin-bottom: 32px;
+        margin-bottom: 80px;
     }
     .banner-slide {
         position: relative;
@@ -337,7 +337,7 @@
         border: 2px solid var(--gray-200);
         border-radius: var(--radius-lg);
         padding: 24px;
-        margin-bottom: 32px;
+        margin-bottom: 80px;
     }
 
     .youtube-item {
@@ -387,7 +387,7 @@
         color: var(--white);
         padding: 40px 0;
         border-radius: var(--radius-lg);
-        margin-bottom: 32px;
+        margin-bottom: 80px;
         box-shadow: var(--shadow-lg);
     }
 
@@ -542,6 +542,15 @@
         .contact-section {
             padding: 32px 0;
         }
+
+        .hero-carousel-wrapper,
+        .feature-section,
+        .news-section,
+        .banner-carousel-wrapper,
+        .youtube-carousel,
+        .contact-section {
+            margin-bottom: 60px;
+        }
     }
 
     @media (max-width: 480px) {
@@ -586,6 +595,15 @@
 
         .feature-card-modern {
             padding: 12px;
+        }
+
+        .hero-carousel-wrapper,
+        .feature-section,
+        .news-section,
+        .banner-carousel-wrapper,
+        .youtube-carousel,
+        .contact-section {
+            margin-bottom: 40px;
         }
     }
 
