@@ -339,10 +339,10 @@
                                         <td>
                                             <div style="display: flex; align-items: center;">
                                                 @php
-                                                    $pathSender = !empty($data['data'][0]['foto_sender']) ? Storage::url('uploads/karyawan/img/' . $data['data'][0]['foto_sender']) : 'https://ui-avatars.com/api/?name=' . urlencode($data['data'][0]['nama_sender']) . '&background=random&color=fff&size=200';
+                                                    $pathAuth = !empty($data['data'][0]['foto_auth']) ? Storage::url('uploads/karyawan/img/' . $data['data'][0]['foto_auth']) : 'https://ui-avatars.com/api/?name=' . urlencode($data['data'][0]['nama_auth']) . '&background=random&color=fff&size=200';
                                                 @endphp
-                                                <img src="{{ $pathSender }}" alt="Sender" class="table-avatar">
-                                                <strong>{{ $data['data'][0]['nama_sender'] }}</strong>
+                                                <img src="{{ $pathAuth }}" alt="Pengirim" class="table-avatar">
+                                                <strong>{{ $data['data'][0]['nama_auth'] }}</strong>
                                             </div>
                                         </td>
                                         <td>
@@ -350,7 +350,7 @@
                                                 @php
                                                     $pathProfile = !empty($data['data'][0]['foto_profile']) ? Storage::url('uploads/karyawan/img/' . $data['data'][0]['foto_profile']) : 'https://ui-avatars.com/api/?name=' . urlencode($data['data'][0]['nama_profile']) . '&background=random&color=fff&size=200';
                                                 @endphp
-                                                <img src="{{ $pathProfile }}" alt="Receiver" class="table-avatar">
+                                                <img src="{{ $pathProfile }}" alt="Penerima" class="table-avatar">
                                                 <strong>{{ $data['data'][0]['nama_profile'] }}</strong>
                                             </div>
                                         </td>

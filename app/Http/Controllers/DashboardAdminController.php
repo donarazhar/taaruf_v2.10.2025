@@ -46,15 +46,15 @@ class DashboardAdminController extends Controller
         // Mengambil data dari tabel 'chat' berdasarkan id_progress
         $allChats = DB::table('chat')
             ->join('progress', 'chat.id_progress', '=', 'progress.id')
-            ->leftJoin('karyawan', 'chat.email_sender', '=', 'karyawan.email')
+            ->leftJoin('karyawan as karyawan_auth', 'progress.email_auth', '=', 'karyawan_auth.email')
             ->leftJoin('karyawan as karyawan_profile', 'progress.email_profile', '=', 'karyawan_profile.email')
             ->whereIn('progress.id', $allidProgress->pluck('id'))
             ->select(
                 'progress.id as id_progress',
                 'progress.email_auth',
                 'progress.email_profile',
-                'karyawan.nama as nama_sender',
-                'karyawan.foto as foto_sender',
+                'karyawan_auth.nama as nama_auth',
+                'karyawan_auth.foto as foto_auth',
                 'karyawan_profile.nama as nama_profile',
                 'karyawan_profile.foto as foto_profile',
                 'chat.pesan as pesan_sender',
@@ -65,7 +65,7 @@ class DashboardAdminController extends Controller
         // Mengambil data dari tabel 'chat_shadow' berdasarkan id_progress
         $allChatsShadow = DB::table('chat_shadow')
             ->join('progress_shadow', 'chat_shadow.id_progress', '=', 'progress_shadow.id')
-            ->leftJoin('karyawan', 'chat_shadow.email_sender', '=', 'karyawan.email')
+            ->leftJoin('karyawan as karyawan_auth', 'progress_shadow.email_auth', '=', 'karyawan_auth.email')
             ->leftJoin('karyawan as karyawan_profile', 'progress_shadow.email_profile', '=', 'karyawan_profile.email')
             ->whereIn(
                 'progress_shadow.id',
@@ -75,8 +75,8 @@ class DashboardAdminController extends Controller
                 'progress_shadow.id as id_progress',
                 'progress_shadow.email_auth',
                 'progress_shadow.email_profile',
-                'karyawan.nama as nama_sender',
-                'karyawan.foto as foto_sender',
+                'karyawan_auth.nama as nama_auth',
+                'karyawan_auth.foto as foto_auth',
                 'karyawan_profile.nama as nama_profile',
                 'karyawan_profile.foto as foto_profile',
                 'chat_shadow.pesan as pesan_sender',
@@ -94,9 +94,9 @@ class DashboardAdminController extends Controller
                     return [
                         'email_auth' => $item->email_auth,
                         'email_profile' => $item->email_profile,
-                        'nama_sender' => $item->nama_sender,
+                        'nama_auth' => $item->nama_auth,
                         'nama_profile' => $item->nama_profile,
-                        'foto_sender' => $item->foto_sender,
+                        'foto_auth' => $item->foto_auth,
                         'foto_profile' => $item->foto_profile,
                         'pesan_sender' => $item->pesan_sender,
                         'tgl_pesan' => $item->tgl_pesan,
