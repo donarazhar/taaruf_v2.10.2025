@@ -55,6 +55,8 @@ Route::middleware(['guest:user'])->group(function () {
 Route::middleware(['auth:karyawan'])->group(function () {
     Route::get('/proseslogout', [AuthController::class, 'proseslogout']);
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard/berita/{slug}', [DashboardController::class, 'showBerita'])->name('dashboard.berita.show');
+    Route::get('/dashboard/layanan/{slug}', [DashboardController::class, 'showLayanan'])->name('dashboard.layanan.show');
 
     // Profile
     Route::get('/profile', [DashboardController::class, 'profile'])->name('profile');

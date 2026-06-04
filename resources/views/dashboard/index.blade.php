@@ -597,47 +597,37 @@
     <div class="container">
         <div class="hero-carousel-wrapper">
             <div class="owl-carousel owl-carousel-one">
-                <!-- Slide 1 -->
-                <div class="single-hero-slide" style="background-image: url('{{ asset('apk/assets/img/bg-img/maa.jpg') }}')">
-                    <div class="slide-content h-100 d-flex align-items-center text-center">
-                        <div class="container">
-                            <h4>Ta'aruf Jodohku v.2.0</h4>
-                            <p>Temukan pasangan sempurna anda diantara karyawan YPI Al Azhar melalui aplikasi ini.</p>
-                            <a class="btn-hero" href="/taaruf">
-                                <i class="fa fa-heart"></i>
-                                Lanjutkan
-                            </a>
+                @forelse($datalayanan as $layanan)
+                    @php
+                        $bgImage = isset($layanan['image']) && $layanan['image'] ? 'http://localhost:8001/storage/' . $layanan['image'] : asset('apk/assets/img/bg-img/maa.jpg');
+                    @endphp
+                    <div class="single-hero-slide" style="background-image: url('{{ $bgImage }}')">
+                        <div class="slide-content h-100 d-flex align-items-center text-center">
+                            <div class="container">
+                                <h4>{{ $layanan['name'] ?? 'Layanan Masjid' }}</h4>
+                                <p>{{ Str::limit(strip_tags($layanan['description'] ?? ''), 150) }}</p>
+                                <a class="btn-hero" href="/dashboard/layanan/{{ $layanan['slug'] ?? '#' }}">
+                                    <i class="fa fa-arrow-right"></i>
+                                    Selengkapnya
+                                </a>
+                            </div>
                         </div>
                     </div>
-                </div>
-
-                <!-- Slide 2 -->
-                <div class="single-hero-slide" style="background-image: url('{{ asset('apk/assets/img/bg-img/nikah.jpg') }}')">
-                    <div class="slide-content h-100 d-flex align-items-center text-center">
-                        <div class="container">
-                            <h4>Aula Buya Hamka</h4>
-                            <p>Masjid Agung Al Azhar menyediakan aula serba guna untuk acara yang anda niatkan.</p>
-                            <a class="btn-hero" href="https://www.instagram.com/abhalazhar/?hl=id" target="_blank">
-                                <i class="fa fa-building"></i>
-                                Lanjutkan
-                            </a>
+                @empty
+                    <!-- Slide 1 Default -->
+                    <div class="single-hero-slide" style="background-image: url('{{ asset('apk/assets/img/bg-img/maa.jpg') }}')">
+                        <div class="slide-content h-100 d-flex align-items-center text-center">
+                            <div class="container">
+                                <h4>Ta'aruf Jodohku v.2.0</h4>
+                                <p>Temukan pasangan sempurna anda diantara karyawan YPI Al Azhar melalui aplikasi ini.</p>
+                                <a class="btn-hero" href="/taaruf">
+                                    <i class="fa fa-heart"></i>
+                                    Lanjutkan
+                                </a>
+                            </div>
                         </div>
                     </div>
-                </div>
-
-                <!-- Slide 3 -->
-                <div class="single-hero-slide" style="background-image: url('{{ asset('apk/assets/img/bg-img/konsul.jpg') }}')">
-                    <div class="slide-content h-100 d-flex align-items-center text-center">
-                        <div class="container">
-                            <h4>Layanan Konsultasi</h4>
-                            <p>Konsultasikan semua permasalahan anda bersama ustadz di Masjid Agung Al Azhar.</p>
-                            <a class="btn-hero" href="https://wa.link/w2hf7i" target="_blank">
-                                <i class="fa fa-comments"></i>
-                                Lanjutkan
-                            </a>
-                        </div>
-                    </div>
-                </div>
+                @endforelse
             </div>
         </div>
     </div>
@@ -702,13 +692,13 @@
                 <div class="news-card-main">
                     @php
                         $mainNews = $databerita->first();
-                        $mainPath = $mainNews->foto ? Storage::url('uploads/berita/' . $mainNews->foto) : asset('assets/img/preview.png');
+                        $mainPath = $mainNews->foto ? $mainNews->foto : asset('assets/img/preview.png');
                     @endphp
                     <img src="{{ $mainPath }}" alt="{{ $mainNews->judul }}" class="news-image-main">
                     <div class="news-content-main">
                         <h3 class="news-title-main">{{ $mainNews->judul }}</h3>
-                        <p class="news-subtitle-main">{{ $mainNews->subjudul }}</p>
-                        <a href="/masterberita/berita/{{ $mainNews->id }}" class="btn-news">
+                        <p class="news-subtitle-main">{{ Str::limit(strip_tags($mainNews->subjudul), 150) }}</p>
+                        <a href="/dashboard/berita/{{ $mainNews->slug ?? '#' }}" class="btn-news">
                             Selengkapnya
                             <i class="fa fa-arrow-right"></i>
                         </a>
@@ -719,12 +709,12 @@
                 <div class="news-sidebar">
                     @foreach ($databerita->skip(1)->take(4) as $news)
                         @php
-                            $newsPath = $news->foto ? Storage::url('uploads/berita/' . $news->foto) : asset('assets/img/preview.png');
+                            $newsPath = $news->foto ? $news->foto : asset('assets/img/preview.png');
                         @endphp
-                        <a href="/masterberita/berita/{{ $news->id }}" class="news-card-small">
+                        <a href="/dashboard/berita/{{ $news->slug ?? '#' }}" class="news-card-small">
                             <img src="{{ $newsPath }}" alt="{{ $news->judul }}" class="news-image-small">
                             <div class="news-content-small">
-                                <p class="news-subtitle-small">{{ Str::limit($news->subjudul, 60) }}</p>
+                                <p class="news-subtitle-small">{{ Str::limit(strip_tags($news->subjudul), 60) }}</p>
                                 <span class="news-link-small">Baca Selengkapnya →</span>
                             </div>
                         </a>
@@ -758,7 +748,11 @@
                     @foreach ($datayoutube as $video)
                         <a href="{{ $video->link }}" target="_blank" class="youtube-item">
                             @php
-                                $videoPath = $video->gambar ? Storage::url('uploads/youtube/' . $video->gambar) : asset('assets/img/preview.png');
+                                $videoPath = (isset($video->gambar) && strpos($video->gambar, 'http') === 0) 
+                                             ? $video->gambar 
+                                             : (isset($video->gambar) && $video->gambar 
+                                                ? Storage::url('uploads/youtube/' . $video->gambar) 
+                                                : asset('assets/img/preview.png'));
                             @endphp
                             <img src="{{ $videoPath }}" alt="YouTube Video" class="youtube-thumbnail">
                             <div class="youtube-play-overlay">
