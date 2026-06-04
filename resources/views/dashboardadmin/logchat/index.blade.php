@@ -335,19 +335,23 @@
                                 @foreach ($resultChat as $data)
                                     <tr>
                                         <td><strong>{{ $loop->iteration }}</strong></td>
-                                        <td style="display: flex; align-items: center;">
-                                            @php
-                                                $pathSender = !empty($data['data'][0]['foto_sender']) ? Storage::url('uploads/karyawan/img/' . $data['data'][0]['foto_sender']) : 'https://ui-avatars.com/api/?name=' . urlencode($data['data'][0]['nama_sender']) . '&background=random&color=fff&size=200';
-                                            @endphp
-                                            <img src="{{ $pathSender }}" alt="Sender" class="table-avatar">
-                                            <strong>{{ $data['data'][0]['nama_sender'] }}</strong>
+                                        <td>
+                                            <div style="display: flex; align-items: center;">
+                                                @php
+                                                    $pathSender = !empty($data['data'][0]['foto_sender']) ? Storage::url('uploads/karyawan/img/' . $data['data'][0]['foto_sender']) : 'https://ui-avatars.com/api/?name=' . urlencode($data['data'][0]['nama_sender']) . '&background=random&color=fff&size=200';
+                                                @endphp
+                                                <img src="{{ $pathSender }}" alt="Sender" class="table-avatar">
+                                                <strong>{{ $data['data'][0]['nama_sender'] }}</strong>
+                                            </div>
                                         </td>
-                                        <td style="display: flex; align-items: center;">
-                                            @php
-                                                $pathProfile = !empty($data['data'][0]['foto_profile']) ? Storage::url('uploads/karyawan/img/' . $data['data'][0]['foto_profile']) : 'https://ui-avatars.com/api/?name=' . urlencode($data['data'][0]['nama_profile']) . '&background=random&color=fff&size=200';
-                                            @endphp
-                                            <img src="{{ $pathProfile }}" alt="Receiver" class="table-avatar">
-                                            <strong>{{ $data['data'][0]['nama_profile'] }}</strong>
+                                        <td>
+                                            <div style="display: flex; align-items: center;">
+                                                @php
+                                                    $pathProfile = !empty($data['data'][0]['foto_profile']) ? Storage::url('uploads/karyawan/img/' . $data['data'][0]['foto_profile']) : 'https://ui-avatars.com/api/?name=' . urlencode($data['data'][0]['nama_profile']) . '&background=random&color=fff&size=200';
+                                                @endphp
+                                                <img src="{{ $pathProfile }}" alt="Receiver" class="table-avatar">
+                                                <strong>{{ $data['data'][0]['nama_profile'] }}</strong>
+                                            </div>
                                         </td>
                                         <td>
                                             <div style="display: flex; gap: 8px; justify-content: center;">
