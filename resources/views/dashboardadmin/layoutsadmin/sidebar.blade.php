@@ -630,20 +630,7 @@
             <!-- Heading -->
             <div class="sidebar-heading">Manajemen Konten</div>
 
-            <!-- Nav Item - Master Data -->
-            <li class="nav-item {{ request()->is(['masterberita', 'masteryoutube']) ? 'active' : '' }}">
-                <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseMaster">
-                    <i class="fas fa-database"></i>
-                    <span>Data Master</span>
-                </a>
-                <div id="collapseMaster" class="collapse {{ request()->is(['masterberita', 'masteryoutube']) ? 'show' : '' }}">
-                    <div class="collapse-inner">
-                        <h6 class="collapse-header">Konten Web</h6>
-                        <a class="collapse-item {{ request()->is(['masterberita']) ? 'active' : '' }}" href="/masterberita">Artikel & Berita</a>
-                        <a class="collapse-item {{ request()->is(['masteryoutube']) ? 'active' : '' }}" href="/masteryoutube">Youtube</a>
-                    </div>
-                </div>
-            </li>
+
 
             <!-- Nav Item - Q&A -->
             <li class="nav-item {{ request()->is(['daftartanya']) ? 'active' : '' }}">
