@@ -82,7 +82,7 @@
         </div>
         
         @if(isset($layanan->image) && $layanan->image)
-            <img src="http://localhost:8001/storage/{{ $layanan->image }}" alt="{{ $layanan->name }}" class="layanan-image">
+            <img src="{{ env('MAA_WEB_URL', 'http://localhost:8001') }}/storage/{{ $layanan->image }}" alt="{{ $layanan->name }}" class="layanan-image">
         @endif
         
         <div class="layanan-body">

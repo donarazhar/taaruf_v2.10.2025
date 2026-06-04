@@ -599,7 +599,7 @@
             <div class="owl-carousel owl-carousel-one">
                 @forelse($datalayanan as $layanan)
                     @php
-                        $bgImage = isset($layanan['image']) && $layanan['image'] ? 'http://localhost:8001/storage/' . $layanan['image'] : asset('apk/assets/img/bg-img/maa.jpg');
+                        $bgImage = isset($layanan['image']) && $layanan['image'] ? env('MAA_WEB_URL', 'http://localhost:8001') . '/storage/' . $layanan['image'] : asset('apk/assets/img/bg-img/maa.jpg');
                     @endphp
                     <div class="single-hero-slide" style="background-image: url('{{ $bgImage }}')">
                         <div class="slide-content h-100 d-flex align-items-center text-center">

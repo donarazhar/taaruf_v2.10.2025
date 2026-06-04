@@ -81,7 +81,7 @@
         </div>
         
         @if(isset($berita->featured_image) && $berita->featured_image)
-            <img src="http://localhost:8001/storage/{{ $berita->featured_image }}" alt="{{ $berita->title }}" class="news-image">
+            <img src="{{ env('MAA_WEB_URL', 'http://localhost:8001') }}/storage/{{ $berita->featured_image }}" alt="{{ $berita->title }}" class="news-image">
         @endif
         
         <div class="news-body">

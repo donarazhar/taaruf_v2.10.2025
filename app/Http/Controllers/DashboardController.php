@@ -17,14 +17,14 @@ class DashboardController extends Controller
         // Mendapatkan data profile berdasarkan email
         $dataprofile = DB::table('karyawan')->where('email', $email)->first();
         try {
-            $response = \Illuminate\Support\Facades\Http::timeout(5)->get('http://localhost:8001/api/posts');
+            $response = \Illuminate\Support\Facades\Http::timeout(5)->get(env('MAA_WEB_URL', 'http://localhost:8001') . '/api/posts');
             if ($response->successful() && isset($response->json()['data']['data'])) {
                 $databerita = collect(json_decode(json_encode($response->json()['data']['data'])))->map(function($item) {
                     return (object)[
                         'slug' => $item->slug,
                         'judul' => $item->title,
                         'subjudul' => $item->excerpt,
-                        'foto' => $item->featured_image ? 'http://localhost:8001/storage/' . $item->featured_image : null
+                        'foto' => $item->featured_image ? env('MAA_WEB_URL', 'http://localhost:8001') . '/storage/' . $item->featured_image : null
                     ];
                 });
             } else {
@@ -37,7 +37,7 @@ class DashboardController extends Controller
         // Get Data Layanan
         $datalayanan = collect();
         try {
-            $responseLayanan = \Illuminate\Support\Facades\Http::timeout(5)->get('http://localhost:8001/api/programs');
+            $responseLayanan = \Illuminate\Support\Facades\Http::timeout(5)->get(env('MAA_WEB_URL', 'http://localhost:8001') . '/api/programs');
             if ($responseLayanan->successful() && isset($responseLayanan->json()['data'])) {
                 $datalayanan = collect($responseLayanan->json()['data']);
             }
@@ -48,7 +48,7 @@ class DashboardController extends Controller
         // Get Data Youtube
         $datayoutube = collect();
         try {
-            $responseYt = \Illuminate\Support\Facades\Http::timeout(5)->get('http://localhost:8001/api/youtube');
+            $responseYt = \Illuminate\Support\Facades\Http::timeout(5)->get(env('MAA_WEB_URL', 'http://localhost:8001') . '/api/youtube');
             if ($responseYt->successful() && isset($responseYt->json()['data'])) {
                 $datayoutube = collect(json_decode(json_encode($responseYt->json()['data'])));
             }
@@ -108,7 +108,7 @@ class DashboardController extends Controller
         }
 
         try {
-            $response = \Illuminate\Support\Facades\Http::timeout(5)->get('http://localhost:8001/api/posts/' . $slug);
+            $response = \Illuminate\Support\Facades\Http::timeout(5)->get(env('MAA_WEB_URL', 'http://localhost:8001') . '/api/posts/' . $slug);
             if ($response->successful() && isset($response->json()['data'])) {
                 $berita = (object) $response->json()['data'];
             } else {
@@ -144,7 +144,7 @@ class DashboardController extends Controller
         }
 
         try {
-            $response = \Illuminate\Support\Facades\Http::timeout(5)->get('http://localhost:8001/api/programs/' . $slug);
+            $response = \Illuminate\Support\Facades\Http::timeout(5)->get(env('MAA_WEB_URL', 'http://localhost:8001') . '/api/programs/' . $slug);
             if ($response->successful() && isset($response->json()['data'])) {
                 $layanan = (object) $response->json()['data'];
             } else {
