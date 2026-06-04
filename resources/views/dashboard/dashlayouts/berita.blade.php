@@ -19,9 +19,9 @@
                         @php
                             $user = Auth::guard('karyawan')->user();
                             $path = !empty($user->foto) ? Storage::url('uploads/karyawan/img/' . $user->foto) : '';
-                            'no-photo.jpg';
+                            $defaultAvatar = 'https://ui-avatars.com/api/?name=' . urlencode($user->nama) . '&background=random&color=fff&size=200';
                         @endphp
-                        <img src="{{ !empty($path) ? url($path) : asset('assets/img/' . $defaultAvatar) }}"
+                        <img src="{{ !empty($path) ? url($path) : $defaultAvatar }}"
                             alt="avatar" class="imaged w64 {{ $user->jenkel === 'pria' ? '' : 'img-fluid' }}"
                             style="height:60px">
                     </div>
@@ -77,9 +77,9 @@
                 @php
                     $user = Auth::guard('karyawan')->user();
                     $path = !empty($user->foto) ? Storage::url('uploads/karyawan/img/' . $user->foto) : '';
-                    'no-photo.jpg';
+                    $defaultAvatar = 'https://ui-avatars.com/api/?name=' . urlencode($user->nama) . '&background=random&color=fff&size=200';
                 @endphp
-                <img src="{{ !empty($path) ? url($path) : asset('assets/img/' . $defaultAvatar) }}" alt="avatar"
+                <img src="{{ !empty($path) ? url($path) : $defaultAvatar }}" alt="avatar"
                     class="imaged w64 {{ $user->jenkel === 'pria' ? '' : 'img-fluid' }}" style="height:60px">
             </div>
         </div>

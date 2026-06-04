@@ -482,10 +482,8 @@
                         ->select('likedislike.status', 'karyawan.nama', 'karyawan.nip', 'karyawan.jenkel', 'karyawan.foto')
                         ->first();
 
-                    $pathAuth = isset($dataAuth) && !empty($dataAuth->foto) 
-                        ? Storage::url('uploads/karyawan/img/' . $dataAuth->foto) 
-                        : '';
-                    'no-photo.jpg';
+                    $pathAuth = isset($dataAuth) && !empty($dataAuth->foto) ? Storage::url('uploads/karyawan/img/' . $dataAuth->foto) : '';
+                    $defaultAvatarAuth = 'https://ui-avatars.com/api/?name=' . urlencode(isset($dataAuth) ? $dataAuth->nama : 'User') . '&background=random&color=fff&size=200';
 
                     // Data berdasarkan email_profile (Pasangan)
                     $dataProfile = DB::table('karyawan')
@@ -495,10 +493,8 @@
                         ->select('likedislike.status', 'karyawan.nama', 'karyawan.nip', 'karyawan.jenkel', 'karyawan.foto', 'progress.id as progress_id')
                         ->first();
 
-                    $pathProfile = isset($dataProfile) && !empty($dataProfile->foto) 
-                        ? Storage::url('uploads/karyawan/img/' . $dataProfile->foto) 
-                        : '';
-                    'no-photo.jpg';
+                    $pathProfile = isset($dataProfile) && !empty($dataProfile->foto) ? Storage::url('uploads/karyawan/img/' . $dataProfile->foto) : '';
+                    $defaultAvatarProfile = 'https://ui-avatars.com/api/?name=' . urlencode(isset($dataProfile) ? $dataProfile->nama : 'User') . '&background=random&color=fff&size=200';
 
                     // Status dari likedislike
                     $likedislikeStatus = $likedislike
@@ -536,7 +532,7 @@
                     <p class="profile-label">👤 Profil Anda</p>
                     <div class="profile-image-wrapper">
                         <img class="profile-avatar"
-                             src="{{ !empty($pathAuth) ? url($pathAuth) : asset('assets/img/' . $defaultAvatarAuth) }}"
+                             src="{{ !empty($pathAuth) ? url($pathAuth) : $defaultAvatarAuth }}"
                              alt="{{ isset($dataAuth) ? $dataAuth->nama : 'Avatar' }}">
                     </div>
                     
@@ -569,7 +565,7 @@
                     <p class="profile-label">💕 Profil Pasangan</p>
                     <div class="profile-image-wrapper">
                         <img class="profile-avatar"
-                             src="{{ !empty($pathProfile) ? url($pathProfile) : asset('assets/img/' . $defaultAvatarProfile) }}"
+                             src="{{ !empty($pathProfile) ? url($pathProfile) : $defaultAvatarProfile }}"
                              alt="{{ isset($dataProfile) ? $dataProfile->nama : 'Avatar' }}">
                     </div>
                     

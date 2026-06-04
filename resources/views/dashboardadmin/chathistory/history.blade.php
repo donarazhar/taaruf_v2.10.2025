@@ -609,7 +609,7 @@
                             @php
                                 $pathchat = !empty($d->foto_sender) 
                                     ? Storage::url('uploads/karyawan/img/' . $d->foto_sender)
-                                    : asset('assets/img/no-photo.jpg');
+                                    : 'https://ui-avatars.com/api/?name=' . urlencode($d->nama_sender) . '&background=random&color=fff&size=200';
                             @endphp
                             <img class="user-avatar" src="{{ url($pathchat) }}" alt="{{ $d->nama_sender }}"
                                  title="{{ $d->nama_sender }}">

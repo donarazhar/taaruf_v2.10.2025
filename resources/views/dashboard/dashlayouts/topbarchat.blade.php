@@ -479,7 +479,7 @@
                             @php
                                 $avatarPath = !empty($chatPartner->foto) 
                                     ? Storage::url('uploads/karyawan/img/' . $chatPartner->foto)
-                                    : asset('assets/img/' . ('no-photo.jpg'));
+                                    : 'https://ui-avatars.com/api/?name=' . urlencode($chatPartner->nama) . '&background=random&color=fff&size=200';
                             @endphp
                             <img src="{{ url($avatarPath) }}" alt="{{ $chatPartner->nama }}">
                         </div>

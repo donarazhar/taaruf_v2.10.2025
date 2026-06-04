@@ -730,9 +730,9 @@
                     @php
                         $user = Auth::guard('karyawan')->user();
                         $path = !empty($user->foto) ? Storage::url('uploads/karyawan/img/' . $user->foto) : '';
-                        'no-photo.jpg';
+                        $defaultAvatar = 'https://ui-avatars.com/api/?name=' . urlencode($dataprofile->nama) . '&background=random&color=fff&size=200';
                     @endphp
-                    <img src="{{ !empty($path) ? url($path) : asset('assets/img/' . $defaultAvatar) }}" alt="avatar">
+                    <img src="{{ !empty($path) ? url($path) : $defaultAvatar }}" alt="avatar">
                 </div>
                 <div class="user-info">
                     <div class="d-flex align-items-center flex-wrap gap-2">

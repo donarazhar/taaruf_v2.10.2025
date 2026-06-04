@@ -581,10 +581,10 @@
                                 <div class="profile-image-wrapper">
                                     @php
                                         $path = !empty($user->foto) ? Storage::url('uploads/karyawan/img/' . $user->foto) : '';
-                                        'no-photo.jpg';
+                                        $defaultAvatar = 'https://ui-avatars.com/api/?name=' . urlencode($user->nama) . '&background=random&color=fff&size=200';
                                     @endphp
                                     <img class="profile-image" 
-                                         src="{{ !empty($path) ? url($path) : asset('assets/img/' . $defaultAvatar) }}"
+                                         src="{{ !empty($path) ? url($path) : $defaultAvatar }}"
                                          alt="{{ $user->nama }}"
                                          loading="lazy">
                                     
