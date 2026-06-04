@@ -225,8 +225,8 @@
         }
 
         .modern-table thead {
-            background: var(--primary);
-            color: var(--white);
+            background: #0053C5;
+            color: #FFFFFF;
             position: sticky;
             top: 0;
             z-index: 10;

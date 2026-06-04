@@ -161,8 +161,8 @@
         }
 
         .modern-table thead {
-            background: var(--gray-50);
-            color: var(--text-muted);
+            background: #0053C5;
+            color: #FFFFFF;
         }
 
         .modern-table thead th {

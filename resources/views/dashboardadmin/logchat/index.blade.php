@@ -3,6 +3,7 @@
     <style>
         /* ===== MODERN LOG CHAT PAGE STYLES ===== */
         :root {
+            --primary: #0053C5;
             --black: #000000;
             --gray-900: #1A1A1A;
             --gray-800: #2D2D2D;
@@ -153,8 +154,8 @@
         }
 
         .modern-table thead {
-            background: var(--black);
-            color: var(--white);
+            background: #0053C5;
+            color: #FFFFFF;
             position: sticky;
             top: 0;
             z-index: 10;
