@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->enum('jenkel', ['pria', 'wanita']);
             $table->string('password');
-            $table->enum('referensi', ['1', '2', '', ''])->nullable();
+            $table->enum('referensi', ['1', '2'])->nullable();
             $table->text('referensi_detail')->nullable();
             $table->string('foto')->nullable();
             $table->integer('status')->nullable();

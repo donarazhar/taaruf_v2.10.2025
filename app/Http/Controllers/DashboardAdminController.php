@@ -16,8 +16,8 @@ class DashboardAdminController extends Controller
         $email = Auth::guard('user')->user()->email;
         // Mendapatkan data profile berdasarkan email
         $datauser = DB::table('users')->where('email', $email)->first();
-        $totalLaki = Karyawan::where('jenkel', 'L')->count();
-        $totalPerempuan = Karyawan::where('jenkel', 'P')->count();
+        $totalLaki = Karyawan::where('jenkel', 'pria')->count();
+        $totalPerempuan = Karyawan::where('jenkel', 'wanita')->count();
         $belumVerifikasi = Karyawan::where('status', '!=', '1')->orWhereNull('status')->count();
 
         $pendidikan = Biodata::selectRaw('pendidikan, COUNT(*) as count')

@@ -485,7 +485,7 @@
                     $pathAuth = isset($dataAuth) && !empty($dataAuth->foto) 
                         ? Storage::url('uploads/karyawan/img/' . $dataAuth->foto) 
                         : '';
-                    $defaultAvatarAuth = isset($dataAuth) && $dataAuth->jenkel === 'L' 
+                    $defaultAvatarAuth = isset($dataAuth) && $dataAuth->jenkel === 'pria' 
                         ? 'avatar.jpg' 
                         : 'avatarwanita.jpg';
 
@@ -500,7 +500,7 @@
                     $pathProfile = isset($dataProfile) && !empty($dataProfile->foto) 
                         ? Storage::url('uploads/karyawan/img/' . $dataProfile->foto) 
                         : '';
-                    $defaultAvatarProfile = isset($dataProfile) && $dataProfile->jenkel === 'L' 
+                    $defaultAvatarProfile = isset($dataProfile) && $dataProfile->jenkel === 'pria' 
                         ? 'avatar.jpg' 
                         : 'avatarwanita.jpg';
 

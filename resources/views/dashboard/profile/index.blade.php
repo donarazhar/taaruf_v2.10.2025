@@ -730,7 +730,7 @@
                     @php
                         $user = Auth::guard('karyawan')->user();
                         $path = !empty($user->foto) ? Storage::url('uploads/karyawan/img/' . $user->foto) : '';
-                        $defaultAvatar = $user->jenkel === 'L' ? 'avatar.jpg' : 'avatarwanita.jpg';
+                        $defaultAvatar = $user->jenkel === 'pria' ? 'avatar.jpg' : 'avatarwanita.jpg';
                     @endphp
                     <img src="{{ !empty($path) ? url($path) : asset('assets/img/' . $defaultAvatar) }}" alt="avatar">
                 </div>
@@ -978,7 +978,7 @@
                                                 <option value="{{ $dataprofilelengkap->statusnikah }}">
                                                     {{ $dataprofilelengkap->statusnikah ?: '- Pilih Status -' }}
                                                 </option>
-                                                @if ($dataprofile->jenkel == 'L')
+                                                @if ($dataprofile->jenkel == 'pria')
                                                     <option value="Lajang">Lajang</option>
                                                     <option value="Duda">Duda</option>
                                                 @else
