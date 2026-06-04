@@ -252,9 +252,9 @@
 
 <div class="section bg-info">
     <div class="container">
-        <div class="row mt-3 mt-md-5">
+        <div class="row mt-5 pt-4 pt-md-0">
             <div class="col-12 text-center">
-                <h2 style="color: white; font-weight: 800; margin: 1rem 0;">
+                <h2 style="color: white; font-weight: 800; margin: 0 0 0.5rem 0;">
                     💑 Status Progress Ta'aruf
                 </h2>
                 <p style="color: rgba(255,255,255,0.9); margin: 0;">
