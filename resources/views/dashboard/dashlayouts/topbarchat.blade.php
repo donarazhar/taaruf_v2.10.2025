@@ -462,7 +462,7 @@
             <div class="chat-user--info d-flex align-items-center">
                 <!-- Back Button-->
                 <div class="back-button">
-                    <a href="/dashboardadmin" title="Kembali ke Dashboard">
+                    <a href="/progress" title="Kembali ke Progress">
                         <svg width="32" height="32" viewBox="0 0 16 16" class="bi bi-arrow-left-short" 
                              fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd"
