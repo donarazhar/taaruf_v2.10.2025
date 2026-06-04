@@ -140,6 +140,8 @@ class DashboardAdminController extends Controller
                 'profileKaryawan.nama as nama_profile',
                 'authKaryawan.foto as foto_auth',
                 'profileKaryawan.foto as foto_profile',
+                'authKaryawan.jenkel as jenkel_auth',
+                'profileKaryawan.jenkel as jenkel_profile',
                 'authLike.status as authStatus',
                 'profileLike.status as profileStatus',
                 DB::raw("'progress' as source_table")
@@ -166,6 +168,8 @@ class DashboardAdminController extends Controller
                 'profileKaryawan.nama as nama_profile',
                 'authKaryawan.foto as foto_auth',
                 'profileKaryawan.foto as foto_profile',
+                'authKaryawan.jenkel as jenkel_auth',
+                'profileKaryawan.jenkel as jenkel_profile',
                 DB::raw('CASE WHEN authLike.status IN (0, 1) THEN authLike.status ELSE null END AS authStatus'),
                 DB::raw('CASE WHEN profileLike.status IN (0, 1) THEN profileLike.status ELSE null END AS profileStatus'),
                 DB::raw("'progress_shadow' as source_table")

@@ -700,54 +700,67 @@
                                     <tr>
                                         <td><strong>{{ $loop->iteration }}</strong></td>
                                         <td>
-                                            <div class="pasangan-container">
-                                                <!-- Person 1 -->
-                                                <div class="couple-card">
-                                                    @php
-                                                        $path1 = $data->foto_auth ? Storage::url('uploads/karyawan/img/' . $data->foto_auth) : asset('assets/img/nophoto.png');
-                                                    @endphp
-                                                    <img src="{{ $path1 }}" alt="{{ $data->nama_auth }}" class="couple-avatar">
-                                                    <div class="couple-info">
-                                                        <div class="couple-name">{{ $data->nama_auth }}</div>
-                                                        <span class="couple-status 
-                                                            @if($data->authStatus == 1) cocok
-                                                            @elseif($data->authStatus === 0) tidak-cocok
-                                                            @else belum
-                                                            @endif">
-                                                            @if($data->authStatus == 1)
-                                                                <i class="fas fa-check-circle"></i> Cocok
-                                                            @elseif($data->authStatus === 0)
-                                                                <i class="fas fa-times-circle"></i> Tidak Cocok
-                                                            @else
-                                                                <i class="fas fa-clock"></i> Belum
-                                                            @endif
-                                                        </span>
-                                                    </div>
-                                                </div>
+                                            @php
+                                                $laki = null;
+                                                $perempuan = null;
+                                                
+                                                // Auth
+                                                $authData = [
+                                                    'nama' => $data->nama_auth,
+                                                    'foto' => $data->foto_auth ? Storage::url('uploads/karyawan/img/' . $data->foto_auth) : asset('assets/img/nophoto.png'),
+                                                    'status' => $data->authStatus,
+                                                    'jenkel' => strtolower($data->jenkel_auth ?? '')
+                                                ];
+                                                
+                                                if (in_array($authData['jenkel'], ['l', 'laki-laki', 'pria'])) {
+                                                    $laki = $authData;
+                                                } else {
+                                                    $perempuan = $authData;
+                                                }
+                                                
+                                                // Profile
+                                                $profileData = [
+                                                    'nama' => $data->nama_profile,
+                                                    'foto' => $data->foto_profile ? Storage::url('uploads/karyawan/img/' . $data->foto_profile) : asset('assets/img/nophoto.png'),
+                                                    'status' => $data->profileStatus,
+                                                    'jenkel' => strtolower($data->jenkel_profile ?? '')
+                                                ];
+                                                
+                                                if (in_array($profileData['jenkel'], ['l', 'laki-laki', 'pria'])) {
+                                                    $laki = $profileData;
+                                                } else {
+                                                    $perempuan = $profileData;
+                                                }
+                                                
+                                                // Fallback if both end up in the same variable (shouldn't happen in Ta'aruf)
+                                                if (!$laki) $laki = $authData;
+                                                if (!$perempuan) $perempuan = $profileData;
+                                                
+                                                $pasangan = [$laki, $perempuan];
+                                            @endphp
 
-                                                <!-- Person 2 -->
-                                                <div class="couple-card">
-                                                    @php
-                                                        $path2 = $data->foto_profile ? Storage::url('uploads/karyawan/img/' . $data->foto_profile) : asset('assets/img/nophoto.png');
-                                                    @endphp
-                                                    <img src="{{ $path2 }}" alt="{{ $data->nama_profile }}" class="couple-avatar">
-                                                    <div class="couple-info">
-                                                        <div class="couple-name">{{ $data->nama_profile }}</div>
-                                                        <span class="couple-status 
-                                                            @if($data->profileStatus == 1) cocok
-                                                            @elseif($data->profileStatus === 0) tidak-cocok
-                                                            @else belum
-                                                            @endif">
-                                                            @if($data->profileStatus == 1)
-                                                                <i class="fas fa-check-circle"></i> Cocok
-                                                            @elseif($data->profileStatus === 0)
-                                                                <i class="fas fa-times-circle"></i> Tidak Cocok
-                                                            @else
-                                                                <i class="fas fa-clock"></i> Belum
-                                                            @endif
-                                                        </span>
+                                            <div style="display: flex; flex-direction: column; gap: 12px; align-items: flex-start; text-align: left;">
+                                                @foreach($pasangan as $p)
+                                                    <div style="display: flex; align-items: center; gap: 12px;">
+                                                        <img src="{{ $p['foto'] }}" alt="{{ $p['nama'] }}" style="width: 45px; height: 45px; border-radius: 50%; object-fit: cover; border: 2px solid var(--gray-200); box-shadow: var(--shadow-sm);">
+                                                        <div>
+                                                            <div style="font-weight: 700; color: var(--gray-900); font-size: 0.95rem; margin-bottom: 4px;">{{ $p['nama'] }}</div>
+                                                            <span class="couple-status 
+                                                                @if($p['status'] == 1) cocok
+                                                                @elseif($p['status'] === 0) tidak-cocok
+                                                                @else belum
+                                                                @endif" style="padding: 2px 8px; font-size: 0.7rem;">
+                                                                @if($p['status'] == 1)
+                                                                    <i class="fas fa-check-circle"></i> Cocok
+                                                                @elseif($p['status'] === 0)
+                                                                    <i class="fas fa-times-circle"></i> Tidak Cocok
+                                                                @else
+                                                                    <i class="fas fa-clock"></i> Belum
+                                                                @endif
+                                                            </span>
+                                                        </div>
                                                     </div>
-                                                </div>
+                                                @endforeach
                                             </div>
                                         </td>
                                         <td>
