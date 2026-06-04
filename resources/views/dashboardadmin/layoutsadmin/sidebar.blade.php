@@ -624,12 +624,16 @@
                 </a>
             </li>
 
+            <!-- Nav Item - Log Chat -->
+            <li class="nav-item {{ request()->is(['logchat']) ? 'active' : '' }}">
+                <a class="nav-link" href="/logchat">
+                    <i class="fas fa-comments"></i>
+                    <span>Log Chat</span>
+                </a>
+            </li>
+
             <!-- Divider -->
             <hr class="sidebar-divider">
-
-
-
-
 
             <!-- Nav Item - Q&A -->
             <li class="nav-item {{ request()->is(['daftartanya']) ? 'active' : '' }}">

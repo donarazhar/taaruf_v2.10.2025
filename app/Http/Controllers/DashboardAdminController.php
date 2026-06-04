@@ -27,6 +27,16 @@ class DashboardAdminController extends Controller
             ->groupBy('suku')
             ->get();
 
+        return view('dashboardadmin.index', compact('datauser', 'totalLaki', 'totalPerempuan', 'belumVerifikasi', 'pendidikan', 'suku'));
+    }
+
+    public function logchat()
+    {
+        // Mendapatkan AUTH
+        $email = Auth::guard('user')->user()->email;
+        // Mendapatkan data profile berdasarkan email
+        $datauser = DB::table('users')->where('email', $email)->first();
+
         $allidProgress = DB::table('progress')
             ->select('id')
             ->distinct()
@@ -95,7 +105,7 @@ class DashboardAdminController extends Controller
             ];
         }
 
-        return view('dashboardadmin.index', compact('datauser', 'totalLaki', 'totalPerempuan', 'belumVerifikasi', 'pendidikan', 'suku', 'resultChat'));
+        return view('dashboardadmin.logchat.index', compact('resultChat', 'datauser'));
     }
 
     public function daftartanya()

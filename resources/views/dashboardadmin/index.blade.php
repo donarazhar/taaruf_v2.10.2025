@@ -455,64 +455,6 @@
         </div>
     </div> --}}
 
-    <!-- History Chat Table -->
-    <div class="table-card">
-        <div class="table-header">
-            <h6 class="table-title">History Chat Ta'aruf</h6>
-        </div>
-        <div class="table-body">
-            <div class="table-responsive">
-                @if($resultChat && count($resultChat) > 0)
-                    <table class="modern-table">
-                        <thead>
-                            <tr>
-                                <th style="width: 60px;">No.</th>
-                                <th>Pengirim</th>
-                                <th>Penerima</th>
-                                <th style="width: 120px;">Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($resultChat as $data)
-                                <tr>
-                                    <td><strong>{{ $loop->iteration }}</strong></td>
-                                    <td>
-                                        @php
-                                            $pathSender = Storage::url('uploads/karyawan/img/' . $data['data'][0]['foto_sender']);
-                                        @endphp
-                                        <img src="{{ $pathSender }}" alt="Sender" class="table-avatar">
-                                        <strong>{{ $data['data'][0]['nama_sender'] }}</strong>
-                                    </td>
-                                    <td>
-                                        @php
-                                            $pathProfile = Storage::url('uploads/karyawan/img/' . $data['data'][0]['foto_profile']);
-                                        @endphp
-                                        <img src="{{ $pathProfile }}" alt="Receiver" class="table-avatar">
-                                        <strong>{{ $data['data'][0]['nama_profile'] }}</strong>
-                                    </td>
-                                    <td>
-                                        <div style="display: flex; gap: 8px;">
-                                            <a href="{{ route('historychat', ['id' => $data['id_progress']]) }}" class="btn-view">
-                                                <i class="fas fa-eye"></i> Lihat
-                                            </a>
-                                            <a href="{{ route('deletehistorychat', ['id' => $data['id_progress']]) }}" class="btn-delete" onclick="return confirm('Apakah Anda yakin ingin menghapus history chat ini?')">
-                                                <i class="fas fa-trash"></i> Hapus
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                @else
-                    <div class="empty-state">
-                        <i class="fas fa-comments"></i>
-                        <p>Belum ada history chat</p>
-                    </div>
-                @endif
-            </div>
-        </div>
-    </div>
 @endsection
 
 {{-- @push('myscript')
