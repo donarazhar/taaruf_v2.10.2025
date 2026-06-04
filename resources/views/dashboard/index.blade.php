@@ -492,11 +492,11 @@
         }
 
         .slide-content h4 {
-            font-size: 1.5rem;
+            font-size: 1.25rem;
         }
 
         .slide-content p {
-            font-size: 0.95rem;
+            font-size: 0.85rem;
         }
 
         .feature-grid {
@@ -541,6 +541,17 @@
     @media (max-width: 480px) {
         .single-hero-slide {
             height: 250px;
+        }
+
+        .slide-content h4 {
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+        }
+
+        .slide-content p {
+            font-size: 0.75rem;
+            margin-bottom: 15px;
+            line-height: 1.4;
         }
 
         .feature-grid {
@@ -605,7 +616,7 @@
                         <div class="slide-content h-100 d-flex align-items-center text-center">
                             <div class="container">
                                 <h4>{{ $layanan['name'] ?? 'Layanan Masjid' }}</h4>
-                                <p>{{ Str::limit(strip_tags($layanan['description'] ?? ''), 150) }}</p>
+                                <p>{{ Str::words(strip_tags($layanan['description'] ?? ''), 8, '...') }}</p>
                                 <a class="btn-hero" href="/dashboard/layanan/{{ $layanan['slug'] ?? '#' }}">
                                     <i class="fa fa-arrow-right"></i>
                                     Selengkapnya
