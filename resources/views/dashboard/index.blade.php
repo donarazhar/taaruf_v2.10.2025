@@ -772,6 +772,97 @@
     }
     
     .desc-mobile { display: none; }
+
+    /* ===== FOOTER ===== */
+    .footer {
+        background: linear-gradient(135deg, #003a8c 0%, #0284c7 100%);
+        color: var(--white);
+        position: relative;
+        overflow: hidden;
+    }
+    .footer-main {
+        position: relative;
+        padding: 60px 0 30px;
+    }
+    .footer-simple-flex {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 40px;
+    }
+    .footer-simple-left {
+        flex: 1;
+    }
+    .footer-simple-right {
+        text-align: right;
+        min-width: 300px;
+    }
+    .footer-contact-inline {
+        font-size: 0.9rem;
+        color: rgba(255, 255, 255, 0.85);
+        line-height: 1.8;
+        margin-bottom: 20px;
+    }
+    .footer-contact-inline i {
+        margin-right: 4px;
+        margin-left: 6px;
+        color: rgba(255, 255, 255, 0.6);
+    }
+    .footer-white-bar {
+        background-color: var(--white);
+        color: #6b7280;
+        text-align: center;
+        padding: 10px 15px;
+        font-size: 0.85rem;
+        width: 100%;
+        border-top: 1px solid #e5e7eb;
+        margin-bottom: 50px;
+    }
+    .footer-widget-title {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: var(--white);
+    }
+    .social-links {
+        display: flex;
+        gap: 10px;
+    }
+    .social-link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 42px;
+        height: 42px;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: var(--radius-md);
+        color: var(--white);
+        transition: all 0.3s ease;
+    }
+    .social-link:hover {
+        background: var(--white);
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+    @media (max-width: 1024px) {
+        .footer-simple-flex {
+            flex-direction: column-reverse;
+            align-items: center;
+            gap: 25px;
+        }
+        .footer-simple-right {
+            text-align: center;
+        }
+        .social-links {
+            justify-content: center !important;
+        }
+        .footer-simple-right .footer-widget-title {
+            text-align: center !important;
+        }
+        .footer-contact-inline {
+            text-align: center;
+        }
+    }
 </style>
 
 <div class="section">
@@ -816,47 +907,7 @@
         </div>
     </div>
 
-    <!-- Feature Cards -->
-    <div class="container feature-section">
-        <h5 class="feature-section-title">Unit & Layanan YPI Al Azhar</h5>
-        <div class="feature-grid">
-            <a href="https://www.al-azhar.or.id/" target="_blank" class="feature-card-modern">
-                <div class="feature-icon">
-                    <img src="{{ asset('apk/assets/img/demo-img/logoypi.png') }}" alt="YPI Al Azhar">
-                </div>
-                <p class="feature-name">YPI Al Azhar</p>
-            </a>
 
-            <a href="https://www.masjidagungalazhar.com/" target="_blank" class="feature-card-modern">
-                <div class="feature-icon">
-                    <img src="{{ asset('apk/assets/img/demo-img/logomaa.png') }}" alt="MAA">
-                </div>
-                <p class="feature-name">Masjid Al Azhar</p>
-            </a>
-
-            <a href="https://alazharpeduli.or.id/" target="_blank" class="feature-card-modern">
-                <div class="feature-icon">
-                    <img src="{{ asset('apk/assets/img/demo-img/logolaz.png') }}" alt="LAZ">
-                </div>
-                <p class="feature-name">LAZ Al Azhar</p>
-            </a>
-
-            <a href="https://wakafalazhar.com/" target="_blank" class="feature-card-modern">
-                <div class="feature-icon">
-                    <img src="{{ asset('apk/assets/img/demo-img/logowakaf.png') }}" alt="Wakaf">
-                </div>
-                <p class="feature-name">Wakaf Al Azhar</p>
-            </a>
-
-
-            <a href="https://www.instagram.com/abhalazhar/?hl=id" target="_blank" class="feature-card-modern">
-                <div class="feature-icon">
-                    <img src="{{ asset('apk/assets/img/demo-img/abh.png') }}" alt="ABH">
-                </div>
-                <p class="feature-name">Aula Buya Hamka</p>
-            </a>
-        </div>
-    </div>
 
     <!-- News Section -->
     <div class="container news-section">
@@ -1018,15 +1069,48 @@
         </div>
     </div>
 
-    <!-- Footer Copyright -->
-    <div class="container">
-        <div class="copyright-section">
-            <p class="copyright-text">
-                <strong>Copyright © 2024</strong><br>
-                Direktorat Dakwah Sosial YPI Al Azhar<br>
-                <small>Created by DAL Army</small>
-            </p>
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-main">
+                <div class="footer-simple-flex">
+                    <div class="footer-simple-left">
+                        <div class="footer-contact-inline">
+                            <strong>Kontak:</strong> 
+                            <i class="fas fa-map-marker-alt" style="margin-left: 0;"></i> Komplek Masjid Agung Al Azhar Jl. Sisingamangaraja, Kebayoran Baru, Jakarta Selatan 12110 | 
+                            <i class="fas fa-envelope"></i> info@al-azhar.or.id
+                            <br>
+                            <strong>Jam Operasional:</strong> Senin - Jumat: 08:00 - 16:00 | Sabtu - Ahad: Libur
+                        </div>
+                    </div>
+
+                    <div class="footer-simple-right">
+                        <h4 class="footer-widget-title" style="border-bottom: none; margin-bottom: 10px; padding-bottom: 0;">Unit & Layanan YPI Al Azhar:</h4>
+                        <div class="social-links" style="justify-content: flex-end;">
+                            <a href="https://www.al-azhar.or.id/" target="_blank" rel="noopener" class="social-link" title="YPI Al Azhar">
+                                <img src="{{ asset('apk/assets/img/demo-img/logoypi.png') }}" alt="YPI" style="width: 24px; height: 24px; object-fit: contain;">
+                            </a>
+                            <a href="https://www.masjidagungalazhar.com/" target="_blank" rel="noopener" class="social-link" title="Masjid Al Azhar">
+                                <img src="{{ asset('apk/assets/img/demo-img/logomaa.png') }}" alt="MAA" style="width: 24px; height: 24px; object-fit: contain;">
+                            </a>
+                            <a href="https://alazharpeduli.or.id/" target="_blank" rel="noopener" class="social-link" title="LAZ Al Azhar">
+                                <img src="{{ asset('apk/assets/img/demo-img/logolaz.png') }}" alt="LAZ" style="width: 24px; height: 24px; object-fit: contain;">
+                            </a>
+                            <a href="https://wakafalazhar.com/" target="_blank" rel="noopener" class="social-link" title="Wakaf Al Azhar">
+                                <img src="{{ asset('apk/assets/img/demo-img/logowakaf.png') }}" alt="Wakaf" style="width: 24px; height: 24px; object-fit: contain;">
+                            </a>
+                            <a href="https://www.instagram.com/abhalazhar/?hl=id" target="_blank" rel="noopener" class="social-link" title="Aula Buya Hamka">
+                                <img src="{{ asset('apk/assets/img/demo-img/abh.png') }}" alt="ABH" style="width: 24px; height: 24px; object-fit: contain;">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+    </footer>
+    <div style="height: 4px; width: 100%; background: linear-gradient(90deg, var(--primary-color) 0%, #10b981 33%, #f59e0b 66%, #ef4444 100%);"></div>
+    <div class="footer-white-bar">
+        Copyright &copy;{{ date('Y') }} | Direktorat Dakwah Sosial YPI Al Azhar by <a href="https://www.instagram.com/donsiyos/" target="_blank" rel="noopener" style="color: inherit; text-decoration: none; font-weight: 600;">DAL Army</a>
     </div>
 </div>
 @endsection
