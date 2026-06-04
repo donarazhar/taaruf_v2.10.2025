@@ -86,8 +86,9 @@
     .btn-hero {
         display: inline-flex;
         align-items: center;
-        gap: 8px;
-        padding: 14px 32px;
+        gap: 6px;
+        padding: 10px 24px;
+        font-size: 0.9rem;
         background: var(--white);
         color: var(--primary-color);
         border-radius: 50px;
@@ -552,6 +553,11 @@
             font-size: 0.75rem;
             margin-bottom: 15px;
             line-height: 1.4;
+        }
+
+        .btn-hero {
+            padding: 8px 18px;
+            font-size: 0.8rem;
         }
 
         .desc-desktop { display: none !important; }
