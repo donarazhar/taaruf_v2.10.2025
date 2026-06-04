@@ -169,10 +169,7 @@ class ChatController extends Controller
         // Menggabungkan data dari 'chat' dan 'chat_shadow'
         $allChats = $chatData->merge($chatShadowData);
 
-        // Jika data tidak ditemukan, mungkin ada penanganan khusus yang perlu dilakukan
-        if ($allChats->isEmpty()) {
-            return redirect()->back()->with(['error' => 'Data tidak ditemukan.']);
-        }
+        // Tampilkan view meskipun data kosong (view sudah memiliki empty state)
         return view('dashboardadmin.chathistory.history', compact('allChats'));
     }
 
