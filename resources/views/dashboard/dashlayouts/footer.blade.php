@@ -47,6 +47,13 @@
         transition: color 0.3s;
         width: 100%;
         height: 100%;
+        outline: none;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    .footer-nav li a:focus,
+    .footer-nav li a:active {
+        outline: none;
     }
 
     .footer-nav li a svg {
