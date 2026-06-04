@@ -652,7 +652,7 @@
                 <div class="empty-state">
                     <div class="empty-state-icon">💔</div>
                     <h3>Belum Ada Profil</h3>
-                    <p>Saat ini belum ada profil {{ $authUser->jenkel == 'L' ? 'P' : 'L' }} yang tersedia</p>
+                    <p>Saat ini belum ada profil {{ $authUser->jenkel == 'pria' ? 'wanita' : 'pria' }} yang tersedia</p>
                 </div>
             @endif
         </div>

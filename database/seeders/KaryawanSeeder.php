@@ -22,15 +22,15 @@ class KaryawanSeeder extends Seeder
         // Hapus data dummy sebelumnya jika diperlukan, tapi kita biarkan saja nambah
 
         $genders = [
-            ['jenis' => 'L', 'count' => 10],
-            ['jenis' => 'P', 'count' => 10],
+            ['jenis' => 'pria', 'count' => 10],
+            ['jenis' => 'wanita', 'count' => 10],
         ];
 
         foreach ($genders as $gender) {
             for ($i = 0; $i < $gender['count']; $i++) {
                 
                 // Tentukan gender Faker
-                $fakerGender = $gender['jenis'] == 'L' ? 'male' : 'female';
+                $fakerGender = $gender['jenis'] == 'pria' ? 'male' : 'female';
                 
                 $email = $faker->unique()->safeEmail;
                 
