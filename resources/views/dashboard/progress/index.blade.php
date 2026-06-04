@@ -337,7 +337,7 @@
                     </div>
                 @endif
                 
-                <div class="match-body d-flex flex-column flex-md-row align-items-center justify-content-around">
+                <div class="match-body p-4 p-md-5 d-flex flex-column flex-md-row align-items-center justify-content-around">
                     
                     <!-- Profil Anda -->
                     <div class="profile-card text-center w-100" style="max-width: 300px; z-index: 2;">
