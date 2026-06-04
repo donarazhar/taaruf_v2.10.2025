@@ -226,6 +226,10 @@
         .profile-name { font-size: 1.1rem; }
         .btn-action { padding: 0.75rem 1rem; font-size: 0.95rem; width: 100%; justify-content: center; margin-bottom: 0.5rem; }
         .match-actions { display: flex; flex-direction: column; }
+        .section.bg-info { margin-bottom: 0.5rem; padding: 1rem 0; }
+        .match-header { padding: 0.75rem; }
+        .match-header h4 { font-size: 1.1rem; }
+        .match-card { margin-bottom: 1.5rem; }
     }
 
     @keyframes pulse {
@@ -247,7 +251,7 @@
 
 <div class="section bg-info">
     <div class="container">
-        <div class="row mt-5">
+        <div class="row mt-3 mt-md-5">
             <div class="col-12 text-center">
                 <h2 style="color: white; font-weight: 800; margin: 1rem 0;">
                     💑 Status Progress Ta'aruf
