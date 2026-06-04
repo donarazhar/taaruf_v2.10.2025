@@ -1078,7 +1078,7 @@
                         <div class="footer-contact-inline" style="font-size: 1rem;">
                             <strong>Copyright © 2024</strong><br>
                             Direktorat Dakwah Sosial YPI Al Azhar<br>
-                            <small style="opacity: 0.8;">Created by DAL Army</small>
+                            <small style="opacity: 0.8;">Created by <a href="https://www.instagram.com/donsiyos/" target="_blank" rel="noopener" style="color: inherit; text-decoration: none; font-weight: 600;">DAL Army</a></small>
                         </div>
                     </div>
 
