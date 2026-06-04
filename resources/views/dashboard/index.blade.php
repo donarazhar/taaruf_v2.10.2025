@@ -120,7 +120,7 @@
 
     .feature-grid {
         display: grid;
-        grid-template-columns: repeat(6, 1fr);
+        grid-template-columns: repeat(5, 1fr);
         gap: 20px;
     }
 
@@ -564,8 +564,14 @@
         .desc-mobile { display: block !important; }
 
         .feature-grid {
-            grid-template-columns: repeat(3, 1fr);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
             gap: 10px;
+        }
+
+        .feature-card-modern {
+            width: 30%;
         }
 
         .feature-icon {
@@ -689,12 +695,6 @@
                 <p class="feature-name">Wakaf Al Azhar</p>
             </a>
 
-            <a href="https://donasi.online/masjid-agung-al-azhar/program" target="_blank" class="feature-card-modern">
-                <div class="feature-icon">
-                    <img src="{{ asset('apk/assets/img/demo-img/donasi.png') }}" alt="Donasi">
-                </div>
-                <p class="feature-name">Donasi MAA</p>
-            </a>
 
             <a href="https://www.instagram.com/abhalazhar/?hl=id" target="_blank" class="feature-card-modern">
                 <div class="feature-icon">
