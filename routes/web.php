@@ -7,6 +7,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MasterInputanController;
 use App\Http\Controllers\ProgressController;
 use App\Http\Controllers\TaarufContoller;
+use App\Http\Controllers\MurobiController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
 
@@ -109,5 +110,11 @@ Route::middleware(['auth:user'])->group(function () {
     
     Route::get('/historychat/{id}', [ChatController::class, 'historychat'])->name('historychat');
     Route::get('/deletehistorychat/{id}', [ChatController::class, 'deletehistorychat'])->name('deletehistorychat');
+
+    // Murobi Routes
+    Route::get('/murobi/taaruf', [MurobiController::class, 'taaruf'])->name('murobi.taaruf');
+    Route::get('/murobi/taaruf/{email}/lihatprofile', [MurobiController::class, 'lihatprofile'])->name('murobi.lihatprofile');
+    Route::get('/murobi/progress', [MurobiController::class, 'progress'])->name('murobi.progress');
+    Route::post('/murobi/progress/store', [MurobiController::class, 'storeProgress'])->name('murobi.progress.store');
 
 });

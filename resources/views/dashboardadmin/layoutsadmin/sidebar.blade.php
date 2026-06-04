@@ -624,6 +624,25 @@
                 </a>
             </li>
 
+            <!-- Nav Item - Murobi (Collapse) -->
+            <li class="nav-item {{ request()->is(['murobi/*']) ? 'active' : '' }}">
+                <a class="nav-link" href="#" onclick="toggleMurobiMenu(event)" style="justify-content: space-between;">
+                    <span style="display: flex; align-items: center; gap: 12px;">
+                        <i class="fas fa-user-tie"></i>
+                        <span>Murobi</span>
+                    </span>
+                    <i class="fas fa-chevron-down" id="murobiChevron" style="font-size: 12px; transition: transform 0.3s ease; {{ request()->is(['murobi/*']) ? 'transform: rotate(180deg);' : '' }}"></i>
+                </a>
+                <div class="collapse-inner" id="murobiCollapse" style="{{ request()->is(['murobi/*']) ? 'display: block;' : 'display: none;' }}">
+                    <a class="collapse-item {{ request()->is('murobi/taaruf*') ? 'active' : '' }}" href="/murobi/taaruf">
+                        <i class="fas fa-users" style="margin-right: 8px; font-size: 14px;"></i> Taaruf
+                    </a>
+                    <a class="collapse-item {{ request()->is('murobi/progress*') ? 'active' : '' }}" href="/murobi/progress">
+                        <i class="fas fa-heart" style="margin-right: 8px; font-size: 14px;"></i> Progress
+                    </a>
+                </div>
+            </li>
+
             <!-- Nav Item - Log Chat -->
             <li class="nav-item {{ request()->is(['logchat']) ? 'active' : '' }}">
                 <a class="nav-link" href="/logchat">
@@ -822,6 +841,19 @@
                 }
             });
         });
+        // Murobi Menu Toggle
+        function toggleMurobiMenu(e) {
+            e.preventDefault();
+            const collapse = document.getElementById('murobiCollapse');
+            const chevron = document.getElementById('murobiChevron');
+            if (collapse.style.display === 'none' || collapse.style.display === '') {
+                collapse.style.display = 'block';
+                chevron.style.transform = 'rotate(180deg)';
+            } else {
+                collapse.style.display = 'none';
+                chevron.style.transform = 'rotate(0deg)';
+            }
+        }
     </script>
 
     @stack('myscript')
