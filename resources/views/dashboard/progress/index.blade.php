@@ -3,9 +3,9 @@
 <style>
     /* ===== COLOR VARIABLES ===== */
     :root {
-        --primary-color: #0053C5;
-        --primary-light: #0066FF;
-        --primary-dark: #003D91;
+        --primary-color: #2563EB;
+        --primary-light: #3B82F6;
+        --primary-dark: #1D4ED8;
         --success-color: #10B981;
         --danger-color: #EF4444;
         --warning-color: #F59E0B;
@@ -15,27 +15,27 @@
         --gray-600: #6C757D;
         --gray-700: #495057;
         --gray-800: #343A40;
+        --dark: #1F2937;
         --white: #FFFFFF;
         --radius-sm: 8px;
         --radius-md: 12px;
         --radius-lg: 16px;
-        --radius-xl: 20px;
-        --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.08);
-        --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.12);
-        --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.15);
+        --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+        --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+        --shadow-lg: 0 8px 24px rgba(0,0,0,0.12);
     }
 
-    /* ===== GLOBAL STYLES ===== */
     body {
-        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-        min-height: 100vh;
+        background: #F0F2F5;
     }
 
     /* ===== HEADER SECTION ===== */
     .section.bg-info {
-        background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%) !important;
-        padding: 1.5rem 0 1rem;
+        background: var(--white) !important;
+        padding: 1.25rem 0 1rem;
+        margin-top: 1.5rem;
         margin-bottom: 0.5rem;
+        border-bottom: 1px solid var(--gray-200);
     }
 
     /* ===== PAGE CONTENT ===== */
@@ -73,17 +73,11 @@
     /* ===== NEW MATCH CARD STYLES ===== */
     .match-card {
         background: var(--white);
-        border-radius: var(--radius-xl);
-        box-shadow: var(--shadow-lg);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-sm);
         overflow: hidden;
-        margin-bottom: 2.5rem;
-        transition: transform 0.3s ease;
-        border: 1px solid var(--gray-200);
-    }
-    
-    .match-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        margin-bottom: 1.5rem;
+        border: none;
     }
 
     /* ===== HEADER MATCH INDICATOR ===== */
@@ -94,17 +88,17 @@
     }
 
     .match-header.success {
-        background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(5, 150, 105, 0.1) 100%);
+        background: #ECFDF5;
         border-bottom: 2px solid var(--success-color);
     }
 
     .match-header.danger {
-        background: linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(220, 38, 38, 0.1) 100%);
+        background: #FEF2F2;
         border-bottom: 2px solid var(--danger-color);
     }
 
     .match-header.warning {
-        background: linear-gradient(135deg, rgba(245, 158, 11, 0.1) 0%, rgba(217, 119, 6, 0.1) 100%);
+        background: #FFFBEB;
         border-bottom: 2px solid var(--warning-color);
     }
 
@@ -116,12 +110,11 @@
     }
 
     .profile-avatar {
-        width: 130px;
-        height: 130px;
+        width: 100px;
+        height: 100px;
         border-radius: 50%;
         object-fit: cover;
-        border: 4px solid var(--white);
-        box-shadow: var(--shadow-md);
+        border: 3px solid var(--gray-200);
         transition: transform 0.3s ease;
     }
 
@@ -129,95 +122,87 @@
         transform: scale(1.05);
     }
 
-    /* ===== STATUS BADGES ===== */
     .status-badge {
         display: inline-block;
-        padding: 0.5rem 1rem;
+        padding: 0.35rem 0.85rem;
         border-radius: 20px;
-        font-weight: 700;
-        font-size: 0.85rem;
-        margin: 0.75rem 0;
-        box-shadow: var(--shadow-sm);
-        color: var(--white);
+        font-weight: 600;
+        font-size: 0.8rem;
+        margin: 0.5rem 0;
     }
 
-    .badge-success { background: linear-gradient(135deg, var(--success-color) 0%, #059669 100%); }
-    .badge-primary { background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%); }
-    .badge-secondary { background: linear-gradient(135deg, var(--gray-600) 0%, var(--gray-700) 100%); }
-    .badge-danger { background: linear-gradient(135deg, var(--danger-color) 0%, #dc2626 100%); }
-    .badge-pink { background: linear-gradient(135deg, #ec4899 0%, #db2777 100%); color: white; }
+    .badge-success { background: #ECFDF5; color: #065f46; }
+    .badge-primary { background: #EFF6FF; color: var(--primary-color); }
+    .badge-secondary { background: var(--gray-100); color: var(--gray-600); }
+    .badge-danger { background: #FEF2F2; color: #991b1b; }
+    .badge-pink { background: #FDF2F8; color: #9d174d; }
 
-    /* ===== PROFILE NAME ===== */
     .profile-name {
-        font-size: 1.3rem;
-        font-weight: 800;
-        color: var(--gray-800);
-        margin: 0.75rem 0 0.5rem;
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: var(--dark);
+        margin: 0.5rem 0 0.25rem;
     }
 
     /* ===== ACTION BUTTONS ===== */
     .match-actions {
-        padding: 1.5rem;
-        background: var(--gray-50);
+        padding: 1rem 1.5rem;
+        background: var(--gray-100);
         border-top: 1px solid var(--gray-200);
     }
 
     .btn-action {
-        padding: 0.75rem 1.5rem;
+        padding: 0.6rem 1.25rem;
         border: none;
-        border-radius: 30px;
-        font-weight: 700;
-        font-size: 1rem;
+        border-radius: var(--radius-sm);
+        font-weight: 600;
+        font-size: 0.9rem;
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        gap: 0.75rem;
-        transition: all 0.3s ease;
-        box-shadow: var(--shadow-sm);
+        gap: 0.5rem;
+        transition: all 0.2s ease;
         text-decoration: none;
     }
 
-    .btn-action svg { width: 20px; height: 20px; }
+    .btn-action svg { width: 18px; height: 18px; }
 
     .btn-action.btn-success {
-        background: linear-gradient(135deg, var(--success-color) 0%, #059669 100%);
+        background: var(--success-color);
         color: var(--white);
     }
 
     .btn-action.btn-success:hover:not(.disabled) {
-        transform: translateY(-2px);
-        box-shadow: var(--shadow-md);
+        background: #059669;
         color: var(--white);
     }
 
     .btn-action.btn-danger {
-        background: linear-gradient(135deg, var(--danger-color) 0%, #dc2626 100%);
+        background: var(--danger-color);
         color: var(--white);
     }
 
     .btn-action.btn-danger:hover:not(.disabled) {
-        transform: translateY(-2px);
-        box-shadow: var(--shadow-md);
+        background: #dc2626;
         color: var(--white);
     }
 
     .btn-action.disabled {
         opacity: 0.5;
         cursor: not-allowed;
-        background: var(--gray-300) !important;
+        background: var(--gray-200) !important;
         color: var(--gray-600) !important;
         pointer-events: none;
     }
 
     /* ===== CHAT BUTTON ===== */
     .btn-chat {
-        background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
+        background: var(--primary-color);
         color: var(--white);
     }
 
     .btn-chat:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 25px rgba(0, 83, 197, 0.3);
+        background: var(--primary-dark);
         color: var(--white);
     }
 
@@ -242,11 +227,11 @@
     /* ===== EMPTY STATE ===== */
     .empty-state {
         text-align: center;
-        padding: 4rem 2rem;
+        padding: 3rem 2rem;
         background: var(--white);
-        border-radius: var(--radius-xl);
-        box-shadow: var(--shadow-md);
-        margin: 2rem 0;
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-sm);
+        margin: 1.5rem 0;
     }
 </style>
 
@@ -254,10 +239,10 @@
     <div class="container">
         <div class="row mt-5 pt-4 pt-md-0">
             <div class="col-12 text-center">
-                <h2 style="color: white; font-weight: 800; margin: 0 0 0.5rem 0;">
+                <h2 style="color: var(--dark); font-weight: 700; margin: 0 0 0.25rem 0; font-size: 1.1rem;">
                     💑 Status Progress Ta'aruf
                 </h2>
-                <p style="color: rgba(255,255,255,0.9); margin: 0;">
+                <p style="color: var(--gray-600); margin: 0; font-size: 0.85rem;">
                     Lihat status perkembangan ta'aruf Anda
                 </p>
             </div>

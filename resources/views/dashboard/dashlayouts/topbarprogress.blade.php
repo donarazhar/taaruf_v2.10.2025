@@ -1,24 +1,26 @@
 <style>
     /* ===== COLOR VARIABLES ===== */
     :root {
-        --primary-color: #0053C5;
-        --primary-light: #0066FF;
-        --primary-dark: #003D91;
+        --primary-color: #2563EB;
+        --primary-light: #3B82F6;
+        --primary-dark: #1D4ED8;
         --white: #FFFFFF;
         --gray-100: #F8F9FA;
+        --gray-200: #E9ECEF;
+        --gray-600: #6C757D;
         --gray-800: #343A40;
-        --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.08);
-        --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.12);
-        --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.15);
+        --dark: #1F2937;
+        --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+        --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
         --radius-sm: 8px;
         --radius-md: 12px;
-        --radius-lg: 16px;
     }
 
     /* ===== HEADER AREA ===== */
     #headerArea {
-        background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
-        box-shadow: var(--shadow-md);
+        background: var(--white);
+        box-shadow: var(--shadow-sm);
+        border-bottom: 1px solid var(--gray-200);
         padding: 0.75rem 0;
         position: fixed;
         top: 0;
@@ -34,22 +36,19 @@
 
     /* ===== BACK BUTTON ===== */
     .back-button {
-        width: 45px;
-        height: 45px;
+        width: 40px;
+        height: 40px;
         display: flex;
         align-items: center;
         justify-content: center;
-        background: rgba(255, 255, 255, 0.2);
-        backdrop-filter: blur(10px);
-        border: 2px solid rgba(255, 255, 255, 0.3);
-        border-radius: var(--radius-md);
-        transition: all 0.3s ease;
+        background: var(--gray-100);
+        border: none;
+        border-radius: var(--radius-sm);
+        transition: all 0.2s ease;
     }
 
     .back-button:hover {
-        background: rgba(255, 255, 255, 0.3);
-        transform: translateX(-3px);
-        box-shadow: var(--shadow-sm);
+        background: var(--gray-200);
     }
 
     .back-button a {
@@ -58,15 +57,14 @@
         justify-content: center;
         width: 100%;
         height: 100%;
-        color: var(--white);
+        color: var(--dark);
         text-decoration: none;
     }
 
     .back-button svg {
-        width: 28px;
-        height: 28px;
-        color: var(--white);
-        filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+        width: 24px;
+        height: 24px;
+        color: var(--dark);
     }
 
     /* ===== PAGE TITLE ===== */
@@ -77,11 +75,10 @@
     }
 
     .page-heading h6 {
-        color: var(--white);
-        font-size: 1.1rem;
+        color: var(--dark);
+        font-size: 1rem;
         font-weight: 700;
         margin: 0;
-        text-shadow: 0 2px 4px rgba(0,0,0,0.2);
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -106,20 +103,18 @@
     }
 
     .avatar {
-        width: 45px;
-        height: 45px;
+        width: 40px;
+        height: 40px;
         border-radius: 50%;
         overflow: hidden;
-        border: 3px solid var(--white);
-        box-shadow: var(--shadow-md);
-        transition: all 0.3s ease;
+        border: 2px solid var(--gray-200);
+        transition: all 0.2s ease;
         background: var(--white);
         position: relative;
     }
 
     .avatar:hover {
-        transform: scale(1.1);
-        box-shadow: 0 4px 16px rgba(255,255,255,0.4);
+        border-color: var(--primary-color);
     }
 
     .avatar img {
@@ -148,7 +143,7 @@
 
     /* ===== HEADER SCROLL EFFECT ===== */
     #headerArea.scrolled {
-        box-shadow: 0 4px 20px rgba(0, 83, 197, 0.3);
+        box-shadow: var(--shadow-md);
     }
 
     /* ===== PULSE ANIMATION FOR AVATAR ===== */

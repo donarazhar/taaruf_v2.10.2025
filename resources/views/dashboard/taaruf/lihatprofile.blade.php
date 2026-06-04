@@ -4,9 +4,9 @@
 <style>
     /* ===== COLOR VARIABLES ===== */
     :root {
-        --primary-color: #0053C5;
-        --primary-light: #0066FF;
-        --primary-dark: #003D91;
+        --primary-color: #2563EB;
+        --primary-light: #3B82F6;
+        --primary-dark: #1D4ED8;
         --success-color: #10B981;
         --danger-color: #EF4444;
         --warning-color: #F59E0B;
@@ -21,17 +21,13 @@
         --radius-sm: 8px;
         --radius-md: 12px;
         --radius-lg: 16px;
-        --radius-xl: 20px;
-        --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.08);
-        --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.12);
-        --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.15);
-        --shadow-xl: 0 20px 50px rgba(0, 0, 0, 0.2);
+        --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+        --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+        --shadow-lg: 0 8px 24px rgba(0,0,0,0.12);
     }
 
-    /* ===== GLOBAL STYLES ===== */
     body {
-        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-        min-height: 100vh;
+        background: #F0F2F5;
     }
 
     /* ===== LOGIN WRAPPER ===== */
@@ -43,35 +39,19 @@
     /* ===== PROFILE CONTAINER ===== */
     .profile-container {
         background: var(--white);
-        border-radius: var(--radius-xl);
-        box-shadow: var(--shadow-xl);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-md);
         overflow: hidden;
-        margin-bottom: 2rem;
+        margin-bottom: 1.5rem;
     }
 
     /* ===== PROFILE HEADER ===== */
     .profile-header {
-        background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
-        padding: 3rem 2rem 2rem;
+        background: var(--white);
+        padding: 2rem 1.5rem 1.5rem;
         text-align: center;
         position: relative;
-        overflow: hidden;
-    }
-
-    .profile-header::before {
-        content: '';
-        position: absolute;
-        top: -50%;
-        right: -50%;
-        width: 200%;
-        height: 200%;
-        background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
-        animation: pulse 15s infinite;
-    }
-
-    @keyframes pulse {
-        0%, 100% { transform: scale(1); opacity: 0.5; }
-        50% { transform: scale(1.1); opacity: 0.8; }
+        border-bottom: 1px solid var(--gray-200);
     }
 
     .profile-image-container {
@@ -82,12 +62,11 @@
     }
 
     .profile-image-wrapper {
-        width: 180px;
-        height: 180px;
+        width: 140px;
+        height: 140px;
         border-radius: 50%;
         overflow: hidden;
-        border: 6px solid var(--white);
-        box-shadow: var(--shadow-lg);
+        border: 4px solid var(--gray-200);
         margin: 0 auto;
         position: relative;
     }
@@ -100,35 +79,33 @@
 
     .verified-badge-large {
         position: absolute;
-        bottom: 10px;
-        right: 10px;
-        width: 45px;
-        height: 45px;
+        bottom: 5px;
+        right: 5px;
+        width: 36px;
+        height: 36px;
         background: var(--success-color);
-        border: 4px solid var(--white);
+        border: 3px solid var(--white);
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
         color: var(--white);
-        font-size: 1.2rem;
-        box-shadow: var(--shadow-md);
+        font-size: 1rem;
         z-index: 2;
     }
 
     .profile-name {
-        font-size: 2rem;
-        font-weight: 800;
-        color: var(--white);
-        margin-bottom: 0.5rem;
-        text-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--dark);
+        margin-bottom: 0.35rem;
         z-index: 1;
         position: relative;
     }
 
     .profile-subtitle {
-        color: rgba(255,255,255,0.95);
-        font-size: 1rem;
+        color: var(--gray-600);
+        font-size: 0.9rem;
         line-height: 1.6;
         margin-bottom: 0;
         z-index: 1;
@@ -136,7 +113,8 @@
     }
 
     .profile-subtitle strong {
-        font-weight: 700;
+        font-weight: 600;
+        color: var(--dark);
     }
 
     /* ===== ALERT MESSAGES ===== */
@@ -176,22 +154,15 @@
 
     /* ===== INFO CARDS ===== */
     .info-section {
-        padding: 2rem;
+        padding: 1.5rem;
     }
 
     .info-card {
         background: var(--white);
-        border: 2px solid var(--gray-200);
-        border-radius: var(--radius-lg);
-        padding: 1.5rem;
-        margin-bottom: 1.5rem;
-        transition: all 0.3s ease;
-    }
-
-    .info-card:hover {
-        border-color: var(--primary-light);
-        box-shadow: var(--shadow-md);
-        transform: translateY(-2px);
+        border: 1px solid var(--gray-200);
+        border-radius: var(--radius-md);
+        padding: 1.25rem;
+        margin-bottom: 1rem;
     }
 
     .info-card-header {
@@ -204,23 +175,22 @@
     }
 
     .info-card-icon {
-        width: 45px;
-        height: 45px;
-        background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
-        border-radius: var(--radius-md);
+        width: 36px;
+        height: 36px;
+        background: #EFF6FF;
+        border-radius: 8px;
         display: flex;
         align-items: center;
         justify-content: center;
-        color: var(--white);
-        font-size: 1.3rem;
-        box-shadow: var(--shadow-sm);
+        color: var(--primary-color);
+        font-size: 1.1rem;
         flex-shrink: 0;
     }
 
     .info-card-title {
-        font-size: 1.2rem;
+        font-size: 1rem;
         font-weight: 700;
-        color: var(--primary-color);
+        color: var(--dark);
         margin: 0;
     }
 
@@ -252,11 +222,11 @@
 
     /* ===== CRITERIA CARD ===== */
     .criteria-card {
-        background: linear-gradient(135deg, var(--gray-100) 0%, var(--gray-200) 100%);
-        border: 2px solid var(--gray-300);
-        border-radius: var(--radius-lg);
-        padding: 1.5rem;
-        margin-bottom: 1.5rem;
+        background: var(--gray-100);
+        border: none;
+        border-radius: var(--radius-md);
+        padding: 1rem;
+        margin-bottom: 1rem;
     }
 
     .criteria-item {
@@ -280,15 +250,15 @@
     }
 
     .criteria-icon {
-        width: 35px;
-        height: 35px;
-        background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
+        width: 32px;
+        height: 32px;
+        background: #EFF6FF;
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
-        color: var(--white);
-        font-size: 0.9rem;
+        color: var(--primary-color);
+        font-size: 0.8rem;
         flex-shrink: 0;
     }
 
@@ -329,44 +299,42 @@
 
     /* ===== ACTION BUTTON ===== */
     .action-section {
-        padding: 0 2rem 2rem;
+        padding: 0 1.5rem 1.5rem;
     }
 
     .btn-progress {
         width: 100%;
-        padding: 1rem 2rem;
+        padding: 0.85rem 1.5rem;
         border: none;
-        border-radius: var(--radius-md);
-        font-weight: 700;
-        font-size: 1.1rem;
-        transition: all 0.3s ease;
+        border-radius: var(--radius-sm);
+        font-weight: 600;
+        font-size: 1rem;
+        transition: all 0.2s ease;
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: 0.75rem;
-        box-shadow: var(--shadow-md);
+        gap: 0.5rem;
     }
 
     .btn-progress.btn-primary {
-        background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
+        background: var(--primary-color);
         color: var(--white);
     }
 
     .btn-progress.btn-primary:hover:not(:disabled) {
-        background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary-color) 100%);
-        transform: translateY(-2px);
-        box-shadow: var(--shadow-lg);
+        background: var(--primary-dark);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(37,99,235,0.3);
     }
 
     .btn-progress.btn-danger {
-        background: linear-gradient(135deg, var(--danger-color) 0%, #dc2626 100%);
-        color: var(--white);
+        background: var(--gray-200);
+        color: var(--gray-600);
         cursor: not-allowed;
-        opacity: 0.7;
     }
 
     .btn-progress i {
-        font-size: 1.2rem;
+        font-size: 1.1rem;
     }
 
     /* ===== STATS BADGES ===== */
@@ -381,21 +349,21 @@
     }
 
     .stat-badge {
-        background: rgba(255,255,255,0.2);
-        backdrop-filter: blur(10px);
-        border: 2px solid rgba(255,255,255,0.3);
-        border-radius: var(--radius-md);
-        padding: 0.75rem 1.25rem;
-        color: var(--white);
+        background: #EFF6FF;
+        border: 1px solid #BFDBFE;
+        border-radius: var(--radius-sm);
+        padding: 0.5rem 1rem;
+        color: var(--dark);
         font-weight: 600;
+        font-size: 0.85rem;
         display: flex;
         align-items: center;
-        gap: 0.5rem;
-        box-shadow: var(--shadow-sm);
+        gap: 0.4rem;
     }
 
     .stat-badge i {
-        font-size: 1.2rem;
+        font-size: 0.9rem;
+        color: var(--primary-color);
     }
 
     /* ===== RESPONSIVE ===== */
@@ -516,14 +484,12 @@
 
     /* ===== HOVER GLOW EFFECT ===== */
     .btn-progress.btn-primary:hover:not(:disabled) {
-        box-shadow: 0 8px 25px rgba(0, 83, 197, 0.4);
+        box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
     }
 </style>
 @endpush
 
 @section('content')
-<!-- Login Wrapper Area-->
-<div class="login-wrapper d-flex align-items-center justify-content-center">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-12 col-sm-10 col-md-8 col-lg-7 col-xl-6">
@@ -733,5 +699,4 @@
             </div>
         </div>
     </div>
-</div>
 @endsection

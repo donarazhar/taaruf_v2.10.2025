@@ -2,11 +2,11 @@
 
 @push('styles')
 <style>
-    /* ===== MODERN PROFILE STYLES ===== */
+    /* ===== CLEAN PROFILE STYLES ===== */
     :root {
-        --primary-color: #0053C5;
-        --primary-light: #0066FF;
-        --primary-dark: #003D91;
+        --primary-color: #2563EB;
+        --primary-light: #3B82F6;
+        --primary-dark: #1D4ED8;
         --success-color: #10B981;
         --danger-color: #EF4444;
         --warning-color: #F59E0B;
@@ -23,49 +23,24 @@
     }
 
     body {
-        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        background: #F0F2F5;
     }
 
-    .page-content-wrapper {
-        background: transparent;
-        min-height: 100vh;
-        padding: 1.5rem 0 3rem;
-    }
 
     /* ===== USER INFO CARD ===== */
     .user-info-card {
         border: none;
         border-radius: var(--radius);
-        box-shadow: var(--shadow-lg);
+        box-shadow: 0 1px 3px rgba(0,0,0,0.08);
         overflow: hidden;
-        margin-bottom: 1.5rem;
-        background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
+        margin-bottom: 1rem;
+        background: var(--white);
+        border-left: 4px solid var(--primary-color);
         position: relative;
     }
 
     .user-info-card::before {
-        content: '';
-        position: absolute;
-        top: -50%;
-        right: -50%;
-        width: 200%;
-        height: 200%;
-        background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
-        animation: pulse 15s infinite;
-    }
-
-    @keyframes pulse {
-
-        0%,
-        100% {
-            transform: scale(1);
-            opacity: 0.5;
-        }
-
-        50% {
-            transform: scale(1.1);
-            opacity: 0.8;
-        }
+        display: none;
     }
 
     .user-info-card .card-body {
@@ -89,52 +64,51 @@
     }
 
     .user-info h5 {
-        color: white;
-        font-weight: 800;
+        color: var(--dark);
+        font-weight: 700;
         margin-bottom: 0.25rem;
-        font-size: 1.2rem;
-        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        font-size: 1.1rem;
     }
 
     .user-info p {
-        color: rgba(255, 255, 255, 0.95);
-        font-size: 0.9rem;
+        color: var(--gray-600);
+        font-size: 0.85rem;
         margin: 0;
     }
 
     .user-info .badge {
-        background: rgba(255, 255, 255, 0.25);
-        backdrop-filter: blur(10px);
-        color: white;
-        font-weight: 700;
-        padding: 0.4rem 0.85rem;
+        background: #EFF6FF;
+        color: var(--primary-color);
+        font-weight: 600;
+        padding: 0.35rem 0.75rem;
         font-size: 0.75rem;
-        border: 2px solid rgba(255, 255, 255, 0.3);
+        border: 1px solid #BFDBFE;
     }
 
     /* ===== WELCOME BANNER ===== */
     .welcome-banner {
-        background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
+        background: #EFF6FF;
+        border: 1px solid #BFDBFE;
         border-radius: var(--radius);
-        padding: 1.25rem;
-        margin-bottom: 1.5rem;
-        box-shadow: var(--shadow);
-        color: white;
+        padding: 1rem 1.25rem;
+        margin-bottom: 1rem;
+        color: var(--dark);
         display: flex;
         align-items: center;
         gap: 1rem;
     }
 
     .welcome-icon {
-        width: 50px;
-        height: 50px;
-        background: rgba(255, 255, 255, 0.2);
-        border-radius: 12px;
+        width: 40px;
+        height: 40px;
+        background: var(--primary-color);
+        border-radius: 10px;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 1.5rem;
+        font-size: 1.2rem;
         flex-shrink: 0;
+        color: white;
     }
 
     .welcome-text {
@@ -143,14 +117,15 @@
 
     .welcome-text h6 {
         margin: 0;
-        font-weight: 700;
-        font-size: 1.1rem;
+        font-weight: 600;
+        font-size: 0.95rem;
+        color: var(--dark);
     }
 
     .welcome-text p {
         margin: 0;
-        font-size: 0.85rem;
-        opacity: 0.9;
+        font-size: 0.8rem;
+        color: var(--gray-600);
     }
 
     /* ===== ALERTS ===== */
@@ -231,34 +206,23 @@
     }
 
     .accordion-button {
-        background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
-        color: white;
+        background: var(--white);
+        color: var(--dark);
         font-weight: 700;
-        padding: 1.25rem 1.5rem;
+        padding: 1rem 1.25rem;
         border: none;
-        font-size: 1.05rem;
-        letter-spacing: 0.3px;
+        font-size: 0.95rem;
+        letter-spacing: 0.2px;
         position: relative;
         overflow: hidden;
     }
 
     .accordion-button::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-        transition: left 0.5s;
-    }
-
-    .accordion-button:hover::before {
-        left: 100%;
+        display: none;
     }
 
     .accordion-button:not(.collapsed) {
-        background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary-color) 100%);
+        background: var(--primary-color);
         color: white;
         box-shadow: none;
     }
@@ -268,17 +232,17 @@
         border: none;
     }
 
-    .accordion-button::after {
-        filter: brightness(0) invert(1);
-        transition: transform 0.3s ease;
-    }
-
     .accordion-button:not(.collapsed)::after {
+        filter: brightness(0) invert(1);
         transform: rotate(180deg);
     }
 
+    .accordion-button::after {
+        transition: transform 0.3s ease;
+    }
+
     .accordion-body {
-        padding: 2rem;
+        padding: 1.5rem;
         background: #FFFFFF;
     }
 
@@ -422,6 +386,7 @@
         border-radius: 10px;
         outline: none;
         -webkit-appearance: none;
+        appearance: none;
         position: relative;
     }
 
@@ -528,38 +493,22 @@
 
     /* ===== BUTTON STYLING ===== */
     .btn-info {
-        background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
+        background: var(--primary-color);
         border: none;
-        border-radius: 12px;
-        padding: 1rem 2rem;
-        font-weight: 700;
-        font-size: 1.05rem;
-        letter-spacing: 0.5px;
-        transition: all 0.3s ease;
-        box-shadow: var(--shadow);
-        position: relative;
-        overflow: hidden;
-    }
-
-    .btn-info::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-        transition: left 0.5s;
-    }
-
-    .btn-info:hover::before {
-        left: 100%;
+        border-radius: 10px;
+        padding: 0.85rem 1.5rem;
+        font-weight: 600;
+        font-size: 0.95rem;
+        letter-spacing: 0.3px;
+        transition: all 0.2s ease;
+        color: white;
     }
 
     .btn-info:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 25px rgba(0, 83, 197, 0.4);
-        background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary-color) 100%);
+        background: var(--primary-dark);
+        color: white;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
     }
 
     .btn-info:active {
@@ -571,12 +520,11 @@
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        width: 32px;
-        height: 32px;
-        background: rgba(255, 255, 255, 0.2);
-        border-radius: 8px;
-        margin-right: 0.75rem;
-        font-size: 1.1rem;
+        width: 28px;
+        height: 28px;
+        border-radius: 6px;
+        margin-right: 0.5rem;
+        font-size: 1rem;
     }
 
     /* ===== FILE INPUT CUSTOM ===== */
@@ -617,21 +565,21 @@
     }
 
     .section-header-icon {
-        width: 40px;
-        height: 40px;
-        background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
-        border-radius: 10px;
+        width: 36px;
+        height: 36px;
+        background: #EFF6FF;
+        border-radius: 8px;
         display: flex;
         align-items: center;
         justify-content: center;
-        color: white;
-        font-size: 1.2rem;
+        color: var(--primary-color);
+        font-size: 1.1rem;
         flex-shrink: 0;
     }
 
     .section-header-text h6 {
         margin: 0;
-        font-size: 1.1rem;
+        font-size: 0.95rem;
         font-weight: 700;
         color: var(--gray-800);
     }
@@ -721,7 +669,6 @@
 @endpush
 
 @section('content')
-<div class="page-content-wrapper">
     <div class="container">
         <!-- User Information Card -->
         <div class="card user-info-card mb-3">
@@ -1216,8 +1163,8 @@
             </div>
 
         </div>
+        </div>
     </div>
-</div>
 @endsection
 
 <!-- JavaScript -->

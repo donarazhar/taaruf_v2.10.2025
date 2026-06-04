@@ -4,9 +4,9 @@
 <style>
     /* ===== COLOR VARIABLES ===== */
     :root {
-        --primary-color: #0053C5;
-        --primary-light: #0066FF;
-        --primary-dark: #003D91;
+        --primary-color: #2563EB;
+        --primary-light: #3B82F6;
+        --primary-dark: #1D4ED8;
         --success-color: #10B981;
         --danger-color: #EF4444;
         --warning-color: #F59E0B;
@@ -21,58 +21,54 @@
         --radius-sm: 8px;
         --radius-md: 12px;
         --radius-lg: 16px;
-        --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.08);
-        --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.12);
-        --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.15);
+        --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
+        --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+        --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
     }
 
     /* ===== GLOBAL STYLES ===== */
     body {
-        background-color: var(--white) !important;
-    }
-
-    .page-content-wrapper {
-        background: var(--white);
-        min-height: 100vh;
-        padding: 1.5rem 0;
+        background-color: #F0F2F5 !important;
     }
 
     /* ===== HEADER SECTION ===== */
     .taaruf-header {
-        background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
+        background: var(--white);
         border-radius: var(--radius-lg);
-        padding: 2rem;
-        margin-bottom: 2rem;
-        box-shadow: var(--shadow-lg);
-        text-align: center;
-        color: var(--white);
+        padding: 1.25rem 1.5rem;
+        margin-bottom: 1rem;
+        box-shadow: var(--shadow-sm);
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        border-left: 4px solid var(--primary-color);
     }
 
     .taaruf-header h1 {
-        font-size: 1.75rem;
-        font-weight: 800;
-        margin-bottom: 0.5rem;
-        color: var(--white);
+        font-size: 1.1rem;
+        font-weight: 700;
+        margin-bottom: 0.15rem;
+        color: var(--dark);
     }
 
     .taaruf-header p {
-        font-size: 1rem;
+        font-size: 0.85rem;
         margin: 0;
-        opacity: 0.95;
+        color: var(--gray-600);
     }
 
     .taaruf-header .icon {
-        font-size: 2.5rem;
-        margin-bottom: 1rem;
+        font-size: 1.75rem;
+        flex-shrink: 0;
     }
 
     /* ===== FILTER SECTION ===== */
     .filter-section {
         background: var(--white);
-        border: 2px solid var(--gray-200);
+        border: none;
         border-radius: var(--radius-lg);
-        padding: 1.5rem;
-        margin-bottom: 2rem;
+        padding: 1rem 1.25rem;
+        margin-bottom: 1rem;
         box-shadow: var(--shadow-sm);
     }
 
@@ -116,54 +112,46 @@
     /* ===== STATS BAR ===== */
     .stats-bar {
         display: flex;
-        gap: 1rem;
-        margin-bottom: 2rem;
+        gap: 0.75rem;
+        margin-bottom: 1rem;
         flex-wrap: wrap;
     }
 
     .stat-card {
         flex: 1;
-        min-width: 150px;
+        min-width: 100px;
         background: var(--white);
-        border: 2px solid var(--gray-200);
+        border: none;
         border-radius: var(--radius-md);
-        padding: 1rem;
+        padding: 0.75rem;
         text-align: center;
-        transition: all 0.3s ease;
-    }
-
-    .stat-card:hover {
-        border-color: var(--primary-color);
-        transform: translateY(-2px);
-        box-shadow: var(--shadow-md);
+        box-shadow: var(--shadow-sm);
     }
 
     .stat-number {
-        font-size: 2rem;
-        font-weight: 800;
+        font-size: 1.5rem;
+        font-weight: 700;
         color: var(--primary-color);
         display: block;
     }
 
     .stat-label {
-        font-size: 0.85rem;
+        font-size: 0.75rem;
         color: var(--gray-600);
         font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
     }
 
     /* ===== PROFILE CARD MODERN ===== */
     .blog-wrapper {
-        margin-bottom: 2rem;
+        margin-bottom: 1.5rem;
     }
 
     .profile-card {
         background: var(--white);
-        border: 2px solid var(--gray-200);
-        border-radius: var(--radius-lg);
+        border: none;
+        border-radius: var(--radius-md);
         overflow: hidden;
-        transition: all 0.3s ease;
+        transition: all 0.2s ease;
         height: 100%;
         display: flex;
         flex-direction: column;
@@ -171,9 +159,8 @@
     }
 
     .profile-card:hover {
-        transform: translateY(-8px);
+        transform: translateY(-4px);
         box-shadow: var(--shadow-lg);
-        border-color: var(--primary-light);
     }
 
     .profile-image-wrapper {
@@ -200,17 +187,15 @@
 
     .profile-badge {
         position: absolute;
-        top: 0.75rem;
-        left: 0.75rem;
-        background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: linear-gradient(transparent, rgba(0,0,0,0.7));
         color: var(--white);
-        padding: 0.4rem 0.8rem;
-        border-radius: 20px;
-        font-size: 0.75rem;
-        font-weight: 700;
-        box-shadow: var(--shadow-md);
+        padding: 2rem 0.75rem 0.5rem;
+        font-size: 0.8rem;
+        font-weight: 600;
         z-index: 10;
-        max-width: calc(100% - 1.5rem);
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
@@ -277,49 +262,45 @@
 
     .btn-view {
         flex: 1;
-        padding: 0.65rem 1rem;
-        background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
+        padding: 0.55rem 0.75rem;
+        background: var(--primary-color);
         color: var(--white);
         border: none;
-        border-radius: var(--radius-md);
-        font-weight: 700;
-        font-size: 0.85rem;
+        border-radius: var(--radius-sm);
+        font-weight: 600;
+        font-size: 0.8rem;
         text-decoration: none;
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: 0.5rem;
-        transition: all 0.3s ease;
+        gap: 0.35rem;
+        transition: all 0.2s ease;
     }
 
     .btn-view:hover {
-        transform: translateY(-2px);
-        box-shadow: var(--shadow-md);
+        background: var(--primary-dark);
         color: var(--white);
-        background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary-color) 100%);
     }
 
     .btn-like {
-        width: 45px;
-        height: 45px;
+        width: 38px;
+        height: 38px;
         padding: 0;
-        background: var(--white);
+        background: #FEF2F2;
         color: var(--danger-color);
-        border: 2px solid var(--danger-color);
-        border-radius: var(--radius-md);
-        font-size: 1.2rem;
+        border: none;
+        border-radius: var(--radius-sm);
+        font-size: 1rem;
         display: flex;
         align-items: center;
         justify-content: center;
-        transition: all 0.3s ease;
+        transition: all 0.2s ease;
         text-decoration: none;
     }
 
     .btn-like:hover {
         background: var(--danger-color);
         color: var(--white);
-        transform: scale(1.1);
-        box-shadow: var(--shadow-md);
     }
 
     /* ===== EMPTY STATE ===== */
@@ -520,14 +501,15 @@
 @endpush
 
 @section('content')
-<div class="page-content-wrapper">
     <div class="container">
         
         <!-- Header Section -->
         <div class="taaruf-header">
             <div class="icon">💑</div>
-            <h1>Ta'aruf Jodohku</h1>
-            <p>Temukan pasangan terbaik untuk masa depan Anda</p>
+            <div>
+                <h1>Ta'aruf Jodohku</h1>
+                <p>Temukan pasangan terbaik untuk masa depan Anda</p>
+            </div>
         </div>
 
         @php
@@ -657,7 +639,6 @@
             @endif
         </div>
     </div>
-</div>
 @endsection
 
 @push('myscript')
