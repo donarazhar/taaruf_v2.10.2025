@@ -43,6 +43,14 @@
     <style>
         /* ===== MODERN DASHBOARD STYLES ===== */
         :root {
+            --primary-color: #0053C5;
+            --primary-light: #3375D1;
+            --primary-dark: #003B8C;
+            --primary: #0053C5;
+            --success-color: #10B981;
+            --warning-color: #F59E0B;
+            --danger-color: #EF4444;
+            --info-color: #3B82F6;
             --black: #000000;
             --gray-900: #1A1A1A;
             --gray-800: #2D2D2D;
