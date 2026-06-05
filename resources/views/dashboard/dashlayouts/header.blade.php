@@ -252,7 +252,7 @@
                 padding: 0 16px;
             }
 
-            .user-info {
+            .header-content .user-info {
                 display: none;
             }
 
