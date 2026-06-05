@@ -13,6 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
+        if (!Schema::hasTable('karyawan')) {
         Schema::create('karyawan', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('nip')->unique();
@@ -27,6 +28,7 @@ return new class extends Migration
             $table->string('email_verification_token')->nullable();
             $table->timestamps();
         });
+        }
     }
 
     /**

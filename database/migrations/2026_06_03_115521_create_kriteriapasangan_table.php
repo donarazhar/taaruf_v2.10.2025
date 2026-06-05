@@ -13,6 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
+        if (!Schema::hasTable('kriteriapasangan')) {
         Schema::create('kriteriapasangan', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('email');
@@ -23,6 +24,7 @@ return new class extends Migration
             $table->string('kriteriasuku')->nullable();
             $table->timestamps();
         });
+        }
     }
 
     /**

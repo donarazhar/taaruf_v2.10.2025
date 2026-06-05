@@ -13,6 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
+        if (!Schema::hasTable('pertanyaan')) {
         Schema::create('pertanyaan', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('email')->nullable();
@@ -20,6 +21,7 @@ return new class extends Migration
             $table->date('tgl_tanya')->nullable();
             $table->timestamps();
         });
+        }
     }
 
     /**

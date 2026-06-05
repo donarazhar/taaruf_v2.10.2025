@@ -13,6 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
+        if (!Schema::hasTable('chat')) {
         Schema::create('chat', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('pesan')->nullable();
@@ -21,6 +22,7 @@ return new class extends Migration
             $table->timestamp('tgl_pesan')->nullable();
             $table->timestamps();
         });
+        }
     }
 
     /**

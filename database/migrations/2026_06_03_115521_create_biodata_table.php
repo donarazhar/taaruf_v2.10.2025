@@ -13,6 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
+        if (!Schema::hasTable('biodata')) {
         Schema::create('biodata', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('email')->nullable();
@@ -32,6 +33,7 @@ return new class extends Migration
             $table->string('video')->nullable();
             $table->timestamps();
         });
+        }
     }
 
     /**

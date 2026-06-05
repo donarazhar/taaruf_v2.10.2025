@@ -13,11 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
+        if (!Schema::hasTable('proses')) {
         Schema::create('proses', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedInteger('id_progress')->nullable();
             $table->timestamps();
         });
+        }
     }
 
     /**

@@ -13,6 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
+        if (!Schema::hasTable('likedislike')) {
         Schema::create('likedislike', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedInteger('id_progress')->nullable();
@@ -20,6 +21,7 @@ return new class extends Migration
             $table->unsignedSmallInteger('status')->nullable();
             $table->timestamps();
         });
+        }
     }
 
     /**

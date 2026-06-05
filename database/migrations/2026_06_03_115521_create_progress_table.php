@@ -13,6 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
+        if (!Schema::hasTable('progress')) {
         Schema::create('progress', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('email_auth')->nullable();
@@ -21,6 +22,7 @@ return new class extends Migration
             $table->tinyInteger('status')->nullable();
             $table->timestamps();
         });
+        }
     }
 
     /**
