@@ -59,6 +59,9 @@ Route::middleware(['auth:karyawan'])->group(function () {
     Route::get('/dashboard/berita/{slug}', [DashboardController::class, 'showBerita'])->name('dashboard.berita.show');
     Route::get('/dashboard/layanan/{slug}', [DashboardController::class, 'showLayanan'])->name('dashboard.layanan.show');
 
+    // Notifications
+    Route::get('/notifications/check', [DashboardController::class, 'checkNotifications'])->name('notifications.check');
+
     // Profile
     Route::get('/profile', [DashboardController::class, 'profile'])->name('profile');
     Route::post('/profile/{email}/updateprofile', [DashboardController::class, 'updateprofile']);

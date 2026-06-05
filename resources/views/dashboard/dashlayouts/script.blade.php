@@ -247,6 +247,56 @@
         // ===== CONSOLE LOG BRANDING =====
         console.log('%c Ta\'aruf Jodohku v.2.0 ', 'background: #000; color: #fff; padding: 10px 20px; font-size: 16px; font-weight: bold;');
         console.log('%c YPI Al Azhar © 2024 ', 'background: #f5f5f5; color: #000; padding: 5px 20px; font-size: 12px;');
+
+        // ===== PUSH NOTIFICATIONS (POLLING) =====
+        function setupNotifications() {
+            if ("Notification" in window) {
+                // Request permission if not granted
+                if (Notification.permission !== "granted" && Notification.permission !== "denied") {
+                    Notification.requestPermission();
+                }
+
+                // Check interval (every 10 seconds)
+                setInterval(function() {
+                    $.ajax({
+                        url: '/notifications/check',
+                        method: 'GET',
+                        success: function(response) {
+                            if (response.chat) {
+                                let lastChatId = localStorage.getItem('last_chat_id');
+                                if (!lastChatId || parseInt(lastChatId) < response.chat.id) {
+                                    localStorage.setItem('last_chat_id', response.chat.id);
+                                    if (Notification.permission === "granted") {
+                                        new Notification(response.chat.title, {
+                                            body: response.chat.body,
+                                            icon: '{{ asset("logo.png") }}'
+                                        });
+                                    }
+                                }
+                            }
+                            if (response.progress) {
+                                let lastProgressId = localStorage.getItem('last_progress_id');
+                                if (!lastProgressId || parseInt(lastProgressId) < response.progress.id) {
+                                    localStorage.setItem('last_progress_id', response.progress.id);
+                                    if (Notification.permission === "granted") {
+                                        new Notification(response.progress.title, {
+                                            body: response.progress.body,
+                                            icon: '{{ asset("logo.png") }}'
+                                        });
+                                    }
+                                }
+                            }
+                        },
+                        error: function() {
+                            // Silently fail (might be logged out or network error)
+                        }
+                    });
+                }, 10000); // 10 seconds
+            }
+        }
+
+        // Initialize notifications
+        setTimeout(setupNotifications, 2000); // Delay initialization slightly
     });
 
     // ===== PWA INSTALL PROMPT =====

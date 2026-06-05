@@ -44,6 +44,11 @@
                 <a href="/proseslogout" title="Logout" onclick="return confirm('Yakin ingin logout?')" class="text-danger">
                     <i class="bi bi-box-arrow-right"></i> Logout
                 </a>
+
+                <!-- Dark Mode Toggle -->
+                <button class="dark-mode-toggle btn btn-sm border-0 bg-transparent ms-2" id="darkModeBtn" title="Toggle Dark Mode">
+                    <i class="bi bi-moon-fill text-dark fs-5" id="darkModeIcon"></i>
+                </button>
             </div>
 
             <!-- Hamburger Button -->
@@ -100,6 +105,34 @@
                     const icon = hamburgerBtn.querySelector('i');
                     icon.classList.remove('bi-x');
                     icon.classList.add('bi-list');
+                }
+            });
+        }
+
+        // Dark Mode Logic
+        const darkModeBtn = document.getElementById('darkModeBtn');
+        const darkModeIcon = document.getElementById('darkModeIcon');
+        
+        // Check local storage for preference
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark-mode');
+            if(darkModeIcon) {
+                darkModeIcon.classList.replace('bi-moon-fill', 'bi-sun-fill');
+                darkModeIcon.classList.replace('text-dark', 'text-warning');
+            }
+        }
+
+        if (darkModeBtn) {
+            darkModeBtn.addEventListener('click', () => {
+                document.body.classList.toggle('dark-mode');
+                if (document.body.classList.contains('dark-mode')) {
+                    localStorage.setItem('theme', 'dark');
+                    darkModeIcon.classList.replace('bi-moon-fill', 'bi-sun-fill');
+                    darkModeIcon.classList.replace('text-dark', 'text-warning');
+                } else {
+                    localStorage.setItem('theme', 'light');
+                    darkModeIcon.classList.replace('bi-sun-fill', 'bi-moon-fill');
+                    darkModeIcon.classList.replace('text-warning', 'text-dark');
                 }
             });
         }

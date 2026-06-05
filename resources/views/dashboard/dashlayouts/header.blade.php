@@ -60,11 +60,26 @@
             --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.16);
             --shadow-xl: 0 12px 32px rgba(0, 0, 0, 0.2);
             --radius-sm: 8px;
-            --radius-md: 12px;
             --radius-lg: 16px;
             --radius-xl: 24px;
             --header-height: 70px;
             --footer-height: 70px;
+        }
+
+        /* ===== DARK MODE ===== */
+        body.dark-mode {
+            --gray-900: #FAFAFA;
+            --gray-800: #E5E5E5;
+            --gray-700: #CCCCCC;
+            --gray-600: #999999;
+            --gray-500: #808080;
+            --gray-400: #666666;
+            --gray-300: #404040;
+            --gray-200: #2D2D2D;
+            --gray-100: #1A1A1A;
+            --gray-50: #121212;
+            --white: #1A1A1A;
+            --black: #FFFFFF;
         }
 
         * {

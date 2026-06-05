@@ -538,7 +538,7 @@
                 <i class="fa fa-filter"></i>
                 Filter & Pencarian Lanjutan
             </div>
-            <form action="{{ route('taaruf') }}" method="GET">
+            <form action="{{ route('taaruf') }}" method="GET" id="filterForm">
                 <div class="row g-3">
                     <!-- Search Input -->
                     <div class="col-md-3">
@@ -685,8 +685,97 @@
                     <p>Saat ini belum ada profil {{ $authUser->jenkel == 'pria' ? 'wanita' : 'pria' }} yang tersedia</p>
                 </div>
             @endif
-        </div>
+        <!-- Content End -->
     </div>
+
+    @push('scripts')
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const filterForm = document.getElementById('filterForm');
+        const profileGrid = document.getElementById('profileGrid');
+
+        // Shimmer Animation Style
+        if (!document.getElementById('shimmer-style')) {
+            const style = document.createElement('style');
+            style.id = 'shimmer-style';
+            style.innerHTML = '@keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }';
+            document.head.appendChild(style);
+        }
+
+        if(filterForm && profileGrid) {
+            filterForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Show Skeleton Loading
+                const skeletonHTML = `
+                    ${Array(10).fill().map(() => `
+                    <div class="col profile-item">
+                        <div class="profile-card" style="box-shadow: none; border: 1px solid var(--gray-200);">
+                            <div class="profile-image-wrapper" style="background: var(--gray-200);">
+                                <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(90deg, var(--gray-200) 0%, var(--gray-300) 50%, var(--gray-200) 100%); background-size: 200% 100%; animation: shimmer 1.5s infinite;"></div>
+                            </div>
+                            <div class="profile-card-body" style="padding: 1rem;">
+                                <div style="height: 15px; width: 50%; background: var(--gray-200); border-radius: 4px; margin-bottom: 12px; position: relative; overflow: hidden;">
+                                    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.4) 50%, transparent 100%); background-size: 200% 100%; animation: shimmer 1.5s infinite;"></div>
+                                </div>
+                                <div style="height: 10px; width: 80%; background: var(--gray-200); border-radius: 4px; margin-bottom: 8px; position: relative; overflow: hidden;">
+                                    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.4) 50%, transparent 100%); background-size: 200% 100%; animation: shimmer 1.5s infinite;"></div>
+                                </div>
+                                <div style="height: 10px; width: 60%; background: var(--gray-200); border-radius: 4px; position: relative; overflow: hidden;">
+                                    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.4) 50%, transparent 100%); background-size: 200% 100%; animation: shimmer 1.5s infinite;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    `).join('')}
+                `;
+                
+                profileGrid.innerHTML = skeletonHTML;
+
+                const formData = new FormData(filterForm);
+                const queryString = new URLSearchParams(formData).toString();
+                
+                // Update URL bar without reload
+                window.history.pushState({}, '', '?' + queryString);
+
+                fetch('{{ route('taaruf') }}?' + queryString, {
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                })
+                .then(response => response.text())
+                .then(html => {
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(html, 'text/html');
+                    const newGrid = doc.getElementById('profileGrid');
+                    
+                    if (newGrid) {
+                        profileGrid.innerHTML = newGrid.innerHTML;
+                    } else {
+                        profileGrid.innerHTML = '<div class="col-12 text-center py-5"><h5 class="text-muted">Tidak ada data ditemukan</h5></div>';
+                    }
+                    
+                    // Replace pagination if exists
+                    const currentPagination = document.querySelector('.pagination-wrapper') || document.querySelector('.d-flex.justify-content-center.mt-4');
+                    const newPagination = doc.querySelector('.pagination-wrapper') || doc.querySelector('.d-flex.justify-content-center.mt-4');
+                    
+                    if(currentPagination && newPagination) {
+                        currentPagination.innerHTML = newPagination.innerHTML;
+                    } else if(newPagination) {
+                        profileGrid.parentElement.insertAdjacentHTML('beforeend', newPagination.outerHTML);
+                    } else if(currentPagination) {
+                        currentPagination.innerHTML = '';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                    profileGrid.innerHTML = '<div class="col-12 text-center py-5"><h5 class="text-danger"><i class="bi bi-exclamation-triangle"></i> Terjadi kesalahan saat memuat data. Periksa koneksi internet Anda.</h5></div>';
+                });
+            });
+        }
+    });
+    </script>
+    @endpush
 @endsection
 
 @push('myscript')

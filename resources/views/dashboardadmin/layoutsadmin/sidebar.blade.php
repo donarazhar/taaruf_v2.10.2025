@@ -59,6 +59,27 @@
             --radius-xl: 20px;
         }
 
+        /* ===== DARK MODE ADMIN ===== */
+        body.dark-mode {
+            --gray-900: #f8fafc;
+            --gray-800: #f1f5f9;
+            --gray-700: #e2e8f0;
+            --gray-600: #cbd5e1;
+            --gray-500: #94a3b8;
+            --gray-400: #64748b;
+            --gray-300: #475569;
+            --gray-200: #334155;
+            --gray-100: #1e293b;
+            --gray-50: #0f172a;
+            --white: #1e293b;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --primary-light: #334155;
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -708,6 +729,13 @@
                 <i class="fas fa-bars"></i>
             </button>
 
+            <div style="display: flex; align-items: center; gap: 15px; margin-left: auto; margin-right: 20px;">
+                <!-- Dark Mode Toggle -->
+                <button class="btn btn-sm border-0 bg-transparent" id="darkModeBtnAdmin" title="Toggle Dark Mode">
+                    <i class="fas fa-moon" id="darkModeIconAdmin" style="font-size: 1.2rem; color: var(--gray-600);"></i>
+                </button>
+            </div>
+
             <!-- User Dropdown -->
             <div class="user-dropdown" id="userDropdown">
                 <span class="user-name">{{ $datauser->name }}</span>
@@ -803,9 +831,40 @@
                 e.stopPropagation();
                 this.classList.toggle('show');
             });
+        }
 
-            document.addEventListener('click', function() {
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            if (userDropdown && !userDropdown.contains(e.target)) {
                 userDropdown.classList.remove('show');
+            }
+        });
+
+        // Dark Mode Logic Admin
+        const darkModeBtnAdmin = document.getElementById('darkModeBtnAdmin');
+        const darkModeIconAdmin = document.getElementById('darkModeIconAdmin');
+        
+        // Check local storage for preference
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark-mode');
+            if(darkModeIconAdmin) {
+                darkModeIconAdmin.classList.replace('fa-moon', 'fa-sun');
+                darkModeIconAdmin.style.color = '#f59e0b'; // warning color
+            }
+        }
+
+        if (darkModeBtnAdmin) {
+            darkModeBtnAdmin.addEventListener('click', () => {
+                document.body.classList.toggle('dark-mode');
+                if (document.body.classList.contains('dark-mode')) {
+                    localStorage.setItem('theme', 'dark');
+                    darkModeIconAdmin.classList.replace('fa-moon', 'fa-sun');
+                    darkModeIconAdmin.style.color = '#f59e0b';
+                } else {
+                    localStorage.setItem('theme', 'light');
+                    darkModeIconAdmin.classList.replace('fa-sun', 'fa-moon');
+                    darkModeIconAdmin.style.color = 'var(--gray-600)';
+                }
             });
         }
 

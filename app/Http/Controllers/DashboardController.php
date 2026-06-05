@@ -234,6 +234,45 @@ class DashboardController extends Controller
         return view('dashboard.profile.index', compact('dataprofile', 'dataprofilelengkap', 'menuAktif'));
     }
 
+    public function checkNotifications()
+    {
+        $emailAuth = Auth::guard('karyawan')->user()->email;
+
+        // Get latest chat received by user
+        $latestChat = DB::table('chat')
+            ->join('progress', 'progress.id', '=', 'chat.id_progress')
+            ->leftJoin('karyawan', 'karyawan.email', '=', 'chat.email_sender')
+            ->where(function ($query) use ($emailAuth) {
+                $query->where('progress.email_auth', $emailAuth)
+                      ->orWhere('progress.email_profile', $emailAuth);
+            })
+            ->where('chat.email_sender', '!=', $emailAuth)
+            ->select('chat.id', 'chat.pesan', 'karyawan.nama')
+            ->orderBy('chat.id', 'desc')
+            ->first();
+
+        // Get latest progress involving user
+        $latestProgress = DB::table('progress')
+            ->leftJoin('karyawan', 'karyawan.email', '=', 'progress.email_auth')
+            ->where('progress.email_profile', $emailAuth)
+            ->select('progress.id', 'karyawan.nama')
+            ->orderBy('progress.id', 'desc')
+            ->first();
+
+        return response()->json([
+            'chat' => $latestChat ? [
+                'id' => $latestChat->id,
+                'title' => 'Pesan Baru dari ' . $latestChat->nama,
+                'body' => \Illuminate\Support\Str::limit($latestChat->pesan, 30)
+            ] : null,
+            'progress' => $latestProgress ? [
+                'id' => $latestProgress->id,
+                'title' => 'Kandidat Baru',
+                'body' => $latestProgress->nama . ' telah menjadikan Anda kandidat pasangannya.'
+            ] : null
+        ]);
+    }
+
     public function taaruf(Request $request)
     {
         // Mendapatkan AUTH
