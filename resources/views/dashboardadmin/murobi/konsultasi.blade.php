@@ -364,12 +364,6 @@
                 <h3><i class="fas fa-list"></i> Daftar Permintaan Konsultasi</h3>
             </div>
 
-        <!-- Existing Pairs Table -->
-        <div class="pairs-table-card">
-            <div class="pairs-table-header">
-                <h3><i class="fas fa-list"></i> Daftar Pasangan yang Sudah Dipasangkan</h3>
-            </div>
-
             @if($listKonsultasi->count() > 0)
                 <div style="overflow-x: auto;">
                     <table class="pairs-table">
