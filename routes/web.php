@@ -116,6 +116,8 @@ Route::middleware(['auth:user'])->group(function () {
     // Murobi Routes
     Route::get('/murobi/taaruf', [MurobiController::class, 'taaruf'])->name('murobi.taaruf');
     Route::get('/murobi/taaruf/{email}/lihatprofile', [MurobiController::class, 'lihatprofile'])->name('murobi.lihatprofile');
+    Route::get('/murobi/progress', [MurobiController::class, 'progress'])->name('murobi.progress');
+    Route::post('/murobi/progress/store', [MurobiController::class, 'storeProgress'])->name('murobi.progress.store');
     
     // Murobi Rekomendasi
     Route::get('/murobi/rekomendasi', [MurobiController::class, 'rekomendasi'])->name('murobi.rekomendasi');

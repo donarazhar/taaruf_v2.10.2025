@@ -655,6 +655,9 @@
                     <a class="collapse-item {{ request()->is('murobi/taaruf*') ? 'active' : '' }}" href="/murobi/taaruf">
                         <i class="fas fa-users" style="margin-right: 8px; font-size: 14px;"></i> Daftar Profile
                     </a>
+                    <a class="collapse-item {{ request()->is('murobi/progress*') ? 'active' : '' }}" href="/murobi/progress">
+                        <i class="fas fa-heart" style="margin-right: 8px; font-size: 14px;"></i> Menta'aruf
+                    </a>
                     <a class="collapse-item {{ request()->is('murobi/rekomendasi*') ? 'active' : '' }}" href="/murobi/rekomendasi">
                         <i class="fas fa-bullhorn" style="margin-right: 8px; font-size: 14px;"></i> Rekomendasi
                     </a>

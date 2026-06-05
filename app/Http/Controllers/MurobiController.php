@@ -93,7 +93,10 @@ class MurobiController extends Controller
         return view('dashboardadmin.murobi.lihatprofile', compact('datauser', 'karyawan', 'emailprofile'));
     }
 
-    public function rekomendasi()
+    /**
+     * Halaman Progress Murobi - Form untuk memasangkan Pria & Wanita
+     */
+    public function progress()
     {
         $email = Auth::guard('user')->user()->email;
         $datauser = DB::table('users')->where('email', $email)->first();
@@ -105,6 +108,102 @@ class MurobiController extends Controller
         $shadowProfile = DB::table('progress_shadow')->pluck('email_profile')->toArray();
 
         $inProgressEmails = array_unique(array_merge($progressAuth, $progressProfile, $shadowAuth, $shadowProfile));
+
+        // Ambil semua Pria terverifikasi
+        $listPria = DB::table('karyawan')
+            ->where('jenkel', 'pria')
+            ->where('status', '1')
+            ->orderBy('nama', 'asc')
+            ->get();
+
+        // Ambil semua Wanita terverifikasi
+        $listWanita = DB::table('karyawan')
+            ->where('jenkel', 'wanita')
+            ->where('status', '1')
+            ->orderBy('nama', 'asc')
+            ->get();
+
+        // Ambil daftar pasangan yang sudah dipasangkan
+        $existingPairs = DB::table('progress')
+            ->leftJoin('karyawan as pria', 'progress.email_auth', '=', 'pria.email')
+            ->leftJoin('karyawan as wanita', 'progress.email_profile', '=', 'wanita.email')
+            ->select(
+                'progress.id',
+                'progress.progress_tgl',
+                'progress.status',
+                'pria.nama as nama_pria',
+                'pria.foto as foto_pria',
+                'pria.nip as nip_pria',
+                'wanita.nama as nama_wanita',
+                'wanita.foto as foto_wanita',
+                'wanita.nip as nip_wanita'
+            )
+            ->orderBy('progress.progress_tgl', 'desc')
+            ->get();
+
+        return view('dashboardadmin.murobi.progress', compact(
+            'datauser',
+            'listPria',
+            'listWanita',
+            'existingPairs',
+            'inProgressEmails'
+        ));
+    }
+
+    /**
+     * Store Progress - Memasangkan Pria dengan Wanita
+     */
+    public function storeProgress(Request $request)
+    {
+        $request->validate([
+            'email_pria' => 'required|email|exists:karyawan,email',
+            'email_wanita' => 'required|email|exists:karyawan,email',
+        ], [
+            'email_pria.required' => 'Silakan pilih karyawan pria.',
+            'email_pria.exists' => 'Data karyawan pria tidak ditemukan.',
+            'email_wanita.required' => 'Silakan pilih karyawan wanita.',
+            'email_wanita.exists' => 'Data karyawan wanita tidak ditemukan.',
+        ]);
+
+        $emailPria = $request->email_pria;
+        $emailWanita = $request->email_wanita;
+
+        // Cek apakah sudah ada progress aktif antara keduanya
+        $existing = DB::table('progress')
+            ->where(function ($query) use ($emailPria, $emailWanita) {
+                $query->where('email_auth', $emailPria)
+                    ->where('email_profile', $emailWanita);
+            })
+            ->orWhere(function ($query) use ($emailPria, $emailWanita) {
+                $query->where('email_auth', $emailWanita)
+                    ->where('email_profile', $emailPria);
+            })
+            ->first();
+
+        if ($existing) {
+            return Redirect::back()->with('error', 'Pasangan ini sudah ada dalam progress ta\'aruf.');
+        }
+
+        try {
+            $data = [
+                'email_auth' => $emailPria,
+                'email_profile' => $emailWanita,
+                'progress_tgl' => now(),
+                'status' => 1
+            ];
+
+            DB::table('progress')->insert($data);
+
+            return Redirect::back()->with('success', 'Berhasil memasangkan pasangan ta\'aruf!');
+        } catch (\Exception $e) {
+            return Redirect::back()->with('error', 'Terjadi kesalahan saat memasangkan: ' . $e->getMessage());
+        }
+    }
+
+    public function rekomendasi()
+    {
+        $email = Auth::guard('user')->user()->email;
+        $datauser = DB::table('users')->where('email', $email)->first();
 
         // Ambil semua Pria terverifikasi
         $listPria = DB::table('karyawan')
@@ -133,7 +232,7 @@ class MurobiController extends Controller
             ->orderBy('murobbi_recommendations.created_at', 'desc')
             ->get();
 
-        return view('dashboardadmin.murobi.rekomendasi', compact('datauser', 'listPria', 'listWanita', 'recommendations', 'inProgressEmails'));
+        return view('dashboardadmin.murobi.rekomendasi', compact('datauser', 'listPria', 'listWanita', 'recommendations'));
     }
 
     public function storeRekomendasi(Request $request)
