@@ -200,62 +200,6 @@ class MurobiController extends Controller
         }
     }
 
-    public function rekomendasi()
-    {
-        $email = Auth::guard('user')->user()->email;
-        $datauser = DB::table('users')->where('email', $email)->first();
-
-        // Ambil semua Pria terverifikasi
-        $listPria = DB::table('karyawan')
-            ->where('jenkel', 'pria')
-            ->where('status', '1')
-            ->orderBy('nama', 'asc')
-            ->get();
-
-        // Ambil semua Wanita terverifikasi
-        $listWanita = DB::table('karyawan')
-            ->where('jenkel', 'wanita')
-            ->where('status', '1')
-            ->orderBy('nama', 'asc')
-            ->get();
-
-        $recommendations = DB::table('murobbi_recommendations')
-            ->join('users', 'murobbi_recommendations.murobbi_id', '=', 'users.id')
-            ->leftJoin('karyawan as pria', 'murobbi_recommendations.karyawan_pria_email', '=', 'pria.email')
-            ->leftJoin('karyawan as wanita', 'murobbi_recommendations.karyawan_wanita_email', '=', 'wanita.email')
-            ->select(
-                'murobbi_recommendations.*',
-                'users.name as murobbi_name',
-                'pria.nama as nama_pria',
-                'wanita.nama as nama_wanita'
-            )
-            ->orderBy('murobbi_recommendations.created_at', 'desc')
-            ->get();
-
-        return view('dashboardadmin.murobi.rekomendasi', compact('datauser', 'listPria', 'listWanita', 'recommendations'));
-    }
-
-    public function storeRekomendasi(Request $request)
-    {
-        $request->validate([
-            'email_pria' => 'required|email',
-            'email_wanita' => 'required|email',
-        ]);
-
-        $murobbiId = Auth::guard('user')->user()->id;
-
-        DB::table('murobbi_recommendations')->insert([
-            'murobbi_id' => $murobbiId,
-            'karyawan_pria_email' => $request->email_pria,
-            'karyawan_wanita_email' => $request->email_wanita,
-            'status' => 'pending',
-            'created_at' => now(),
-            'updated_at' => now()
-        ]);
-
-        return Redirect::back()->with('success', 'Rekomendasi berhasil dikirim ke peserta terkait!');
-    }
-
     public function konsultasi()
     {
         $email = Auth::guard('user')->user()->email;

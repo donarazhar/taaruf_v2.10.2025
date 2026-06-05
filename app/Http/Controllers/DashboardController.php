@@ -111,30 +111,13 @@ class DashboardController extends Controller
             return $user;
         });
 
-        // --- Rekomendasi Murobbi ---
-        $murobbiRecommendations = DB::table('murobbi_recommendations')
-            ->join('users', 'murobbi_recommendations.murobbi_id', '=', 'users.id')
-            ->select('murobbi_recommendations.*', 'users.name as murobbi_name')
-            ->where(function ($query) use ($email) {
-                $query->where('karyawan_pria_email', $email)
-                      ->orWhere('karyawan_wanita_email', $email);
-            })
-            ->get();
-            
-        $murobbiRecommendations->transform(function ($rec) use ($email) {
-            $targetEmail = ($rec->karyawan_pria_email == $email) ? $rec->karyawan_wanita_email : $rec->karyawan_pria_email;
-            $targetUser = DB::table('karyawan')->where('email', $targetEmail)->first();
-            $rec->target_user = $targetUser;
-            return $rec;
-        });
-
         // --- Riwayat Konsultasi ---
         $riwayatKonsultasi = DB::table('konsultasi')
             ->where('karyawan_email', $email)
             ->orderBy('created_at', 'desc')
             ->get();
 
-        return view('dashboard.index', compact('dataprofile', 'databerita', 'datayoutube', 'menuAktif', 'datalayanan', 'dataslider', 'kandidatHarian', 'murobbiRecommendations', 'riwayatKonsultasi'));
+        return view('dashboard.index', compact('dataprofile', 'databerita', 'datayoutube', 'menuAktif', 'datalayanan', 'dataslider', 'kandidatHarian', 'riwayatKonsultasi'));
     }
 
     public function showBerita($slug)

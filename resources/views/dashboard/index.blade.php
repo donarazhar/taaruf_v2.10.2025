@@ -966,38 +966,6 @@
         </div>
     </div>
 
-    @if(isset($murobbiRecommendations) && $murobbiRecommendations->count() > 0)
-    <!-- ===== REKOMENDASI MUROBBI ===== -->
-    <div class="container mb-4">
-        <div class="alert alert-info shadow-sm" style="border-left: 4px solid var(--primary-color); border-radius: var(--radius-md);">
-            <h5 class="fw-bold mb-3"><i class="bi bi-bell-fill text-primary me-2"></i> Rekomendasi Murobbi</h5>
-            <div class="row g-3">
-                @foreach($murobbiRecommendations as $rec)
-                <div class="col-12 col-md-6">
-                    <div class="d-flex align-items-center bg-white p-3 rounded border">
-                        <div class="me-3">
-                            @php
-                                $target = $rec->target_user;
-                                $path = !empty($target->foto) ? Storage::url('uploads/karyawan/img/' . $target->foto) : '';
-                                $defaultAvatar = 'https://ui-avatars.com/api/?name=' . urlencode($target->nama) . '&background=random&color=fff&size=100';
-                            @endphp
-                            <img src="{{ !empty($path) ? url($path) : $defaultAvatar }}" alt="{{ $target->nama }}" style="width: 60px; height: 60px; object-fit: cover; border-radius: 50%;">
-                        </div>
-                        <div>
-                            <p class="mb-1 text-dark" style="font-size: 0.9rem;">
-                                <strong>Murobbi {{ $rec->murobbi_name }}</strong> merekomendasikan profil ini untuk Anda:
-                            </p>
-                            <h6 class="fw-bold mb-1">{{ $target->nama }}</h6>
-                            <a href="/taaruf/{{ $target->email }}/lihatprofile" class="btn btn-sm btn-primary mt-1" style="border-radius: 20px; font-size: 0.75rem;">Lihat Profil</a>
-                        </div>
-                    </div>
-                </div>
-                @endforeach
-            </div>
-        </div>
-    </div>
-    @endif
-
     <!-- ===== KONSULTASI PRA-TA'ARUF ===== -->
     <div class="container mb-4">
         <div class="row g-4">
