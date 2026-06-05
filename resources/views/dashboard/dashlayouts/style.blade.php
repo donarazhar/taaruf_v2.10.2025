@@ -45,9 +45,66 @@
                     <i class="bi bi-box-arrow-right"></i> Logout
                 </a>
             </div>
+
+            <!-- Hamburger Button -->
+            <button class="hamburger-btn" id="hamburgerBtn" aria-label="Toggle Menu">
+                <i class="bi bi-list"></i>
+            </button>
         </div>
     </div>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay" id="mobileMenu">
+        <a href="{{ route('dashboard') }}" class="{{ request()->is('dashboard') ? 'active' : '' }}">
+            <i class="bi bi-house-door"></i> Home
+        </a>
+        <a href="{{ route('profile') }}" class="{{ request()->is('profile') ? 'active' : '' }}">
+            <i class="bi bi-person"></i> Profile
+        </a>
+        @if (isset($menuAktif) && $menuAktif)
+            <a href="{{ route('taaruf') }}" class="{{ request()->is('taaruf') ? 'active' : '' }}">
+                <i class="bi bi-heart"></i> Ta'aruf
+            </a>
+            <a href="{{ route('progress') }}" class="{{ request()->is('progress') ? 'active' : '' }}">
+                <i class="bi bi-clock-history"></i> Progress
+            </a>
+        @endif
+        <a href="/proseslogout" onclick="return confirm('Yakin ingin logout?')" class="text-danger">
+            <i class="bi bi-box-arrow-right"></i> Logout
+        </a>
+    </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const hamburgerBtn = document.getElementById('hamburgerBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        if (hamburgerBtn && mobileMenu) {
+            hamburgerBtn.addEventListener('click', function() {
+                mobileMenu.classList.toggle('active');
+                const icon = hamburgerBtn.querySelector('i');
+                if (mobileMenu.classList.contains('active')) {
+                    icon.classList.remove('bi-list');
+                    icon.classList.add('bi-x');
+                } else {
+                    icon.classList.remove('bi-x');
+                    icon.classList.add('bi-list');
+                }
+            });
+
+            // Close menu when clicking outside
+            document.addEventListener('click', function(event) {
+                if (!hamburgerBtn.contains(event.target) && !mobileMenu.contains(event.target) && mobileMenu.classList.contains('active')) {
+                    mobileMenu.classList.remove('active');
+                    const icon = hamburgerBtn.querySelector('i');
+                    icon.classList.remove('bi-x');
+                    icon.classList.add('bi-list');
+                }
+            });
+        }
+    });
+</script>
 
 <!-- Page Content -->
 <div class="page-content-wrapper">

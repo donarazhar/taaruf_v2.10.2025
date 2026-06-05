@@ -343,7 +343,85 @@
             border-radius: 2px;
         }
 
-        @media (min-width: 769px) {
+        /* ===== HAMBURGER & MOBILE MENU ===== */
+        .hamburger-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            color: var(--black);
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .mobile-menu-overlay {
+            position: fixed;
+            top: var(--header-height);
+            left: 0;
+            right: 0;
+            background: var(--white);
+            box-shadow: var(--shadow-md);
+            padding: 15px 20px;
+            display: none;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 998;
+            border-top: 1px solid var(--gray-200);
+        }
+
+        .mobile-menu-overlay.active {
+            display: flex;
+            animation: slideDown 0.3s ease-out;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .mobile-menu-overlay a {
+            color: var(--gray-700);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 15px;
+            border-radius: var(--radius-sm);
+            transition: all 0.3s ease;
+        }
+
+        .mobile-menu-overlay a:hover,
+        .mobile-menu-overlay a.active {
+            background: var(--gray-100);
+            color: var(--primary-color);
+        }
+
+        /* Tablet view (769px - 991px) */
+        @media (min-width: 769px) and (max-width: 991px) {
+            .desktop-navbar {
+                display: none !important;
+            }
+            .hamburger-btn {
+                display: block;
+            }
+        }
+
+        /* Mobile view (<= 768px) */
+        @media (max-width: 768px) {
+            .desktop-navbar {
+                display: none !important;
+            }
+            .hamburger-btn {
+                display: none !important; /* Hide on mobile because bottom menu is used */
+            }
+            .mobile-menu-overlay {
+                display: none !important;
+            }
+        }
+
+        @media (min-width: 992px) {
             .desktop-navbar {
                 display: flex;
             }
@@ -352,6 +430,9 @@
             }
             .header-content {
                 justify-content: space-between;
+            }
+            .mobile-menu-overlay {
+                display: none !important;
             }
         }
     </style>
