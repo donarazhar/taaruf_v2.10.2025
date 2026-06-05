@@ -10,6 +10,58 @@ use Illuminate\Support\Facades\Redirect;
 
 class DashboardController extends Controller
 {
+    public function edukasi()
+    {
+        $email = Auth::guard('karyawan')->user()->email;
+        $dataprofile = DB::table('karyawan')->where('email', $email)->first();
+
+        $cekemail = DB::table('karyawan')
+            ->leftJoin('biodata', 'karyawan.email', '=', 'biodata.email')
+            ->leftJoin('kriteriapasangan', 'karyawan.email', '=', 'kriteriapasangan.email')
+            ->select('karyawan.email', 'biodata.email as biodata_email', 'kriteriapasangan.email as kriteriapasangan_email')
+            ->where('karyawan.email', $email)
+            ->first();
+
+        $menuAktif = false;
+        if ($cekemail && $cekemail->biodata_email !== null && $cekemail->kriteriapasangan_email !== null) {
+            $menuAktif = true;
+        }
+
+        $listVideo = DB::table('edukasi')->where('status', 'aktif')->where('jenis', 'video')->orderBy('created_at', 'desc')->get();
+        $listArtikel = DB::table('edukasi')->where('status', 'aktif')->where('jenis', 'artikel')->orderBy('created_at', 'desc')->get();
+        $listKelas = DB::table('edukasi')->where('status', 'aktif')->where('jenis', 'kelas')->orderBy('created_at', 'desc')->get();
+
+        $riwayatDaftar = DB::table('pendaftaran_edukasi')
+            ->where('karyawan_email', $email)
+            ->pluck('status_pendaftaran', 'edukasi_id')
+            ->toArray();
+
+        return view('dashboard.edukasi.index', compact('dataprofile', 'menuAktif', 'listVideo', 'listArtikel', 'listKelas', 'riwayatDaftar'));
+    }
+
+    public function daftarEdukasi(Request $request, $id)
+    {
+        $email = Auth::guard('karyawan')->user()->email;
+        
+        $cekDaftar = DB::table('pendaftaran_edukasi')
+            ->where('edukasi_id', $id)
+            ->where('karyawan_email', $email)
+            ->first();
+
+        if ($cekDaftar) {
+            return redirect()->back()->with('error', 'Anda sudah mendaftar di kelas ini.');
+        }
+
+        DB::table('pendaftaran_edukasi')->insert([
+            'edukasi_id' => $id,
+            'karyawan_email' => $email,
+            'status_pendaftaran' => 'menunggu',
+            'created_at' => now()
+        ]);
+
+        return redirect()->back()->with('success', 'Berhasil mendaftar kelas! Silakan tunggu konfirmasi.');
+    }
+
     public function index()
     {
         // Mendapatkan AUTH

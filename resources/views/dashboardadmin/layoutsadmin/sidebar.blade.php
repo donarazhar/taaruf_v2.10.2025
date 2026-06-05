@@ -682,6 +682,9 @@
                     <a class="collapse-item {{ request()->is('murobi/konsultasi*') ? 'active' : '' }}" href="/murobi/konsultasi">
                         <i class="fas fa-comments" style="margin-right: 8px; font-size: 14px;"></i> Konsultasi
                     </a>
+                    <a class="collapse-item {{ request()->is('murobi/edukasi*') ? 'active' : '' }}" href="/murobi/edukasi">
+                        <i class="fas fa-book-open" style="margin-right: 8px; font-size: 14px;"></i> Kelola Edukasi
+                    </a>
                 </div>
             </li>
 

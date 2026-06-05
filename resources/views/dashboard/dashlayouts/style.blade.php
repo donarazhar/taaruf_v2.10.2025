@@ -40,6 +40,10 @@
                         <i class="bi bi-clock-history"></i> Progress
                     </a>
                 @endif
+                
+                <a href="{{ route('dashboard.edukasi') }}" class="{{ request()->is('edukasi') ? 'active' : '' }}" title="Edukasi Pranikah">
+                    <i class="bi bi-book"></i> Edukasi
+                </a>
 
                 <a href="/proseslogout" title="Logout" onclick="return confirm('Yakin ingin logout?')" class="text-danger">
                     <i class="bi bi-box-arrow-right"></i> Logout
@@ -74,6 +78,9 @@
                 <i class="bi bi-clock-history"></i> Progress
             </a>
         @endif
+        <a href="{{ route('dashboard.edukasi') }}" class="{{ request()->is('edukasi') ? 'active' : '' }}">
+            <i class="bi bi-book"></i> Edukasi
+        </a>
         <a href="/proseslogout" onclick="return confirm('Yakin ingin logout?')" class="text-danger">
             <i class="bi bi-box-arrow-right"></i> Logout
         </a>

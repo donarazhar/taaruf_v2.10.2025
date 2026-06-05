@@ -228,4 +228,70 @@ class MurobiController extends Controller
 
         return Redirect::back()->with('success', 'Konsultasi berhasil diupdate!');
     }
+
+    public function edukasi()
+    {
+        $email = Auth::guard('user')->user()->email;
+        $datauser = DB::table('users')->where('email', $email)->first();
+
+        $listEdukasi = DB::table('edukasi')->orderBy('created_at', 'desc')->get();
+        
+        $pendaftar = DB::table('pendaftaran_edukasi')
+            ->join('karyawan', 'pendaftaran_edukasi.karyawan_email', '=', 'karyawan.email')
+            ->select('pendaftaran_edukasi.*', 'karyawan.nama')
+            ->get()
+            ->groupBy('edukasi_id');
+
+        return view('dashboardadmin.edukasi.index', compact('datauser', 'listEdukasi', 'pendaftar'));
+    }
+
+    public function storeEdukasi(Request $request)
+    {
+        $request->validate([
+            'judul' => 'required',
+            'jenis' => 'required|in:video,artikel,kelas',
+            'konten' => 'required',
+        ]);
+
+        DB::table('edukasi')->insert([
+            'judul' => $request->judul,
+            'jenis' => $request->jenis,
+            'konten' => $request->konten,
+            'thumbnail' => $request->thumbnail,
+            'tanggal_kegiatan' => $request->tanggal_kegiatan,
+            'kuota' => $request->kuota,
+            'status' => $request->status ?? 'aktif',
+            'created_at' => now()
+        ]);
+
+        return Redirect::back()->with('success', 'Materi edukasi berhasil ditambahkan!');
+    }
+
+    public function updateEdukasi(Request $request, $id)
+    {
+        $request->validate([
+            'judul' => 'required',
+            'jenis' => 'required|in:video,artikel,kelas',
+            'konten' => 'required',
+        ]);
+
+        DB::table('edukasi')->where('id', $id)->update([
+            'judul' => $request->judul,
+            'jenis' => $request->jenis,
+            'konten' => $request->konten,
+            'thumbnail' => $request->thumbnail,
+            'tanggal_kegiatan' => $request->tanggal_kegiatan,
+            'kuota' => $request->kuota,
+            'status' => $request->status ?? 'aktif',
+            'updated_at' => now()
+        ]);
+
+        return Redirect::back()->with('success', 'Materi edukasi berhasil diupdate!');
+    }
+
+    public function deleteEdukasi($id)
+    {
+        DB::table('edukasi')->where('id', $id)->delete();
+        return Redirect::back()->with('success', 'Materi edukasi berhasil dihapus!');
+    }
 }
