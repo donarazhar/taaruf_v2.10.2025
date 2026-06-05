@@ -208,14 +208,13 @@
                     </li>
                 @endif
 
-                <!-- Logout -->
-                <li class="{{ request()->is('proseslogout') ? 'active' : '' }}">
-                    <a href="/proseslogout" title="Logout" onclick="return confirm('Yakin ingin logout?')">
+                <!-- Lainnya -->
+                <li class="{{ request()->is('lainnya') || request()->is('edukasi') || request()->is('konsultasi') || request()->is('kandidat-harian') ? 'active' : '' }}">
+                    <a href="{{ route('dashboard.lainnya') }}" title="Lainnya">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
-                            <path
-                                d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm10.5 10V4a.5.5 0 0 0-.832-.374l-4.5 4a.5.5 0 0 0 0 .748l4.5 4A.5.5 0 0 0 10.5 12" />
+                            <path d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5v-3zm8 0A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 5.5v-3zm-8 8A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5v-3zm8 0A1.5 1.5 0 0 1 10.5 9h3a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 13.5v-3z"/>
                         </svg>
-                        <span>Logout</span>
+                        <span>Lainnya</span>
                     </a>
                 </li>
             </ul>

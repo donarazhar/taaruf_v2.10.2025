@@ -59,6 +59,11 @@
             <button class="hamburger-btn" id="hamburgerBtn" aria-label="Toggle Menu">
                 <i class="bi bi-list"></i>
             </button>
+
+            <!-- Mobile Logout Button -->
+            <a href="/proseslogout" title="Logout" onclick="return confirm('Yakin ingin logout?')" class="d-block d-md-none text-danger ms-auto" style="font-size: 1.5rem; margin-top: -5px;">
+                <i class="bi bi-box-arrow-right"></i>
+            </a>
         </div>
     </div>
 
