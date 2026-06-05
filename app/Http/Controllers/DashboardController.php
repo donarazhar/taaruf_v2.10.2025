@@ -234,8 +234,8 @@ class DashboardController extends Controller
             });
         }
 
-        // Pagination per 10 data
-        $users = $query->paginate(10)->appends($request->all());
+        // Pagination per 12 data
+        $users = $query->paginate(12)->appends($request->all());
 
         $cekemail = DB::table('karyawan')
             ->leftJoin('biodata', 'karyawan.email', '=', 'biodata.email')
