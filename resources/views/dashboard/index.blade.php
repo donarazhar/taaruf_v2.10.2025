@@ -966,7 +966,48 @@
         </div>
     </div>
 
-
+    @if(isset($kandidatHarian) && $kandidatHarian->count() > 0)
+    <!-- ===== KANDIDAT PILIHAN HARI INI ===== -->
+    <div class="container mb-4">
+        <div class="section-header d-flex justify-content-between align-items-center" style="border-radius: var(--radius-lg) var(--radius-lg) 0 0;">
+            <h4 class="mb-0"><i class="bi bi-star-fill text-warning me-2"></i> Kandidat Pilihan Hari Ini</h4>
+            <a href="{{ route('taaruf') }}" class="btn btn-sm btn-light text-primary fw-bold" style="border-radius: 20px;">Lihat Semua</a>
+        </div>
+        <div class="bg-white p-4" style="border-radius: 0 0 var(--radius-lg) var(--radius-lg); box-shadow: var(--shadow-sm); border: 1px solid var(--gray-200); border-top: none;">
+            <div class="row g-4">
+                @foreach($kandidatHarian as $kandidat)
+                <div class="col-md-6">
+                    <div class="d-flex bg-light p-3 rounded-3" style="border: 1px solid var(--gray-200); transition: all 0.3s;" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='var(--shadow-md)';" onmouseout="this.style.transform='none'; this.style.boxShadow='none';">
+                        <div class="me-3 position-relative">
+                            @php
+                                $path = !empty($kandidat->foto) ? Storage::url('uploads/karyawan/img/' . $kandidat->foto) : '';
+                                $defaultAvatar = 'https://ui-avatars.com/api/?name=' . urlencode($kandidat->nama) . '&background=random&color=fff&size=200';
+                            @endphp
+                            <img src="{{ !empty($path) ? url($path) : $defaultAvatar }}" alt="{{ $kandidat->nama }}" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; border: 2px solid var(--primary-color);">
+                            @if(isset($kandidat->match_percentage))
+                            <span class="badge bg-primary position-absolute bottom-0 start-50 translate-middle-x" style="font-size: 0.65rem; padding: 3px 6px; white-space: nowrap; border: 1px solid white;">
+                                {{ $kandidat->match_percentage }}% Cocok
+                            </span>
+                            @endif
+                        </div>
+                        <div class="d-flex flex-column justify-content-center w-100">
+                            <h6 class="mb-1 fw-bold text-dark">{{ \Illuminate\Support\Str::limit($kandidat->nama, 20) }}</h6>
+                            <p class="mb-2 text-muted" style="font-size: 0.8rem; line-height: 1.3;">
+                                {{ $kandidat->pendidikan ?? 'Pendidikan -' }} &bull; 
+                                {{ $kandidat->suku ?? 'Suku -' }} &bull; 
+                                {{ !empty($kandidat->tgllahir) ? \Carbon\Carbon::parse($kandidat->tgllahir)->age . ' Thn' : '-' }}
+                            </p>
+                            <a href="{{ route('taaruf') }}" class="btn btn-outline-primary btn-sm mt-auto align-self-start" style="font-size: 0.75rem; border-radius: 20px;">
+                                Cari Tahu <i class="bi bi-arrow-right ms-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                @endforeach
+            </div>
+        </div>
+    </div>
+    @endif
 
     <!-- News Section -->
     <div class="container news-section">

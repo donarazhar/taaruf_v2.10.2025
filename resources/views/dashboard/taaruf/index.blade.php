@@ -600,6 +600,13 @@
                                 <!-- Image Section -->
                                 <div class="profile-image-wrapper">
                                     <div class="skeleton-image" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(90deg, var(--gray-100) 0%, var(--gray-200) 50%, var(--gray-100) 100%); background-size: 200% 100%; animation: shimmer 1.5s infinite; z-index: 1;"></div>
+                                    
+                                    @if(isset($user->match_percentage))
+                                    <div style="position: absolute; top: 10px; left: 10px; z-index: 3; background-color: rgba(0, 83, 197, 0.85); color: white; padding: 4px 10px; border-radius: 20px; font-size: 0.8rem; font-weight: bold; backdrop-filter: blur(4px); box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
+                                        <i class="bi bi-heart-fill text-danger me-1"></i> Kecocokan {{ $user->match_percentage }}%
+                                    </div>
+                                    @endif
+
                                     @php
                                         $path = !empty($user->foto) ? Storage::url('uploads/karyawan/img/' . $user->foto) : '';
                                         $defaultAvatar = 'https://ui-avatars.com/api/?name=' . urlencode($user->nama) . '&background=random&color=fff&size=200';

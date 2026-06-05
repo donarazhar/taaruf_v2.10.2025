@@ -93,7 +93,25 @@ class DashboardController extends Controller
             $menuAktif = false;
         }
 
-        return view('dashboard.index', compact('dataprofile', 'databerita', 'datayoutube', 'menuAktif', 'datalayanan', 'dataslider'));
+        // --- Kandidat Pilihan Hari Ini (Daily Recommendation) ---
+        $oppositeGender = $dataprofile->jenkel == 'pria' ? 'wanita' : 'pria';
+        $myCriteria = DB::table('kriteriapasangan')->where('email', $email)->first();
+
+        $kandidatHarian = DB::table('karyawan')
+            ->leftJoin('biodata', 'karyawan.email', '=', 'biodata.email')
+            ->select('karyawan.*', 'biodata.pendidikan', 'biodata.suku', 'biodata.tgllahir', 'biodata.tinggi', 'biodata.berat')
+            ->where('karyawan.jenkel', $oppositeGender)
+            ->where('karyawan.status', '1')
+            ->inRandomOrder(date('Ymd')) // Random stabil per hari
+            ->limit(2)
+            ->get();
+            
+        $kandidatHarian->transform(function($user) use ($myCriteria) {
+            $user->match_percentage = $this->calculateMatchPercentage($user, $myCriteria);
+            return $user;
+        });
+
+        return view('dashboard.index', compact('dataprofile', 'databerita', 'datayoutube', 'menuAktif', 'datalayanan', 'dataslider', 'kandidatHarian'));
     }
 
     public function showBerita($slug)
@@ -223,7 +241,7 @@ class DashboardController extends Controller
         // Setup query utama dengan join ke tabel biodata untuk keperluan filter
         $query = DB::table('karyawan')
             ->leftJoin('biodata', 'karyawan.email', '=', 'biodata.email')
-            ->select('karyawan.*', 'biodata.pendidikan', 'biodata.suku', 'biodata.tgllahir')
+            ->select('karyawan.*', 'biodata.pendidikan', 'biodata.suku', 'biodata.tgllahir', 'biodata.tinggi', 'biodata.berat')
             ->where('karyawan.jenkel', $oppositeGender)
             ->where('karyawan.status', '1');
 
@@ -261,6 +279,13 @@ class DashboardController extends Controller
 
         // Pagination per 12 data
         $users = $query->paginate(12)->appends($request->all());
+
+        // Hitung Match Percentage
+        $myCriteria = DB::table('kriteriapasangan')->where('email', $email)->first();
+        $users->getCollection()->transform(function($user) use ($myCriteria) {
+            $user->match_percentage = $this->calculateMatchPercentage($user, $myCriteria);
+            return $user;
+        });
 
         $cekemail = DB::table('karyawan')
             ->leftJoin('biodata', 'karyawan.email', '=', 'biodata.email')
@@ -490,5 +515,56 @@ class DashboardController extends Controller
 
         $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('dashboard.profile.cv_pdf', compact('user', 'biodata', 'kriteria'));
         return $pdf->download('CV_Taaruf_' . str_replace(' ', '_', $user->nama) . '.pdf');
+    }
+
+    private function calculateMatchPercentage($user, $myCriteria)
+    {
+        $score = 20; // Base score (opposite gender)
+        
+        if ($myCriteria) {
+            // Usia
+            if (!empty($myCriteria->kriteriaumur) && !empty($user->tgllahir) && $myCriteria->kriteriaumur != 'Bebas' && $myCriteria->kriteriaumur != 'Tidak ada kriteria khusus') {
+                $age = \Carbon\Carbon::parse($user->tgllahir)->age;
+                $range = explode('-', $myCriteria->kriteriaumur);
+                if (count($range) == 2 && $age >= (int)$range[0] && $age <= (int)$range[1]) {
+                    $score += 20;
+                } else if ($myCriteria->kriteriaumur == '40+' && $age >= 40) {
+                    $score += 20;
+                }
+            } else if ($myCriteria->kriteriaumur == 'Bebas' || empty($myCriteria->kriteriaumur) || $myCriteria->kriteriaumur == 'Tidak ada kriteria khusus') {
+                $score += 20;
+            }
+
+            // Tinggi
+            if (!empty($myCriteria->kriteriatinggi) && !empty($user->tinggi) && $myCriteria->kriteriatinggi != 'Bebas' && $myCriteria->kriteriatinggi != 'Tidak ada kriteria khusus') {
+                $range = explode('-', $myCriteria->kriteriatinggi);
+                if (count($range) == 2 && $user->tinggi >= (int)$range[0] && $user->tinggi <= (int)$range[1]) {
+                    $score += 20;
+                }
+            } else if ($myCriteria->kriteriatinggi == 'Bebas' || empty($myCriteria->kriteriatinggi) || $myCriteria->kriteriatinggi == 'Tidak ada kriteria khusus') {
+                $score += 20;
+            }
+
+            // Berat
+            if (!empty($myCriteria->kriteriaberat) && !empty($user->berat) && $myCriteria->kriteriaberat != 'Bebas' && $myCriteria->kriteriaberat != 'Tidak ada kriteria khusus') {
+                $range = explode('-', $myCriteria->kriteriaberat);
+                if (count($range) == 2 && $user->berat >= (int)$range[0] && $user->berat <= (int)$range[1]) {
+                    $score += 20;
+                }
+            } else if ($myCriteria->kriteriaberat == 'Bebas' || empty($myCriteria->kriteriaberat) || $myCriteria->kriteriaberat == 'Tidak ada kriteria khusus') {
+                $score += 20;
+            }
+
+            // Suku
+            if (!empty($myCriteria->kriteriasuku) && !empty($user->suku) && $myCriteria->kriteriasuku != 'Bebas' && $myCriteria->kriteriasuku != 'Tidak ada kriteria khusus') {
+                if (strtolower($myCriteria->kriteriasuku) == strtolower($user->suku)) {
+                    $score += 20;
+                }
+            } else if ($myCriteria->kriteriasuku == 'Bebas' || empty($myCriteria->kriteriasuku) || $myCriteria->kriteriasuku == 'Tidak ada kriteria khusus') {
+                $score += 20;
+            }
+        }
+        
+        return min(100, $score);
     }
 }
