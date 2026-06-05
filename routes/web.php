@@ -118,3 +118,15 @@ Route::middleware(['auth:user'])->group(function () {
     Route::post('/murobi/progress/store', [MurobiController::class, 'storeProgress'])->name('murobi.progress.store');
 
 });
+
+/*
+|--------------------------------------------------------------------------
+| Fallback Route
+|--------------------------------------------------------------------------
+|
+| Redirect all unregistered routes to the root (/) page.
+|
+*/
+Route::fallback(function () {
+    return redirect('/');
+});
