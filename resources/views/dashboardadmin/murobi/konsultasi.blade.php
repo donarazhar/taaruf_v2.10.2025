@@ -302,6 +302,70 @@
             color: #065f46;
         }
 
+        /* Modern Input Styles */
+        .form-control, .form-select {
+            padding: 0.8rem 1rem;
+            border: 2px solid var(--gray-200);
+            border-radius: var(--radius-md);
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            box-shadow: none;
+            width: 100%;
+        }
+
+        .form-control:focus, .form-select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(15, 76, 129, 0.1);
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: var(--text-main);
+            margin-bottom: 0.5rem;
+            display: block;
+            text-align: left;
+        }
+
+        .tanggapan-card {
+            display: none;
+            margin-top: 15px;
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            box-shadow: var(--shadow-sm);
+            padding: 20px;
+            border-radius: var(--radius-lg);
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .btn-modern {
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-modern-primary {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+        }
+
+        .btn-modern-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(15, 76, 129, 0.2);
+            color: white;
+        }
+
         .empty-pairs {
             text-align: center;
             padding: 3rem 2rem;
@@ -397,24 +461,29 @@
                                         </span>
                                     </td>
                                     <td>
-                                        <button class="btn btn-sm btn-info text-white" onclick="document.getElementById('form-tanggapan-{{ $konsultasi->id }}').style.display='block'">Tanggapi</button>
+                                        <button class="btn btn-modern btn-modern-primary btn-sm" onclick="document.getElementById('form-tanggapan-{{ $konsultasi->id }}').style.display='block'">
+                                            <i class="fa fa-reply"></i> Tanggapi
+                                        </button>
                                         
-                                        <div id="form-tanggapan-{{ $konsultasi->id }}" style="display:none; margin-top: 10px; background: #f8f9fa; padding: 10px; border-radius: 8px;">
+                                        <div id="form-tanggapan-{{ $konsultasi->id }}" class="tanggapan-card text-left">
                                             <form action="{{ route('murobi.konsultasi.update', $konsultasi->id) }}" method="POST">
                                                 @csrf
-                                                <div class="mb-2">
-                                                    <label class="form-label">Ubah Status</label>
-                                                    <select name="status" class="form-select form-select-sm">
+                                                <div class="mb-3 text-left">
+                                                    <label class="form-label"><i class="fa fa-tag text-primary mr-1"></i> Ubah Status</label>
+                                                    <select name="status" class="form-select">
                                                         <option value="menunggu" {{ $konsultasi->status == 'menunggu' ? 'selected' : '' }}>Menunggu</option>
                                                         <option value="dijadwalkan" {{ $konsultasi->status == 'dijadwalkan' ? 'selected' : '' }}>Dijadwalkan</option>
                                                         <option value="selesai" {{ $konsultasi->status == 'selesai' ? 'selected' : '' }}>Selesai</option>
                                                     </select>
                                                 </div>
-                                                <div class="mb-2">
-                                                    <label class="form-label">Pesan Balasan</label>
-                                                    <textarea name="pesan_balasan_murobbi" class="form-control form-control-sm" rows="2" placeholder="Sebutkan jadwal atau link Zoom...">{{ $konsultasi->pesan_balasan_murobbi }}</textarea>
+                                                <div class="mb-4 text-left">
+                                                    <label class="form-label"><i class="fa fa-comment-dots text-primary mr-1"></i> Pesan Balasan</label>
+                                                    <textarea name="pesan_balasan_murobbi" class="form-control" rows="3" placeholder="Sebutkan jadwal konsultasi, lokasi, atau link pertemuan virtual (Zoom/GMeet)...">{{ $konsultasi->pesan_balasan_murobbi }}</textarea>
                                                 </div>
-                                                <button type="submit" class="btn btn-sm btn-primary w-100">Kirim Tanggapan</button>
+                                                <div class="d-flex gap-2">
+                                                    <button type="submit" class="btn btn-modern btn-modern-primary w-100"><i class="fa fa-paper-plane"></i> Kirim Tanggapan</button>
+                                                    <button type="button" class="btn btn-modern btn-secondary ml-2" onclick="document.getElementById('form-tanggapan-{{ $konsultasi->id }}').style.display='none'">Batal</button>
+                                                </div>
                                             </form>
                                         </div>
                                     </td>

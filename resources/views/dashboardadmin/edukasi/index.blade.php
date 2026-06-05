@@ -37,6 +37,83 @@
         .table-custom th {
             background-color: var(--primary);
             color: white;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+        }
+
+        .table-custom td {
+            vertical-align: middle;
+        }
+
+        /* Modern Input Styles */
+        .form-control, .custom-select-modern {
+            padding: 0.8rem 1rem;
+            border: 2px solid var(--gray-200);
+            border-radius: var(--radius-md);
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            box-shadow: none;
+        }
+
+        .form-control:focus, .custom-select-modern:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(15, 76, 129, 0.1);
+        }
+
+        .modal-content {
+            border: none;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+        }
+
+        .modal-header {
+            background: var(--gray-50);
+            border-bottom: 1px solid var(--gray-200);
+            padding: 1.5rem;
+        }
+
+        .modal-header .modal-title {
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+        }
+
+        .modal-footer {
+            padding: 1.5rem;
+            border-top: 1px solid var(--gray-200);
+            background: var(--gray-50);
+        }
+
+        .form-group label {
+            font-weight: 600;
+            color: var(--text-main);
+            margin-bottom: 0.5rem;
+        }
+
+        .btn-modern {
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-modern-primary {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            border: none;
+        }
+
+        .btn-modern-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(15, 76, 129, 0.2);
+            color: white;
         }
     </style>
 
@@ -161,7 +238,7 @@
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-                                            <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+                                                    <button type="submit" class="btn btn-modern btn-modern-primary">Simpan Perubahan</button>
                                         </div>
                                     </form>
                                 </div>
@@ -279,7 +356,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                        <button type="submit" class="btn btn-primary">Simpan</button>
+                        <button type="submit" class="btn btn-modern btn-modern-primary">Simpan</button>
                     </div>
                 </form>
             </div>

@@ -674,10 +674,10 @@
                 </a>
                 <div class="collapse-inner" id="murobiCollapse" style="{{ request()->is(['murobi/*']) ? 'display: block;' : 'display: none;' }}">
                     <a class="collapse-item {{ request()->is('murobi/taaruf*') ? 'active' : '' }}" href="/murobi/taaruf">
-                        <i class="fas fa-users" style="margin-right: 8px; font-size: 14px;"></i> Daftar Profile
+                        <i class="fas fa-users" style="margin-right: 8px; font-size: 14px;"></i> Data Taaruf
                     </a>
                     <a class="collapse-item {{ request()->is('murobi/progress*') ? 'active' : '' }}" href="/murobi/progress">
-                        <i class="fas fa-heart" style="margin-right: 8px; font-size: 14px;"></i> Menta'aruf
+                        <i class="fas fa-heart" style="margin-right: 8px; font-size: 14px;"></i> Progress Taaruf
                     </a>
                     <a class="collapse-item {{ request()->is('murobi/konsultasi*') ? 'active' : '' }}" href="/murobi/konsultasi">
                         <i class="fas fa-comments" style="margin-right: 8px; font-size: 14px;"></i> Konsultasi
