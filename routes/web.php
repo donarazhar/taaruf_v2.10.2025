@@ -66,6 +66,7 @@ Route::middleware(['auth:karyawan'])->group(function () {
     Route::post('/profile/{email}/updateprofile3', [DashboardController::class, 'updateprofile3']);
     Route::get('/profile/{email}/cetak-cv', [DashboardController::class, 'cetakCv'])->name('cetak.cv');
     Route::post('/daftartanya/storetanya', [DashboardController::class, 'storetanya'])->name('storetanya');
+    Route::post('/dashboard/konsultasi', [DashboardController::class, 'storeKonsultasi'])->name('dashboard.konsultasi.store');
 
     // Taaruf
     Route::get('/taaruf', [DashboardController::class, 'taaruf'])->name('taaruf');
@@ -117,6 +118,14 @@ Route::middleware(['auth:user'])->group(function () {
     Route::get('/murobi/taaruf/{email}/lihatprofile', [MurobiController::class, 'lihatprofile'])->name('murobi.lihatprofile');
     Route::get('/murobi/progress', [MurobiController::class, 'progress'])->name('murobi.progress');
     Route::post('/murobi/progress/store', [MurobiController::class, 'storeProgress'])->name('murobi.progress.store');
+    
+    // Murobi Rekomendasi
+    Route::get('/murobi/rekomendasi', [MurobiController::class, 'rekomendasi'])->name('murobi.rekomendasi');
+    Route::post('/murobi/rekomendasi/store', [MurobiController::class, 'storeRekomendasi'])->name('murobi.rekomendasi.store');
+    
+    // Murobi Konsultasi
+    Route::get('/murobi/konsultasi', [MurobiController::class, 'konsultasi'])->name('murobi.konsultasi');
+    Route::post('/murobi/konsultasi/update/{id}', [MurobiController::class, 'updateKonsultasi'])->name('murobi.konsultasi.update');
 
 });
 

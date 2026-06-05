@@ -111,7 +111,30 @@ class DashboardController extends Controller
             return $user;
         });
 
-        return view('dashboard.index', compact('dataprofile', 'databerita', 'datayoutube', 'menuAktif', 'datalayanan', 'dataslider', 'kandidatHarian'));
+        // --- Rekomendasi Murobbi ---
+        $murobbiRecommendations = DB::table('murobbi_recommendations')
+            ->join('users', 'murobbi_recommendations.murobbi_id', '=', 'users.id')
+            ->select('murobbi_recommendations.*', 'users.name as murobbi_name')
+            ->where(function ($query) use ($email) {
+                $query->where('karyawan_pria_email', $email)
+                      ->orWhere('karyawan_wanita_email', $email);
+            })
+            ->get();
+            
+        $murobbiRecommendations->transform(function ($rec) use ($email) {
+            $targetEmail = ($rec->karyawan_pria_email == $email) ? $rec->karyawan_wanita_email : $rec->karyawan_pria_email;
+            $targetUser = DB::table('karyawan')->where('email', $targetEmail)->first();
+            $rec->target_user = $targetUser;
+            return $rec;
+        });
+
+        // --- Riwayat Konsultasi ---
+        $riwayatKonsultasi = DB::table('konsultasi')
+            ->where('karyawan_email', $email)
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return view('dashboard.index', compact('dataprofile', 'databerita', 'datayoutube', 'menuAktif', 'datalayanan', 'dataslider', 'kandidatHarian', 'murobbiRecommendations', 'riwayatKonsultasi'));
     }
 
     public function showBerita($slug)
@@ -495,6 +518,25 @@ class DashboardController extends Controller
         } catch (\Exception $e) {
             return Redirect::back()->with(['warning' => 'Maaf ada kesalahan inputan']);
         }
+    }
+
+    public function storeKonsultasi(Request $request)
+    {
+        $request->validate([
+            'topik_konsultasi' => 'required',
+            'pesan' => 'required',
+        ]);
+
+        DB::table('konsultasi')->insert([
+            'karyawan_email' => Auth::guard('karyawan')->user()->email,
+            'topik_konsultasi' => $request->topik_konsultasi,
+            'pesan' => $request->pesan,
+            'status' => 'menunggu',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        return Redirect::back()->with('success', 'Permintaan konsultasi berhasil dikirim!');
     }
 
     public function cetakCv($email)
