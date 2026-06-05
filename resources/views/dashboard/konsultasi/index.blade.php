@@ -8,13 +8,13 @@
                 <h2 class="font-weight-bold mb-2">Konsultasi Murobbi</h2>
                 <p class="mb-0" style="opacity: 0.9; font-size: 1.1rem;">Diskusikan persiapan dan kriteria pasangan Anda</p>
                 
-                <i class="fas fa-comments" style="position: absolute; right: 2rem; bottom: -1rem; font-size: 8rem; opacity: 0.15;"></i>
+                <i class="bi bi-chat-dots-fill" style="position: absolute; right: 2rem; bottom: -1rem; font-size: 8rem; opacity: 0.15;"></i>
             </div>
         </div>
 
         @if(session('success'))
         <div class="alert alert-success alert-dismissible fade show border-0 shadow-sm" role="alert" style="border-radius: 12px;">
-            <i class="fas fa-check-circle mr-2"></i> {{ session('success') }}
+            <i class="bi bi-check-circle-fill mr-2"></i> {{ session('success') }}
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>

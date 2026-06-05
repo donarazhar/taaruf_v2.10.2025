@@ -9,7 +9,7 @@
                 <p class="mb-0" style="opacity: 0.9; font-size: 1.1rem;">Akses fitur tambahan untuk mendukung perjalanan Ta'aruf Anda</p>
                 
                 <!-- Decorative Elements -->
-                <i class="fas fa-th-large" style="position: absolute; right: 2rem; bottom: -1rem; font-size: 8rem; opacity: 0.15;"></i>
+                <i class="bi bi-grid-fill" style="position: absolute; right: 2rem; bottom: -1rem; font-size: 8rem; opacity: 0.15;"></i>
             </div>
         </div>
 
@@ -20,7 +20,7 @@
                     <div class="card h-100 shadow-sm border-0 text-center" style="border-radius: 15px; transition: transform 0.3s;" onmouseover="this.style.transform='translateY(-5px)';" onmouseout="this.style.transform='none';">
                         <div class="card-body py-5">
                             <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-4" style="width: 80px; height: 80px;">
-                                <i class="fas fa-book fa-2x"></i>
+                                <i class="bi bi-book-fill" style="font-size: 2.5rem;"></i>
                             </div>
                             <h4 class="font-weight-bold text-dark mb-3">Edukasi Pranikah</h4>
                             <p class="text-muted mb-0">Tingkatkan ilmu dan kesiapan Anda sebelum melangkah ke jenjang pernikahan melalui kajian dan artikel.</p>
@@ -35,7 +35,7 @@
                     <div class="card h-100 shadow-sm border-0 text-center" style="border-radius: 15px; transition: transform 0.3s;" onmouseover="this.style.transform='translateY(-5px)';" onmouseout="this.style.transform='none';">
                         <div class="card-body py-5">
                             <div class="bg-success text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-4" style="width: 80px; height: 80px;">
-                                <i class="fas fa-comments fa-2x"></i>
+                                <i class="bi bi-chat-dots-fill" style="font-size: 2.5rem;"></i>
                             </div>
                             <h4 class="font-weight-bold text-dark mb-3">Konsultasi Murobbi</h4>
                             <p class="text-muted mb-0">Diskusikan kriteria pasangan dan keluh kesah persiapan Anda langsung bersama Murobbi berpengalaman.</p>
@@ -50,7 +50,7 @@
                     <div class="card h-100 shadow-sm border-0 text-center" style="border-radius: 15px; transition: transform 0.3s;" onmouseover="this.style.transform='translateY(-5px)';" onmouseout="this.style.transform='none';">
                         <div class="card-body py-5">
                             <div class="bg-warning text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-4" style="width: 80px; height: 80px;">
-                                <i class="fas fa-star fa-2x"></i>
+                                <i class="bi bi-star-fill" style="font-size: 2.5rem;"></i>
                             </div>
                             <h4 class="font-weight-bold text-dark mb-3">Kandidat Hari Ini</h4>
                             <p class="text-muted mb-0">Temukan rekomendasi kandidat pasangan yang memiliki tingkat kecocokan paling tinggi dengan kriteria Anda.</p>

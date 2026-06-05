@@ -8,7 +8,7 @@
                 <h2 class="font-weight-bold mb-2">Kandidat Pilihan Hari Ini</h2>
                 <p class="mb-0" style="opacity: 0.9; font-size: 1.1rem;">Rekomendasi profil terbaik yang sesuai dengan kriteria Anda</p>
                 
-                <i class="fas fa-star" style="position: absolute; right: 2rem; bottom: -1rem; font-size: 8rem; opacity: 0.15;"></i>
+                <i class="bi bi-star-fill" style="position: absolute; right: 2rem; bottom: -1rem; font-size: 8rem; opacity: 0.15;"></i>
             </div>
         </div>
 
@@ -33,9 +33,9 @@
                         <div class="d-flex flex-column justify-content-center w-100">
                             <h5 class="mb-2 fw-bold text-dark">{{ \Illuminate\Support\Str::limit($kandidat->nama, 25) }}</h5>
                             <div class="mb-3 text-muted" style="font-size: 0.9rem; line-height: 1.5;">
-                                <div><i class="fas fa-graduation-cap text-primary me-2" style="width:16px"></i> {{ $kandidat->pendidikan ?? 'Pendidikan -' }}</div>
-                                <div><i class="fas fa-users text-primary me-2" style="width:16px"></i> {{ $kandidat->suku ?? 'Suku -' }}</div>
-                                <div><i class="fas fa-birthday-cake text-primary me-2" style="width:16px"></i> {{ !empty($kandidat->tgllahir) ? \Carbon\Carbon::parse($kandidat->tgllahir)->age . ' Tahun' : '-' }}</div>
+                                <div><i class="fa fa-graduation-cap text-primary me-2" style="width:16px"></i> {{ $kandidat->pendidikan ?? 'Pendidikan -' }}</div>
+                                <div><i class="fa fa-users text-primary me-2" style="width:16px"></i> {{ $kandidat->suku ?? 'Suku -' }}</div>
+                                <div><i class="fa fa-birthday-cake text-primary me-2" style="width:16px"></i> {{ !empty($kandidat->tgllahir) ? \Carbon\Carbon::parse($kandidat->tgllahir)->age . ' Tahun' : '-' }}</div>
                             </div>
                             <a href="{{ route('taaruf') }}" class="btn btn-primary mt-auto align-self-start" style="font-size: 0.85rem; border-radius: 20px; padding: 8px 20px;">
                                 Lihat Profil Lengkap <i class="bi bi-arrow-right ms-1"></i>
@@ -48,14 +48,14 @@
             
             <div class="text-center mt-5">
                 <a href="{{ route('taaruf') }}" class="btn btn-outline-primary fw-bold" style="border-radius: 20px; padding: 10px 30px;">
-                    Eksplorasi Semua Kandidat <i class="fas fa-search ms-2"></i>
+                    Eksplorasi Semua Kandidat <i class="fa fa-search ms-2"></i>
                 </a>
             </div>
         </div>
         @else
         <div class="bg-white p-5 text-center mt-4" style="border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); border: 1px solid var(--gray-200);">
             <div class="bg-light rounded-circle d-inline-flex align-items-center justify-content-center mb-4" style="width: 100px; height: 100px;">
-                <i class="fas fa-user-slash fa-3x text-muted"></i>
+                <i class="fa fa-user-times fa-3x text-muted"></i>
             </div>
             <h4 class="fw-bold text-dark mb-3">Belum Ada Rekomendasi Hari Ini</h4>
             <p class="text-muted mb-4">Pastikan Anda sudah mengisi kriteria pasangan di menu Profil agar kami dapat memberikan rekomendasi terbaik untuk Anda.</p>
