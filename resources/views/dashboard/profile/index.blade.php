@@ -672,21 +672,28 @@
     <div class="container">
         <!-- User Information Card -->
         <div class="card user-info-card mb-3">
-            <div class="card-body d-flex align-items-center">
-                <div class="user-profile">
-                    @php
-                        $user = Auth::guard('karyawan')->user();
-                        $path = !empty($user->foto) ? Storage::url('uploads/karyawan/img/' . $user->foto) : '';
-                        $defaultAvatar = 'https://ui-avatars.com/api/?name=' . urlencode($dataprofile->nama) . '&background=random&color=fff&size=200';
-                    @endphp
-                    <img src="{{ !empty($path) ? url($path) : $defaultAvatar }}" alt="avatar">
-                </div>
-                <div class="user-info">
-                    <div class="d-flex align-items-center flex-wrap gap-2">
-                        <h5 class="mb-0">{{ $dataprofile->nama }}</h5>
-                        <span class="badge rounded-pill">{{ $dataprofile->nip }}</span>
+            <div class="card-body d-flex align-items-center justify-content-between flex-wrap gap-3">
+                <div class="d-flex align-items-center">
+                    <div class="user-profile">
+                        @php
+                            $user = Auth::guard('karyawan')->user();
+                            $path = !empty($user->foto) ? Storage::url('uploads/karyawan/img/' . $user->foto) : '';
+                            $defaultAvatar = 'https://ui-avatars.com/api/?name=' . urlencode($dataprofile->nama) . '&background=random&color=fff&size=200';
+                        @endphp
+                        <img src="{{ !empty($path) ? url($path) : $defaultAvatar }}" alt="avatar">
                     </div>
-                    <p class="mb-0 mt-1">{{ $dataprofile->email }}</p>
+                    <div class="user-info">
+                        <div class="d-flex align-items-center flex-wrap gap-2">
+                            <h5 class="mb-0">{{ $dataprofile->nama }}</h5>
+                            <span class="badge rounded-pill">{{ $dataprofile->nip }}</span>
+                        </div>
+                        <p class="mb-0 mt-1">{{ $dataprofile->email }}</p>
+                    </div>
+                </div>
+                <div class="mt-2 mt-md-0">
+                    <a href="{{ route('cetak.cv', $dataprofile->email) }}" target="_blank" class="btn btn-info">
+                        <i class="bi bi-printer"></i> Cetak CV
+                    </a>
                 </div>
             </div>
         </div>

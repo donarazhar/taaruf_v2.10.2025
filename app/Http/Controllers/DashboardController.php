@@ -220,18 +220,43 @@ class DashboardController extends Controller
         // Membaca jenis kelamin dari data profile (pria/wanita), lalu cari lawan jenis
         $oppositeGender = $dataprofile->jenkel == 'pria' ? 'wanita' : 'pria';
         
-        // Setup query utama
+        // Setup query utama dengan join ke tabel biodata untuk keperluan filter
         $query = DB::table('karyawan')
-            ->where('jenkel', $oppositeGender)
-            ->where('status', '1');
+            ->leftJoin('biodata', 'karyawan.email', '=', 'biodata.email')
+            ->select('karyawan.*', 'biodata.pendidikan', 'biodata.suku', 'biodata.tgllahir')
+            ->where('karyawan.jenkel', $oppositeGender)
+            ->where('karyawan.status', '1');
 
         // Fitur Pencarian
         if ($request->has('search') && $request->search != '') {
             $search = $request->search;
             $query->where(function($q) use ($search) {
-                $q->where('nama', 'like', "%{$search}%")
-                  ->orWhere('nip', 'like', "%{$search}%");
+                $q->where('karyawan.nama', 'like', "%{$search}%")
+                  ->orWhere('karyawan.nip', 'like', "%{$search}%");
             });
+        }
+
+        // Fitur Filter Lanjutan
+        if ($request->has('pendidikan') && $request->pendidikan != '') {
+            $query->where('biodata.pendidikan', $request->pendidikan);
+        }
+
+        if ($request->has('suku') && $request->suku != '') {
+            $query->where('biodata.suku', $request->suku);
+        }
+        
+        if ($request->has('usia') && $request->usia != '') {
+            $usiaRange = explode('-', $request->usia);
+            if(count($usiaRange) == 2) {
+                $minAge = (int)$usiaRange[0];
+                $maxAge = (int)$usiaRange[1];
+                $maxDate = \Carbon\Carbon::now()->subYears($minAge)->format('Y-m-d');
+                $minDate = \Carbon\Carbon::now()->subYears($maxAge + 1)->format('Y-m-d');
+                $query->whereBetween('biodata.tgllahir', [$minDate, $maxDate]);
+            } else if ($request->usia == '40+') {
+                $maxDate = \Carbon\Carbon::now()->subYears(40)->format('Y-m-d');
+                $query->where('biodata.tgllahir', '<=', $maxDate);
+            }
         }
 
         // Pagination per 12 data
@@ -445,5 +470,25 @@ class DashboardController extends Controller
         } catch (\Exception $e) {
             return Redirect::back()->with(['warning' => 'Maaf ada kesalahan inputan']);
         }
+    }
+
+    public function cetakCv($email)
+    {
+        // Pastikan hanya bisa cetak CV milik sendiri
+        $authEmail = Auth::guard('karyawan')->user()->email;
+        if ($authEmail != $email) {
+            return Redirect::back()->with('warning', 'Anda tidak diizinkan mencetak CV orang lain.');
+        }
+
+        $user = DB::table('karyawan')->where('email', $email)->first();
+        $biodata = DB::table('biodata')->where('email', $email)->first();
+        $kriteria = DB::table('kriteriapasangan')->where('email', $email)->first();
+
+        if (!$user) {
+            return Redirect::back()->with('warning', 'Data tidak ditemukan.');
+        }
+
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('dashboard.profile.cv_pdf', compact('user', 'biodata', 'kriteria'));
+        return $pdf->download('CV_Taaruf_' . str_replace(' ', '_', $user->nama) . '.pdf');
     }
 }

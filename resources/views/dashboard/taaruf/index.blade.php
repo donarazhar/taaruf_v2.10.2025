@@ -536,18 +536,56 @@
         <div class="filter-section">
             <div class="filter-title">
                 <i class="fa fa-filter"></i>
-                Filter & Pencarian
+                Filter & Pencarian Lanjutan
             </div>
-            <div class="filter-controls">
-                <form action="{{ route('taaruf') }}" method="GET" class="search-box m-0 w-100">
-                    <input type="text" 
-                           name="search"
-                           id="searchInput" 
-                           value="{{ request('search') }}"
-                           placeholder="🔍 Cari berdasarkan nama atau NIP..." 
-                           onchange="this.form.submit()">
-                </form>
-            </div>
+            <form action="{{ route('taaruf') }}" method="GET">
+                <div class="row g-3">
+                    <!-- Search Input -->
+                    <div class="col-md-3">
+                        <input type="text" name="search" class="form-control" value="{{ request('search') }}" placeholder="🔍 Nama atau NIP">
+                    </div>
+                    <!-- Usia -->
+                    <div class="col-md-2">
+                        <select name="usia" class="form-select">
+                            <option value="">Semua Usia</option>
+                            <option value="20-25" {{ request('usia') == '20-25' ? 'selected' : '' }}>20 - 25 Tahun</option>
+                            <option value="26-30" {{ request('usia') == '26-30' ? 'selected' : '' }}>26 - 30 Tahun</option>
+                            <option value="31-35" {{ request('usia') == '31-35' ? 'selected' : '' }}>31 - 35 Tahun</option>
+                            <option value="36-40" {{ request('usia') == '36-40' ? 'selected' : '' }}>36 - 40 Tahun</option>
+                            <option value="40+" {{ request('usia') == '40+' ? 'selected' : '' }}>Di atas 40 Tahun</option>
+                        </select>
+                    </div>
+                    <!-- Pendidikan -->
+                    <div class="col-md-3">
+                        <select name="pendidikan" class="form-select">
+                            <option value="">Semua Pendidikan</option>
+                            <option value="SMA/SMK" {{ request('pendidikan') == 'SMA/SMK' ? 'selected' : '' }}>SMA/SMK</option>
+                            <option value="D3" {{ request('pendidikan') == 'D3' ? 'selected' : '' }}>D3</option>
+                            <option value="S1" {{ request('pendidikan') == 'S1' ? 'selected' : '' }}>S1</option>
+                            <option value="S2" {{ request('pendidikan') == 'S2' ? 'selected' : '' }}>S2</option>
+                            <option value="S3" {{ request('pendidikan') == 'S3' ? 'selected' : '' }}>S3</option>
+                        </select>
+                    </div>
+                    <!-- Suku -->
+                    <div class="col-md-2">
+                        <select name="suku" class="form-select">
+                            <option value="">Semua Suku</option>
+                            <option value="Jawa" {{ request('suku') == 'Jawa' ? 'selected' : '' }}>Jawa</option>
+                            <option value="Sunda" {{ request('suku') == 'Sunda' ? 'selected' : '' }}>Sunda</option>
+                            <option value="Batak" {{ request('suku') == 'Batak' ? 'selected' : '' }}>Batak</option>
+                            <option value="Minang" {{ request('suku') == 'Minang' ? 'selected' : '' }}>Minang</option>
+                            <option value="Bugis" {{ request('suku') == 'Bugis' ? 'selected' : '' }}>Bugis</option>
+                            <option value="Betawi" {{ request('suku') == 'Betawi' ? 'selected' : '' }}>Betawi</option>
+                            <option value="Lainnya" {{ request('suku') == 'Lainnya' ? 'selected' : '' }}>Lainnya</option>
+                        </select>
+                    </div>
+                    <!-- Buttons -->
+                    <div class="col-md-2 d-flex gap-2">
+                        <button type="submit" class="btn btn-primary w-100" style="background-color: var(--primary-color); border: none;">Terapkan</button>
+                        <a href="{{ route('taaruf') }}" class="btn btn-secondary w-100">Reset</a>
+                    </div>
+                </div>
+            </form>
         </div>
 
         <!-- Profile Grid -->
@@ -561,6 +599,7 @@
                             <div class="profile-card">
                                 <!-- Image Section -->
                                 <div class="profile-image-wrapper">
+                                    <div class="skeleton-image" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(90deg, var(--gray-100) 0%, var(--gray-200) 50%, var(--gray-100) 100%); background-size: 200% 100%; animation: shimmer 1.5s infinite; z-index: 1;"></div>
                                     @php
                                         $path = !empty($user->foto) ? Storage::url('uploads/karyawan/img/' . $user->foto) : '';
                                         $defaultAvatar = 'https://ui-avatars.com/api/?name=' . urlencode($user->nama) . '&background=random&color=fff&size=200';
@@ -568,7 +607,9 @@
                                     <img class="profile-image" 
                                          src="{{ !empty($path) ? url($path) : $defaultAvatar }}"
                                          alt="{{ $user->nama }}"
-                                         loading="lazy">
+                                         loading="lazy"
+                                         onload="this.previousElementSibling.style.display='none'"
+                                         style="z-index: 2; position: relative;">
                                     
                                     <!-- Name Badge -->
                                     <span class="profile-badge" title="{{ $user->nama }}">
