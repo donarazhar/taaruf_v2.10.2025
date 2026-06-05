@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('konsultasi', function (Blueprint $table) {
             $table->id();
-            $table->string('karyawan_email');
+            $table->string('karyawan_email')->collation('utf8mb4_general_ci');
             $table->string('topik_konsultasi');
             $table->text('pesan');
             $table->string('status')->default('menunggu'); // menunggu, dijadwalkan, selesai
