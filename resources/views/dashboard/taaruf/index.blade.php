@@ -615,8 +615,8 @@
                                          src="{{ !empty($path) ? url($path) : $defaultAvatar }}"
                                          alt="{{ $user->nama }}"
                                          loading="lazy"
-                                         onload="this.previousElementSibling.style.display='none'"
-                                         style="z-index: 2; position: relative;">
+                                         onload="this.parentElement.querySelector('.skeleton-image').style.display='none'"
+                                         style="z-index: 2;">
                                     
                                     <!-- Name Badge -->
                                     <span class="profile-badge" title="{{ $user->nama }}">
