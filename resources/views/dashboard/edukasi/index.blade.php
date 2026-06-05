@@ -1,17 +1,6 @@
-@extends('dashboard.dashlayouts.app')
+@extends('dashboard.dashlayouts.style')
 @section('content')
 
-    <!-- Preloader -->
-    <div class="preloader" id="preloader">
-        <div class="spinner-grow text-secondary" role="status">
-            <div class="sr-only">Loading...</div>
-        </div>
-    </div>
-
-    <!-- Header Area -->
-    @include('dashboard.dashlayouts.header')
-
-    <div class="page-content-wrapper">
         <div class="container pt-5 pb-5">
             <!-- Hero Section -->
             <div class="card mb-4" style="border-radius: 20px; border: none; overflow: hidden; position: relative;">
@@ -187,10 +176,6 @@
 
             </div>
         </div>
-    </div>
-
-    <!-- Footer Area -->
-    @include('dashboard.dashlayouts.footer')
 
     @push('myscript')
     <style>
