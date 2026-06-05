@@ -145,7 +145,52 @@ class DashboardController extends Controller
             $menuAktif = false;
         }
 
-        // --- Kandidat Pilihan Hari Ini (Daily Recommendation) ---
+        return view('dashboard.index', compact('dataprofile', 'databerita', 'datayoutube', 'menuAktif', 'datalayanan', 'dataslider'));
+    }
+
+    private function getCommonData()
+    {
+        $email = Auth::guard('karyawan')->user()->email;
+        $dataprofile = DB::table('karyawan')->where('email', $email)->first();
+
+        $cekemail = DB::table('karyawan')
+            ->leftJoin('biodata', 'karyawan.email', '=', 'biodata.email')
+            ->leftJoin('kriteriapasangan', 'karyawan.email', '=', 'kriteriapasangan.email')
+            ->select('karyawan.email', 'biodata.email as biodata_email', 'kriteriapasangan.email as kriteriapasangan_email')
+            ->where('karyawan.email', $email)
+            ->first();
+
+        $menuAktif = false;
+        if ($cekemail && $cekemail->biodata_email !== null && $cekemail->kriteriapasangan_email !== null) {
+            $menuAktif = true;
+        }
+
+        return ['email' => $email, 'dataprofile' => $dataprofile, 'menuAktif' => $menuAktif];
+    }
+
+    public function lainnya()
+    {
+        $data = $this->getCommonData();
+        return view('dashboard.lainnya.index', $data);
+    }
+
+    public function konsultasi()
+    {
+        $data = $this->getCommonData();
+        $riwayatKonsultasi = DB::table('konsultasi')
+            ->where('karyawan_email', $data['email'])
+            ->orderBy('created_at', 'desc')
+            ->get();
+            
+        return view('dashboard.konsultasi.index', array_merge($data, ['riwayatKonsultasi' => $riwayatKonsultasi]));
+    }
+
+    public function kandidatHarian()
+    {
+        $data = $this->getCommonData();
+        $email = $data['email'];
+        $dataprofile = $data['dataprofile'];
+
         $oppositeGender = $dataprofile->jenkel == 'pria' ? 'wanita' : 'pria';
         $myCriteria = DB::table('kriteriapasangan')->where('email', $email)->first();
 
@@ -163,13 +208,7 @@ class DashboardController extends Controller
             return $user;
         });
 
-        // --- Riwayat Konsultasi ---
-        $riwayatKonsultasi = DB::table('konsultasi')
-            ->where('karyawan_email', $email)
-            ->orderBy('created_at', 'desc')
-            ->get();
-
-        return view('dashboard.index', compact('dataprofile', 'databerita', 'datayoutube', 'menuAktif', 'datalayanan', 'dataslider', 'kandidatHarian', 'riwayatKonsultasi'));
+        return view('dashboard.kandidat_harian.index', array_merge($data, ['kandidatHarian' => $kandidatHarian]));
     }
 
     public function showBerita($slug)

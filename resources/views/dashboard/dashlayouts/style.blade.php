@@ -41,8 +41,8 @@
                     </a>
                 @endif
                 
-                <a href="{{ route('dashboard.edukasi') }}" class="{{ request()->is('edukasi') ? 'active' : '' }}" title="Edukasi Pranikah">
-                    <i class="bi bi-book"></i> Edukasi
+                <a href="{{ route('dashboard.lainnya') }}" class="{{ request()->is('lainnya') || request()->is('edukasi') || request()->is('konsultasi') || request()->is('kandidat-harian') ? 'active' : '' }}" title="Lainnya">
+                    <i class="bi bi-grid-fill"></i> Lainnya
                 </a>
 
                 <a href="/proseslogout" title="Logout" onclick="return confirm('Yakin ingin logout?')" class="text-danger">
@@ -78,8 +78,8 @@
                 <i class="bi bi-clock-history"></i> Progress
             </a>
         @endif
-        <a href="{{ route('dashboard.edukasi') }}" class="{{ request()->is('edukasi') ? 'active' : '' }}">
-            <i class="bi bi-book"></i> Edukasi
+        <a href="{{ route('dashboard.lainnya') }}" class="{{ request()->is('lainnya') || request()->is('edukasi') || request()->is('konsultasi') || request()->is('kandidat-harian') ? 'active' : '' }}">
+            <i class="bi bi-grid-fill"></i> Lainnya
         </a>
         <a href="/proseslogout" onclick="return confirm('Yakin ingin logout?')" class="text-danger">
             <i class="bi bi-box-arrow-right"></i> Logout

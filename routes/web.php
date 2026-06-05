@@ -71,6 +71,11 @@ Route::middleware(['auth:karyawan'])->group(function () {
     Route::post('/daftartanya/storetanya', [DashboardController::class, 'storetanya'])->name('storetanya');
     Route::post('/dashboard/konsultasi', [DashboardController::class, 'storeKonsultasi'])->name('dashboard.konsultasi.store');
 
+    // Menu Lain (Lainnya)
+    Route::get('/lainnya', [DashboardController::class, 'lainnya'])->name('dashboard.lainnya');
+    Route::get('/konsultasi', [DashboardController::class, 'konsultasi'])->name('dashboard.konsultasi');
+    Route::get('/kandidat-harian', [DashboardController::class, 'kandidatHarian'])->name('dashboard.kandidat_harian');
+
     // Edukasi Pranikah
     Route::get('/edukasi', [DashboardController::class, 'edukasi'])->name('dashboard.edukasi');
     Route::post('/edukasi/{id}/daftar', [DashboardController::class, 'daftarEdukasi'])->name('dashboard.edukasi.daftar');
