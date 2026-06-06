@@ -140,6 +140,8 @@ Route::middleware(['auth:user'])->group(function () {
     Route::post('/murobi/edukasi/store', [MurobiController::class, 'storeEdukasi'])->name('murobi.edukasi.store');
     Route::post('/murobi/edukasi/update/{id}', [MurobiController::class, 'updateEdukasi'])->name('murobi.edukasi.update');
     Route::get('/murobi/edukasi/delete/{id}', [MurobiController::class, 'deleteEdukasi'])->name('murobi.edukasi.delete');
+    Route::post('/murobi/edukasi/peserta/{id}/approve', [MurobiController::class, 'approvePeserta'])->name('murobi.edukasi.peserta.approve');
+    Route::post('/murobi/edukasi/peserta/{id}/reject', [MurobiController::class, 'rejectPeserta'])->name('murobi.edukasi.peserta.reject');
 
 });
 

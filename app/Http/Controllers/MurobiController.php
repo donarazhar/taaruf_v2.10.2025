@@ -294,4 +294,42 @@ class MurobiController extends Controller
         DB::table('edukasi')->where('id', $id)->delete();
         return Redirect::back()->with('success', 'Materi edukasi berhasil dihapus!');
     }
+
+    /**
+     * Approve peserta pendaftaran kelas edukasi
+     */
+    public function approvePeserta($id)
+    {
+        $pendaftaran = DB::table('pendaftaran_edukasi')->where('id', $id)->first();
+
+        if (!$pendaftaran) {
+            return Redirect::back()->with('error', 'Data pendaftaran tidak ditemukan.');
+        }
+
+        DB::table('pendaftaran_edukasi')->where('id', $id)->update([
+            'status_pendaftaran' => 'diterima',
+            'updated_at' => now()
+        ]);
+
+        return Redirect::back()->with('success', 'Peserta berhasil disetujui!');
+    }
+
+    /**
+     * Reject peserta pendaftaran kelas edukasi
+     */
+    public function rejectPeserta($id)
+    {
+        $pendaftaran = DB::table('pendaftaran_edukasi')->where('id', $id)->first();
+
+        if (!$pendaftaran) {
+            return Redirect::back()->with('error', 'Data pendaftaran tidak ditemukan.');
+        }
+
+        DB::table('pendaftaran_edukasi')->where('id', $id)->update([
+            'status_pendaftaran' => 'ditolak',
+            'updated_at' => now()
+        ]);
+
+        return Redirect::back()->with('success', 'Peserta telah ditolak.');
+    }
 }
