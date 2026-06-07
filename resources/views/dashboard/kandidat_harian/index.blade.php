@@ -691,7 +691,7 @@
                                 </div>
                                 <div>
                                     <span class="kandidat-info-label">Pendidikan</span>
-                                    <span class="kandidat-info-value">{{ $kandidat->pendidikan ?? '-' }}</span>
+                                    <span class="kandidat-info-value">{{ $kandidat->biodata->pendidikan ?? '-' }}</span>
                                 </div>
                             </div>
                             <div class="kandidat-info-item">
@@ -700,7 +700,7 @@
                                 </div>
                                 <div>
                                     <span class="kandidat-info-label">Suku</span>
-                                    <span class="kandidat-info-value">{{ $kandidat->suku ?? '-' }}</span>
+                                    <span class="kandidat-info-value">{{ $kandidat->biodata->suku ?? '-' }}</span>
                                 </div>
                             </div>
                             <div class="kandidat-info-item">
@@ -709,10 +709,10 @@
                                 </div>
                                 <div>
                                     <span class="kandidat-info-label">Usia</span>
-                                    <span class="kandidat-info-value">{{ !empty($kandidat->tgllahir) ? \Carbon\Carbon::parse($kandidat->tgllahir)->age . ' Tahun' : '-' }}</span>
+                                    <span class="kandidat-info-value">{{ isset($kandidat->biodata->tgllahir) ? \Carbon\Carbon::parse($kandidat->biodata->tgllahir)->age . ' Tahun' : '-' }}</span>
                                 </div>
                             </div>
-                            @if(!empty($kandidat->tinggi))
+                            @if(!empty($kandidat->biodata->tinggi))
                             <div class="kandidat-info-item">
                                 <div class="kandidat-info-icon height">
                                     <i class="bi bi-arrows-vertical"></i>

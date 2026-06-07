@@ -97,13 +97,11 @@ class DashboardController extends Controller
         $email = $user->email;
         $oppositeGender = $user->jenkel == 'pria' ? 'wanita' : 'pria';
         
-        $myCriteria = DB::table('kriteriapasangan')->where('email', $email)->first();
+        $myCriteria = \App\Models\Kriteriapasangan::where('email', $email)->first();
 
-        $kandidatHarian = DB::table('karyawan')
-            ->leftJoin('biodata', 'karyawan.email', '=', 'biodata.email')
-            ->select('karyawan.*', 'biodata.pendidikan', 'biodata.suku', 'biodata.tgllahir', 'biodata.tinggi', 'biodata.berat')
-            ->where('karyawan.jenkel', $oppositeGender)
-            ->where('karyawan.status', '1')
+        $kandidatHarian = \App\Models\Karyawan::with('biodata')
+            ->where('jenkel', $oppositeGender)
+            ->where('status', '1')
             ->inRandomOrder(date('Ymd')) // Random stabil per hari
             ->limit(2)
             ->get();
@@ -214,29 +212,31 @@ class DashboardController extends Controller
         $email = $user->email;
         $oppositeGender = $user->jenkel == 'pria' ? 'wanita' : 'pria';
         
-        // Setup query utama dengan join ke tabel biodata untuk keperluan filter
-        $query = DB::table('karyawan')
-            ->leftJoin('biodata', 'karyawan.email', '=', 'biodata.email')
-            ->select('karyawan.*', 'biodata.pendidikan', 'biodata.suku', 'biodata.tgllahir', 'biodata.tinggi', 'biodata.berat')
-            ->where('karyawan.jenkel', $oppositeGender)
-            ->where('karyawan.status', '1');
+        // Setup query utama dengan Eloquent
+        $query = \App\Models\Karyawan::with('biodata')
+            ->where('jenkel', $oppositeGender)
+            ->where('status', '1');
 
         // Fitur Pencarian
         if ($request->has('search') && $request->search != '') {
             $search = $request->search;
             $query->where(function($q) use ($search) {
-                $q->where('karyawan.nama', 'like', "%{$search}%")
-                  ->orWhere('karyawan.nip', 'like', "%{$search}%");
+                $q->where('nama', 'like', "%{$search}%")
+                  ->orWhere('nip', 'like', "%{$search}%");
             });
         }
 
         // Fitur Filter Lanjutan
         if ($request->has('pendidikan') && $request->pendidikan != '') {
-            $query->where('biodata.pendidikan', $request->pendidikan);
+            $query->whereHas('biodata', function ($q) use ($request) {
+                $q->where('pendidikan', $request->pendidikan);
+            });
         }
 
         if ($request->has('suku') && $request->suku != '') {
-            $query->where('biodata.suku', $request->suku);
+            $query->whereHas('biodata', function ($q) use ($request) {
+                $q->where('suku', $request->suku);
+            });
         }
         
         if ($request->has('usia') && $request->usia != '') {
@@ -246,10 +246,14 @@ class DashboardController extends Controller
                 $maxAge = (int)$usiaRange[1];
                 $maxDate = \Carbon\Carbon::now()->subYears($minAge)->format('Y-m-d');
                 $minDate = \Carbon\Carbon::now()->subYears($maxAge + 1)->format('Y-m-d');
-                $query->whereBetween('biodata.tgllahir', [$minDate, $maxDate]);
+                $query->whereHas('biodata', function ($q) use ($minDate, $maxDate) {
+                    $q->whereBetween('tgllahir', [$minDate, $maxDate]);
+                });
             } else if ($request->usia == '40+') {
                 $maxDate = \Carbon\Carbon::now()->subYears(40)->format('Y-m-d');
-                $query->where('biodata.tgllahir', '<=', $maxDate);
+                $query->whereHas('biodata', function ($q) use ($maxDate) {
+                    $q->where('tgllahir', '<=', $maxDate);
+                });
             }
         }
 
@@ -257,7 +261,7 @@ class DashboardController extends Controller
         $users = $query->paginate(12)->appends($request->all());
 
         // Hitung Match Percentage
-        $myCriteria = DB::table('kriteriapasangan')->where('email', $email)->first();
+        $myCriteria = \App\Models\Kriteriapasangan::where('email', $email)->first();
         $users->getCollection()->transform(function($user) use ($myCriteria) {
             $user->match_percentage = $this->calculateMatchPercentage($user, $myCriteria);
             return $user;
@@ -367,10 +371,15 @@ class DashboardController extends Controller
     {
         $score = 20; // Base score (opposite gender)
         
+        $tgllahir = $user->tgllahir ?? ($user->biodata->tgllahir ?? null);
+        $tinggi = $user->tinggi ?? ($user->biodata->tinggi ?? null);
+        $berat = $user->berat ?? ($user->biodata->berat ?? null);
+        $suku = $user->suku ?? ($user->biodata->suku ?? null);
+
         if ($myCriteria) {
             // Usia
-            if (!empty($myCriteria->kriteriaumur) && !empty($user->tgllahir) && $myCriteria->kriteriaumur != 'Bebas' && $myCriteria->kriteriaumur != 'Tidak ada kriteria khusus') {
-                $age = \Carbon\Carbon::parse($user->tgllahir)->age;
+            if (!empty($myCriteria->kriteriaumur) && !empty($tgllahir) && $myCriteria->kriteriaumur != 'Bebas' && $myCriteria->kriteriaumur != 'Tidak ada kriteria khusus') {
+                $age = \Carbon\Carbon::parse($tgllahir)->age;
                 $range = explode('-', $myCriteria->kriteriaumur);
                 if (count($range) == 2 && $age >= (int)$range[0] && $age <= (int)$range[1]) {
                     $score += 20;
@@ -382,9 +391,9 @@ class DashboardController extends Controller
             }
 
             // Tinggi
-            if (!empty($myCriteria->kriteriatinggi) && !empty($user->tinggi) && $myCriteria->kriteriatinggi != 'Bebas' && $myCriteria->kriteriatinggi != 'Tidak ada kriteria khusus') {
+            if (!empty($myCriteria->kriteriatinggi) && !empty($tinggi) && $myCriteria->kriteriatinggi != 'Bebas' && $myCriteria->kriteriatinggi != 'Tidak ada kriteria khusus') {
                 $range = explode('-', $myCriteria->kriteriatinggi);
-                if (count($range) == 2 && $user->tinggi >= (int)$range[0] && $user->tinggi <= (int)$range[1]) {
+                if (count($range) == 2 && $tinggi >= (int)$range[0] && $tinggi <= (int)$range[1]) {
                     $score += 20;
                 }
             } else if ($myCriteria->kriteriatinggi == 'Bebas' || empty($myCriteria->kriteriatinggi) || $myCriteria->kriteriatinggi == 'Tidak ada kriteria khusus') {
@@ -392,9 +401,9 @@ class DashboardController extends Controller
             }
 
             // Berat
-            if (!empty($myCriteria->kriteriaberat) && !empty($user->berat) && $myCriteria->kriteriaberat != 'Bebas' && $myCriteria->kriteriaberat != 'Tidak ada kriteria khusus') {
+            if (!empty($myCriteria->kriteriaberat) && !empty($berat) && $myCriteria->kriteriaberat != 'Bebas' && $myCriteria->kriteriaberat != 'Tidak ada kriteria khusus') {
                 $range = explode('-', $myCriteria->kriteriaberat);
-                if (count($range) == 2 && $user->berat >= (int)$range[0] && $user->berat <= (int)$range[1]) {
+                if (count($range) == 2 && $berat >= (int)$range[0] && $berat <= (int)$range[1]) {
                     $score += 20;
                 }
             } else if ($myCriteria->kriteriaberat == 'Bebas' || empty($myCriteria->kriteriaberat) || $myCriteria->kriteriaberat == 'Tidak ada kriteria khusus') {
@@ -402,8 +411,8 @@ class DashboardController extends Controller
             }
 
             // Suku
-            if (!empty($myCriteria->kriteriasuku) && !empty($user->suku) && $myCriteria->kriteriasuku != 'Bebas' && $myCriteria->kriteriasuku != 'Tidak ada kriteria khusus') {
-                if (strtolower($myCriteria->kriteriasuku) == strtolower($user->suku)) {
+            if (!empty($myCriteria->kriteriasuku) && !empty($suku) && $myCriteria->kriteriasuku != 'Bebas' && $myCriteria->kriteriasuku != 'Tidak ada kriteria khusus') {
+                if (strtolower($myCriteria->kriteriasuku) == strtolower($suku)) {
                     $score += 20;
                 }
             } else if ($myCriteria->kriteriasuku == 'Bebas' || empty($myCriteria->kriteriasuku) || $myCriteria->kriteriasuku == 'Tidak ada kriteria khusus') {
