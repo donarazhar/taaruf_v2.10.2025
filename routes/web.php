@@ -44,6 +44,13 @@ Route::middleware(['guest:karyawan'])->group(function () {
     Route::post('/prosesdaftar', [AuthController::class, 'prosesdaftar'])->middleware('throttle:6,1');
     Route::post('/proseslogin', [AuthController::class, 'proseslogin'])->middleware('throttle:10,1');
     Route::get('/masterkaryawan/verify/{token}', [MasterInputanController::class, 'verify'])->name('verify');
+
+    // Forgot Password
+    Route::get('/forgot-password', [\App\Http\Controllers\Auth\PasswordResetController::class, 'showLinkRequestForm'])->name('password.request');
+    Route::post('/forgot-password', [\App\Http\Controllers\Auth\PasswordResetController::class, 'sendResetLinkEmail'])->name('password.email');
+    Route::get('/reset-password/{token}', [\App\Http\Controllers\Auth\PasswordResetController::class, 'showResetForm'])->name('password.reset');
+    Route::post('/reset-password', [\App\Http\Controllers\Auth\PasswordResetController::class, 'reset'])->name('password.update');
+
 });
 Route::middleware(['guest:user'])->group(function () {
     Route::get('/panel', function () {

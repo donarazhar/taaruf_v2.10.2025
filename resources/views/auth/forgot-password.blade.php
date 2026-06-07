@@ -232,10 +232,6 @@
             box-shadow: var(--shadow-lg);
         }
 
-        .btn-login-modern:active {
-            transform: translateY(0);
-        }
-
         /* ===== ALERTS ===== */
         .alert-modern {
             padding: 16px 20px;
@@ -270,6 +266,12 @@
             background: rgba(255, 214, 0, 0.1);
             color: #f57c00;
             border-left: 4px solid var(--warning);
+        }
+        
+        .alert-danger {
+            background: rgba(255, 0, 0, 0.1);
+            color: #d32f2f;
+            border-left: 4px solid #d32f2f;
         }
 
         /* ===== DIVIDER ===== */
@@ -318,50 +320,7 @@
         .text-muted {
             color: var(--gray-600);
         }
-
-        /* ===== FEATURES LIST ===== */
-        .features-list {
-            margin-top: 32px;
-            padding: 24px;
-            background: var(--gray-50);
-            border-radius: var(--radius-md);
-        }
-
-        .feature-item {
-            display: flex;
-            align-items: start;
-            gap: 12px;
-            margin-bottom: 16px;
-            color: var(--gray-900);
-        }
-
-        .feature-item:last-child {
-            margin-bottom: 0;
-        }
-
-        .feature-icon {
-            width: 24px;
-            height: 24px;
-            background: var(--primary);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            margin-top: 2px;
-        }
-
-        .feature-icon svg {
-            width: 14px;
-            height: 14px;
-        }
-
-        .feature-text {
-            flex: 1;
-            font-size: 0.9rem;
-            line-height: 1.5;
-        }
-
+        
         /* ===== RESPONSIVE ===== */
         @media (max-width: 768px) {
             .hero-login-title {
@@ -385,59 +344,6 @@
             .login-card-body {
                 padding: 36px 28px;
             }
-
-            .hero-login-icon {
-                width: 70px;
-                height: 70px;
-            }
-
-            .hero-login-icon svg {
-                width: 35px;
-                height: 35px;
-            }
-        }
-
-        @media (max-width: 576px) {
-            .hero-login-title {
-                font-size: 1.75rem;
-            }
-
-            .login-card-header {
-                padding: 24px 24px;
-            }
-
-            .login-card-header b {
-                font-size: 1.25rem;
-            }
-
-            .login-card-body {
-                padding: 32px 24px;
-            }
-
-            .btn-login-modern {
-                padding: 14px 28px;
-                font-size: 1rem;
-            }
-
-            .form-control-modern {
-                padding: 14px 16px 14px 48px;
-            }
-        }
-
-        /* ===== PASSWORD TOGGLE ===== */
-        .password-toggle {
-            position: absolute;
-            right: 18px;
-            top: 50%;
-            transform: translateY(-50%);
-            cursor: pointer;
-            color: var(--gray-600);
-            transition: color 0.3s ease;
-            z-index: 2;
-        }
-
-        .password-toggle:hover {
-            color: var(--primary);
         }
     </style>
 
@@ -450,9 +356,9 @@
                         <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 5C13.66 5 15 6.34 15 8C15 9.66 13.66 11 12 11C10.34 11 9 9.66 9 8C9 6.34 10.34 5 12 5ZM12 19.2C9.5 19.2 7.29 17.92 6 15.98C6.03 13.99 10 12.9 12 12.9C13.99 12.9 17.97 13.99 18 15.98C16.71 17.92 14.5 19.2 12 19.2Z" fill="white"/>
                     </svg>
                 </div>
-                <h1 class="hero-login-title">Selamat Datang Kembali</h1>
+                <h1 class="hero-login-title">Lupa Password</h1>
                 <p class="hero-login-subtitle">
-                    Masuk ke akun Anda untuk melanjutkan perjalanan ta'aruf
+                    Masukkan email Anda untuk menerima link reset password
                 </p>
             </div>
         </div>
@@ -474,15 +380,15 @@
                             <span>{{ Session::get('success') }}</span>
                         </div>
                     @endif
-                    
-                    @if (Session::get('warning'))
-                        <div class="alert-modern alert-warning" data-aos="fade-down">
+
+                    @error('email')
+                        <div class="alert-modern alert-danger" data-aos="fade-down">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M1 21H23L12 2L1 21ZM13 18H11V16H13V18ZM13 14H11V10H13V14Z" fill="currentColor"/>
                             </svg>
-                            <span>{{ Session::get('warning') }}</span>
+                            <span>{{ $message }}</span>
                         </div>
-                    @endif
+                    @enderror
 
                     <div class="login-card" data-aos="fade-up" data-aos-delay="100">
                         <div class="login-card-header">
@@ -490,11 +396,11 @@
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M18 8H17V6C17 3.24 14.76 1 12 1C9.24 1 7 3.24 7 6V8H6C4.9 8 4 8.9 4 10V20C4 21.1 4.9 22 6 22H18C19.1 22 20 21.1 20 20V10C20 8.9 19.1 8 18 8ZM12 17C10.9 17 10 16.1 10 15C10 13.9 10.9 13 12 13C13.1 13 14 13.9 14 15C14 16.1 13.1 17 12 17ZM15.1 8H8.9V6C8.9 4.29 10.29 2.9 12 2.9C13.71 2.9 15.1 4.29 15.1 6V8Z" fill="white"/>
                                 </svg>
-                                Login
+                                Reset Password
                             </b>
                         </div>
                         <div class="login-card-body">
-                            <form action="/proseslogin" method="POST" id="frmlogin">
+                            <form action="{{ route('password.email') }}" method="POST">
                                 @csrf
                                 
                                 <div class="form-group-modern">
@@ -506,36 +412,13 @@
                                             </svg>
                                         </span>
                                         <input type="email" class="form-control-modern" name="email" id="email"
-                                            placeholder="nama@email.com" required autofocus>
+                                            placeholder="nama@email.com" value="{{ old('email') }}" required autofocus>
                                     </div>
-                                </div>
-
-                                <div class="form-group-modern">
-                                    <label class="form-label-modern">Password</label>
-                                    <div class="input-group-modern">
-                                        <span class="input-icon">
-                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M18 8H17V6C17 3.24 14.76 1 12 1C9.24 1 7 3.24 7 6V8H6C4.9 8 4 8.9 4 10V20C4 21.1 4.9 22 6 22H18C19.1 22 20 21.1 20 20V10C20 8.9 19.1 8 18 8ZM12 17C10.9 17 10 16.1 10 15C10 13.9 10.9 13 12 13C13.1 13 14 13.9 14 15C14 16.1 13.1 17 12 17ZM15.1 8H8.9V6C8.9 4.29 10.29 2.9 12 2.9C13.71 2.9 15.1 4.29 15.1 6V8Z" fill="currentColor"/>
-                                            </svg>
-                                        </span>
-                                        <input type="password" class="form-control-modern" name="password"
-                                            id="password" placeholder="Masukkan password Anda" required>
-                                        <span class="password-toggle" onclick="togglePassword()">
-                                            <svg id="eye-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M12 4.5C7 4.5 2.73 7.61 1 12C2.73 16.39 7 19.5 12 19.5C17 19.5 21.27 16.39 23 12C21.27 7.61 17 4.5 12 4.5ZM12 17C9.24 17 7 14.76 7 12C7 9.24 9.24 7 12 7C14.76 7 17 9.24 17 12C17 14.76 14.76 17 12 17ZM12 9C10.34 9 9 10.34 9 12C9 13.66 10.34 15 12 15C13.66 15 15 13.66 15 12C15 10.34 13.66 9 12 9Z" fill="currentColor"/>
-                                            </svg>
-                                        </span>
-                                    </div>
-                                    <div style="text-align: right; margin-top: 8px;">
-                                        <a href="{{ route('password.request') }}" style="color: var(--primary); font-size: 0.85rem; font-weight: 600; text-decoration: none;">Lupa Password?</a>
-                                    </div>
+                                    <small class="text-muted mt-2 d-block">Kami akan mengirimkan link untuk mereset password ke email ini.</small>
                                 </div>
 
                                 <button class="btn-login-modern" type="submit">
-                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M11 7L9.6 8.4L12.2 11H2V13H12.2L9.6 15.6L11 17L16 12L11 7ZM20 19H12V21H20C21.1 21 22 20.1 22 19V5C22 3.9 21.1 3 20 3H12V5H20V19Z" fill="white"/>
-                                    </svg>
-                                    Masuk Sekarang
+                                    Kirim Link Reset
                                 </button>
                             </form>
 
@@ -543,48 +426,15 @@
                                 <span>atau</span>
                             </div>
 
-                            <div class="link-section">
-                                <span class="text-muted">Belum punya akun?</span>
-                                <a href="/daftar" class="link-primary">
-                                    Daftar di sini
+                            <div class="link-section mt-0">
+                                <a href="/login" class="link-primary" style="justify-content: center; width: 100%;">
                                     <svg width="16" height="16" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                     </svg>
+                                    Kembali ke Login
                                 </a>
                             </div>
 
-                            {{-- <div class="features-list">
-                                <div class="feature-item">
-                                    <div class="feature-icon">
-                                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M9 16.2L4.8 12L3.4 13.4L9 19L21 7L19.6 5.6L9 16.2Z" fill="white"/>
-                                        </svg>
-                                    </div>
-                                    <div class="feature-text">
-                                        <strong>Aman & Terpercaya</strong> - Data Anda dilindungi dengan enkripsi
-                                    </div>
-                                </div>
-                                <div class="feature-item">
-                                    <div class="feature-icon">
-                                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M9 16.2L4.8 12L3.4 13.4L9 19L21 7L19.6 5.6L9 16.2Z" fill="white"/>
-                                        </svg>
-                                    </div>
-                                    <div class="feature-text">
-                                        <strong>Pembimbing Profesional</strong> - Didampingi konsultan berpengalaman
-                                    </div>
-                                </div>
-                                <div class="feature-item">
-                                    <div class="feature-icon">
-                                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M9 16.2L4.8 12L3.4 13.4L9 19L21 7L19.6 5.6L9 16.2Z" fill="white"/>
-                                        </svg>
-                                    </div>
-                                    <div class="feature-text">
-                                        <strong>Sesuai Syariat</strong> - Proses ta'aruf yang Islami
-                                    </div>
-                                </div>
-                            </div> --}}
                         </div>
                     </div>
 
@@ -597,19 +447,4 @@
             </div>
         </div>
     </section>
-
-    <script>
-        function togglePassword() {
-            const passwordInput = document.getElementById('password');
-            const eyeIcon = document.getElementById('eye-icon');
-            
-            if (passwordInput.type === 'password') {
-                passwordInput.type = 'text';
-                eyeIcon.innerHTML = '<path d="M12 7C14.76 7 17 9.24 17 12C17 12.65 16.87 13.26 16.64 13.83L19.56 16.75C21.07 15.49 22.26 13.86 22.99 12C21.26 7.61 16.99 4.5 11.99 4.5C10.59 4.5 9.25 4.75 8.01 5.2L10.17 7.36C10.74 7.13 11.35 7 12 7ZM2 4.27L4.28 6.55L4.74 7.01C3.08 8.3 1.78 10.02 1 12C2.73 16.39 7 19.5 12 19.5C13.55 19.5 15.03 19.2 16.38 18.66L16.8 19.08L19.73 22L21 20.73L3.27 3L2 4.27ZM7.53 9.8L9.08 11.35C9.03 11.56 9 11.78 9 12C9 13.66 10.34 15 12 15C12.22 15 12.44 14.97 12.65 14.92L14.2 16.47C13.53 16.8 12.79 17 12 17C9.24 17 7 14.76 7 12C7 11.21 7.2 10.47 7.53 9.8ZM11.84 9.02L14.99 12.17L15.01 12.01C15.01 10.35 13.67 9.01 12.01 9.01L11.84 9.02Z" fill="currentColor"/>';
-            } else {
-                passwordInput.type = 'password';
-                eyeIcon.innerHTML = '<path d="M12 4.5C7 4.5 2.73 7.61 1 12C2.73 16.39 7 19.5 12 19.5C17 19.5 21.27 16.39 23 12C21.27 7.61 17 4.5 12 4.5ZM12 17C9.24 17 7 14.76 7 12C7 9.24 9.24 7 12 7C14.76 7 17 9.24 17 12C17 14.76 14.76 17 12 17ZM12 9C10.34 9 9 10.34 9 12C9 13.66 10.34 15 12 15C13.66 15 15 13.66 15 12C15 10.34 13.66 9 12 9Z" fill="currentColor"/>';
-            }
-        }
-    </script>
 @endsection
