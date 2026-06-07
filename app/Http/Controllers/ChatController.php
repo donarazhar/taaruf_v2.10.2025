@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\NewChatNotification;
 
 class ChatController extends Controller
 {
@@ -90,6 +92,18 @@ class ChatController extends Controller
 
             $simpan = DB::table('chat')->insert($data);
             if ($simpan) {
+                // Tentukan penerima email (lawan bicara)
+                $recipientEmail = ($progress->email_auth === $emailAuth) ? $progress->email_profile : $progress->email_auth;
+                
+                // Ambil nama pengirim
+                $senderName = Auth::guard('karyawan')->user()->nama;
+                
+                // Generate URL ke halaman chat
+                $chatUrl = url('/chat/' . $id);
+                
+                // Kirim email (menggunakan queue)
+                Mail::to($recipientEmail)->send(new NewChatNotification($senderName, $pesan, $chatUrl));
+
                 return redirect()->back();
             }
         } catch (\Exception $e) {

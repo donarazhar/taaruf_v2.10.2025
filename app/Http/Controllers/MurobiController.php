@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\ProgressUpdateNotification;
+use App\Mail\KonsultasiRepliedNotification;
 
 class MurobiController extends Controller
 {
@@ -194,6 +197,17 @@ class MurobiController extends Controller
 
             DB::table('progress')->insert($data);
 
+            // Kirim notifikasi ke Pria dan Wanita
+            $progressUrl = url('/progress');
+            
+            Mail::to($emailPria)->send(
+                new ProgressUpdateNotification('Seseorang telah diajukan untuk berta\'aruf dengan Anda.', 'Silakan periksa profil calon di dashboard Anda.', $progressUrl)
+            );
+            
+            Mail::to($emailWanita)->send(
+                new ProgressUpdateNotification('Seseorang telah diajukan untuk berta\'aruf dengan Anda.', 'Silakan periksa profil calon di dashboard Anda.', $progressUrl)
+            );
+
             return Redirect::back()->with('success', 'Berhasil memasangkan pasangan ta\'aruf!');
         } catch (\Exception $e) {
             return Redirect::back()->with('error', 'Terjadi kesalahan saat memasangkan: ' . $e->getMessage());
@@ -225,6 +239,22 @@ class MurobiController extends Controller
             'pesan_balasan_murobbi' => $request->pesan_balasan_murobbi,
             'updated_at' => now()
         ]);
+
+        // Kirim email notifikasi balasan
+        if ($request->filled('pesan_balasan_murobbi')) {
+            $konsultasi = DB::table('konsultasi')
+                ->join('karyawan', 'konsultasi.karyawan_email', '=', 'karyawan.email')
+                ->select('konsultasi.karyawan_email', 'karyawan.nama')
+                ->where('konsultasi.id', $id)
+                ->first();
+                
+            if ($konsultasi) {
+                $konsultasiUrl = url('/konsultasi');
+                Mail::to($konsultasi->karyawan_email)->send(
+                    new KonsultasiRepliedNotification($konsultasi->nama, $konsultasiUrl)
+                );
+            }
+        }
 
         return Redirect::back()->with('success', 'Konsultasi berhasil diupdate!');
     }
