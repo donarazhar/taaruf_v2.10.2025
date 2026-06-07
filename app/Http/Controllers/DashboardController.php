@@ -28,7 +28,6 @@ class DashboardController extends Controller
     public function edukasi()
     {
         $email = Auth::guard('karyawan')->user()->email;
-        $dataprofile = DB::table('karyawan')->where('email', $email)->first();
 
         $listVideo = DB::table('edukasi')->where('status', 'aktif')->where('jenis', 'video')->orderBy('created_at', 'desc')->get();
         $listArtikel = DB::table('edukasi')->where('status', 'aktif')->where('jenis', 'artikel')->orderBy('created_at', 'desc')->get();
@@ -39,7 +38,7 @@ class DashboardController extends Controller
             ->pluck('status_pendaftaran', 'edukasi_id')
             ->toArray();
 
-        return view('dashboard.edukasi.index', compact('dataprofile', 'listVideo', 'listArtikel', 'listKelas', 'riwayatDaftar'));
+        return view('dashboard.edukasi.index', compact('listVideo', 'listArtikel', 'listKelas', 'riwayatDaftar'));
     }
 
     public function daftarEdukasi(Request $request, $id)
@@ -67,50 +66,36 @@ class DashboardController extends Controller
 
     public function index()
     {
-        // Mendapatkan AUTH
-        $email = Auth::guard('karyawan')->user()->email;
-        // Mendapatkan data profile berdasarkan email
-        $dataprofile = DB::table('karyawan')->where('email', $email)->first();
         $databerita = $this->maaApi->getPosts();
         $datalayanan = $this->maaApi->getPrograms();
         $datayoutube = $this->maaApi->getYoutubeVideos();
         $dataslider = $this->maaApi->getSliders();
 
-        return view('dashboard.index', compact('dataprofile', 'databerita', 'datayoutube', 'datalayanan', 'dataslider'));
-    }
-
-    private function getCommonData()
-    {
-        $email = Auth::guard('karyawan')->user()->email;
-        $dataprofile = DB::table('karyawan')->where('email', $email)->first();
-
-        return ['email' => $email, 'dataprofile' => $dataprofile];
+        return view('dashboard.index', compact('databerita', 'datayoutube', 'datalayanan', 'dataslider'));
     }
 
     public function lainnya()
     {
-        $data = $this->getCommonData();
-        return view('dashboard.lainnya.index', $data);
+        return view('dashboard.lainnya.index');
     }
 
     public function konsultasi()
     {
-        $data = $this->getCommonData();
+        $email = Auth::guard('karyawan')->user()->email;
         $riwayatKonsultasi = DB::table('konsultasi')
-            ->where('karyawan_email', $data['email'])
+            ->where('karyawan_email', $email)
             ->orderBy('created_at', 'desc')
             ->get();
             
-        return view('dashboard.konsultasi.index', array_merge($data, ['riwayatKonsultasi' => $riwayatKonsultasi]));
+        return view('dashboard.konsultasi.index', compact('riwayatKonsultasi'));
     }
 
     public function kandidatHarian()
     {
-        $data = $this->getCommonData();
-        $email = $data['email'];
-        $dataprofile = $data['dataprofile'];
-
-        $oppositeGender = $dataprofile->jenkel == 'pria' ? 'wanita' : 'pria';
+        $user = Auth::guard('karyawan')->user();
+        $email = $user->email;
+        $oppositeGender = $user->jenkel == 'pria' ? 'wanita' : 'pria';
+        
         $myCriteria = DB::table('kriteriapasangan')->where('email', $email)->first();
 
         $kandidatHarian = DB::table('karyawan')
@@ -122,48 +107,39 @@ class DashboardController extends Controller
             ->limit(2)
             ->get();
             
-        $kandidatHarian->transform(function($user) use ($myCriteria) {
-            $user->match_percentage = $this->calculateMatchPercentage($user, $myCriteria);
-            return $user;
+        $kandidatHarian->transform(function($u) use ($myCriteria) {
+            $u->match_percentage = $this->calculateMatchPercentage($u, $myCriteria);
+            return $u;
         });
 
-        return view('dashboard.kandidat_harian.index', array_merge($data, ['kandidatHarian' => $kandidatHarian]));
+        return view('dashboard.kandidat_harian.index', compact('kandidatHarian'));
     }
 
     public function showBerita($slug)
     {
-        $email = Auth::guard('karyawan')->user()->email;
-        $dataprofile = DB::table('karyawan')->where('email', $email)->first();
-
         $berita = $this->maaApi->getPost($slug);
         
         if (!$berita) {
             return abort(404);
         }
 
-        return view('dashboard.berita.show', compact('dataprofile', 'berita'));
+        return view('dashboard.berita.show', compact('berita'));
     }
 
     public function showLayanan($slug)
     {
-        $email = Auth::guard('karyawan')->user()->email;
-        $dataprofile = DB::table('karyawan')->where('email', $email)->first();
-
         $layanan = $this->maaApi->getProgram($slug);
         
         if (!$layanan) {
             return abort(404);
         }
 
-        return view('dashboard.layanan.show', compact('dataprofile', 'layanan'));
+        return view('dashboard.layanan.show', compact('layanan'));
     }
 
     public function profile()
     {
-        // Mendapatkan AUTH
         $email = Auth::guard('karyawan')->user()->email;
-        // Mendapatkan data profile berdasarkan email
-        $dataprofile = DB::table('karyawan')->where('email', $email)->first();
         $userModel = \App\Models\Karyawan::with(['biodata', 'kriteriapasangan'])->find($email);
 
         // Memetakan ke struktur yang diharapkan oleh view agar tidak perlu merubah view besar-besaran
@@ -189,7 +165,7 @@ class DashboardController extends Controller
             'kriteriaumum' => $userModel->kriteriapasangan->kriteriaumum ?? '',
         ];
 
-        return view('dashboard.profile.index', compact('dataprofile', 'dataprofilelengkap'));
+        return view('dashboard.profile.index', compact('dataprofilelengkap'));
     }
 
     public function checkNotifications()
@@ -233,13 +209,9 @@ class DashboardController extends Controller
 
     public function taaruf(Request $request)
     {
-        // Mendapatkan AUTH
-        $email = Auth::guard('karyawan')->user()->email;
-        // Mendapatkan data profile berdasarkan email
-        $dataprofile = DB::table('karyawan')->where('email', $email)->first();
-        
-        // Membaca jenis kelamin dari data profile (pria/wanita), lalu cari lawan jenis
-        $oppositeGender = $dataprofile->jenkel == 'pria' ? 'wanita' : 'pria';
+        $user = Auth::guard('karyawan')->user();
+        $email = $user->email;
+        $oppositeGender = $user->jenkel == 'pria' ? 'wanita' : 'pria';
         
         // Setup query utama dengan join ke tabel biodata untuk keperluan filter
         $query = DB::table('karyawan')
@@ -290,46 +262,7 @@ class DashboardController extends Controller
             return $user;
         });
 
-        $cekemail = DB::table('karyawan')
-            ->leftJoin('biodata', 'karyawan.email', '=', 'biodata.email')
-            ->leftJoin('kriteriapasangan', 'karyawan.email', '=', 'kriteriapasangan.email')
-            ->select('karyawan.email', 'biodata.email as biodata_email', 'kriteriapasangan.email as kriteriapasangan_email')
-            ->where('karyawan.email', $email)
-            ->first();
-
-        if ($cekemail) {
-            // Jika email ditemukan di tabel karyawan
-            if (
-                $cekemail->biodata_email !== null && $cekemail->kriteriapasangan_email !== null
-            ) {
-                // Lakukan sesuatu jika email ditemukan di kedua tabel biodata dan kriteriapasangan
-                // Misalnya, aktifkan menu
-                $menuAktif = true;
-            } else {
-                // Lakukan sesuatu jika email tidak ditemukan di salah satu atau kedua tabel
-                // Misalnya, nonaktifkan menu
-                $menuAktif = false;
-            }
-        } else {
-            // Lakukan sesuatu jika email tidak ditemukan di tabel karyawan
-            // Misalnya, nonaktifkan menu
-            $menuAktif = false;
-        }
-
-
-        return view('dashboard.taaruf.index', compact('dataprofile', 'users', 'menuAktif'));
-    }
-
-    public function progress()
-    {
-        // Mendapatkan AUTH
-        $email = Auth::guard('karyawan')->user()->email;
-        // Mendapatkan data profile berdasarkan email
-        $dataprofile = DB::table('karyawan')->where('email', $email)->first();
-
-
-
-        return view('dashboard.progress.index', compact('dataprofile'));
+        return view('dashboard.taaruf.index', compact('users'));
     }
 
     public function updateprofile(UpdateBasicProfileRequest $request)

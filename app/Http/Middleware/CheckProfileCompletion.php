@@ -27,6 +27,9 @@ class CheckProfileCompletion
             if ($user->biodata && $user->kriteriapasangan) {
                 $menuAktif = true;
             }
+
+            $dataprofile = DB::table('karyawan')->where('email', $user->email)->first();
+            View::share('dataprofile', $dataprofile);
         }
 
         View::share('menuAktif', $menuAktif);

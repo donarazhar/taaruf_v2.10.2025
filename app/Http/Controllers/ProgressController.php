@@ -12,13 +12,7 @@ class ProgressController extends Controller
     public function index()
     {
         $user = Auth::guard('karyawan')->user()->email;
-        // Mendapatkan data profile berdasarkan email
-        $karyawan = DB::table('karyawan')
-            ->select('karyawan.*', 'biodata.*', 'kriteriapasangan.*')
-            ->leftJoin('biodata', 'karyawan.email', '=', 'biodata.email')
-            ->leftJoin('kriteriapasangan', 'karyawan.email', '=', 'kriteriapasangan.email')
-            ->where('karyawan.email', '=', $user) // Tambahkan tanda kutip di sekitar $email
-            ->first();
+
         // Melakukan LEFT JOIN ke tabel karyawan untuk mendapatkan data dari tabel karyawan
         $dataprogress = DB::table('progress')
             ->leftJoin('karyawan', 'karyawan.email', '=', 'progress.email_auth')
@@ -31,7 +25,7 @@ class ProgressController extends Controller
             ->get();
         $likedislike = DB::table('likedislike')->get();
 
-        return view('dashboard.progress.index', compact('dataprogress', 'karyawan', 'likedislike'));
+        return view('dashboard.progress.index', compact('dataprogress', 'likedislike'));
     }
 
     public function like($id)

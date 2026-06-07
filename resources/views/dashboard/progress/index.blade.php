@@ -575,7 +575,7 @@
                     </div>
                     <div class="hero-stat-item">
                         <i class="bi bi-person-check-fill"></i>
-                        <span>{{ $karyawan->nama }}</span>
+                        <span>{{ $dataprofile->nama }}</span>
                     </div>
                 </div>
             </div>
