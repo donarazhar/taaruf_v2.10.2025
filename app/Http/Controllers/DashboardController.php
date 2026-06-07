@@ -161,11 +161,30 @@ class DashboardController extends Controller
         $email = Auth::guard('karyawan')->user()->email;
         // Mendapatkan data profile berdasarkan email
         $dataprofile = DB::table('karyawan')->where('email', $email)->first();
-        $dataprofilelengkap = DB::table('karyawan')
-            ->leftJoin('biodata', 'karyawan.email', '=', 'biodata.email')
-            ->leftJoin('kriteriapasangan', 'karyawan.email', '=', 'kriteriapasangan.email')
-            ->where('karyawan.email', $email)
-            ->first();
+        $userModel = \App\Models\Karyawan::with(['biodata', 'kriteriapasangan'])->find($email);
+
+        // Memetakan ke struktur yang diharapkan oleh view agar tidak perlu merubah view besar-besaran
+        $dataprofilelengkap = (object) [
+            'nohp' => $userModel->biodata->nohp ?? '',
+            'tempatlahir' => $userModel->biodata->tempatlahir ?? '',
+            'tgllahir' => $userModel->biodata->tgllahir ?? '',
+            'alamat' => $userModel->biodata->alamat ?? '',
+            'goldar' => $userModel->biodata->goldar ?? '',
+            'tinggi' => $userModel->biodata->tinggi ?? '',
+            'berat' => $userModel->biodata->berat ?? '',
+            'statusnikah' => $userModel->biodata->statusnikah ?? '',
+            'pekerjaan' => $userModel->biodata->pekerjaan ?? '',
+            'suku' => $userModel->biodata->suku ?? '',
+            'pendidikan' => $userModel->biodata->pendidikan ?? '',
+            'hobi' => $userModel->biodata->hobi ?? '',
+            'motto' => $userModel->biodata->motto ?? '',
+            'video' => $userModel->biodata->video ?? '',
+            'kriteriaumur' => $userModel->kriteriapasangan->kriteriaumur ?? '',
+            'kriteriatinggi' => $userModel->kriteriapasangan->kriteriatinggi ?? '',
+            'kriteriaberat' => $userModel->kriteriapasangan->kriteriaberat ?? '',
+            'kriteriasuku' => $userModel->kriteriapasangan->kriteriasuku ?? '',
+            'kriteriaumum' => $userModel->kriteriapasangan->kriteriaumum ?? '',
+        ];
 
         return view('dashboard.profile.index', compact('dataprofile', 'dataprofilelengkap'));
     }

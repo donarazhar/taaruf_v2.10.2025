@@ -13,6 +13,9 @@ class Karyawan extends Authenticatable
     use HasApiTokens, HasFactory, Notifiable;
 
     protected $table = "karyawan";
+    protected $primaryKey = 'email';
+    public $incrementing = false;
+    protected $keyType = 'string';
 
     /**
      * The attributes that are mass assignable.
@@ -23,6 +26,20 @@ class Karyawan extends Authenticatable
         'id',
         'nama',
         'foto',
-
     ];
+
+    public function biodata()
+    {
+        return $this->hasOne(Biodata::class, 'email', 'email');
+    }
+
+    public function kriteriapasangan()
+    {
+        return $this->hasOne(Kriteriapasangan::class, 'email', 'email');
+    }
+
+    public function progress()
+    {
+        return $this->hasMany(Progress::class, 'email_auth', 'email');
+    }
 }

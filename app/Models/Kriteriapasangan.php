@@ -2,15 +2,14 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Biodata extends Model
+class Kriteriapasangan extends Model
 {
     use HasFactory;
 
-    protected $table = "biodata";
+    protected $table = 'kriteriapasangan';
     protected $primaryKey = 'email';
     public $incrementing = false;
     protected $keyType = 'string';
@@ -21,11 +20,4 @@ class Biodata extends Model
     {
         return $this->belongsTo(Karyawan::class, 'email', 'email');
     }
-
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [];
 }

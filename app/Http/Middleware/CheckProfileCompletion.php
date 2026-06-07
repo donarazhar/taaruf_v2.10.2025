@@ -22,14 +22,9 @@ class CheckProfileCompletion
         $menuAktif = false;
 
         if ($user) {
-            $cekemail = DB::table('karyawan')
-                ->leftJoin('biodata', 'karyawan.email', '=', 'biodata.email')
-                ->leftJoin('kriteriapasangan', 'karyawan.email', '=', 'kriteriapasangan.email')
-                ->select('karyawan.email', 'biodata.email as biodata_email', 'kriteriapasangan.email as kriteriapasangan_email')
-                ->where('karyawan.email', $user->email)
-                ->first();
-
-            if ($cekemail && $cekemail->biodata_email !== null && $cekemail->kriteriapasangan_email !== null) {
+            $user->loadMissing(['biodata', 'kriteriapasangan']);
+            
+            if ($user->biodata && $user->kriteriapasangan) {
                 $menuAktif = true;
             }
         }
