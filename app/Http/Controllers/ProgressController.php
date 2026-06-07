@@ -31,40 +31,26 @@ class ProgressController extends Controller
             ->get();
         $likedislike = DB::table('likedislike')->get();
 
-        $cekemail = DB::table('karyawan')
-            ->leftJoin('biodata', 'karyawan.email', '=', 'biodata.email')
-            ->leftJoin('kriteriapasangan', 'karyawan.email', '=', 'kriteriapasangan.email')
-            ->select('karyawan.email', 'biodata.email as biodata_email', 'kriteriapasangan.email as kriteriapasangan_email')
-            ->where('karyawan.email', $user)
-            ->first();
-
-        if ($cekemail) {
-            // Jika email ditemukan di tabel karyawan
-            if (
-                $cekemail->biodata_email !== null && $cekemail->kriteriapasangan_email !== null
-            ) {
-                // Lakukan sesuatu jika email ditemukan di kedua tabel biodata dan kriteriapasangan
-                // Misalnya, aktifkan menu
-                $menuAktif = true;
-            } else {
-                // Lakukan sesuatu jika email tidak ditemukan di salah satu atau kedua tabel
-                // Misalnya, nonaktifkan menu
-                $menuAktif = false;
-            }
-        } else {
-            // Lakukan sesuatu jika email tidak ditemukan di tabel karyawan
-            // Misalnya, nonaktifkan menu
-            $menuAktif = false;
-        }
-
-
-        return view('dashboard.progress.index', compact('dataprogress', 'karyawan', 'likedislike', 'menuAktif'));
+        return view('dashboard.progress.index', compact('dataprogress', 'karyawan', 'likedislike'));
     }
 
     public function like($id)
     {
         // Mendapatkan email auth
         $emailAuth = Auth::guard('karyawan')->user()->email;
+
+        // Cek authorization
+        $progress = DB::table('progress')
+            ->where('id', $id)
+            ->where(function ($query) use ($emailAuth) {
+                $query->where('email_auth', $emailAuth)
+                    ->orWhere('email_profile', $emailAuth);
+            })
+            ->first();
+
+        if (!$progress) {
+            abort(403, 'Unauthorized action.');
+        }
 
         // Proses update atau insert
         DB::table('likedislike')->updateOrInsert(
@@ -80,6 +66,20 @@ class ProgressController extends Controller
     {
         // Mendapatkan email auth
         $emailAuth = Auth::guard('karyawan')->user()->email;
+
+        // Cek authorization
+        $progress = DB::table('progress')
+            ->where('id', $id)
+            ->where(function ($query) use ($emailAuth) {
+                $query->where('email_auth', $emailAuth)
+                    ->orWhere('email_profile', $emailAuth);
+            })
+            ->first();
+
+        if (!$progress) {
+            abort(403, 'Unauthorized action.');
+        }
+
         // Mendapatkan data progress yang akan dipindahkan
         $progressData = DB::table('progress')
             ->leftJoin('likedislike', 'progress.id', '=', 'likedislike.id_progress')

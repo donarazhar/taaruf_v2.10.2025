@@ -1043,9 +1043,13 @@
                                     <button class="btn-edu-action edit" title="Edit" onclick="openModal('editModal{{ $item->id }}')">
                                         <i class="fas fa-pen"></i>
                                     </button>
-                                    <a href="{{ route('murobi.edukasi.delete', $item->id) }}" class="btn-edu-action delete" title="Hapus" onclick="return confirm('Yakin ingin menghapus materi ini?')">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </a>
+                                    <form action="{{ route('murobi.edukasi.delete', $item->id) }}" method="POST" class="d-inline">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn-edu-action delete" title="Hapus" onclick="return confirm('Yakin ingin menghapus materi ini?')" style="border: none;">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                    </form>
                                     @if($item->jenis == 'kelas')
                                         <button class="btn-edu-action peserta" title="Lihat Peserta" onclick="openModal('pendaftarModal{{ $item->id }}')">
                                             <i class="fas fa-users"></i>

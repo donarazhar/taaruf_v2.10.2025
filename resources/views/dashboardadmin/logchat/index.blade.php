@@ -359,9 +359,13 @@
                                                 <a href="{{ route('historychat', ['id' => $data['id_progress']]) }}" class="btn-action-modern btn-view" title="Lihat Chat">
                                                     <i class="fas fa-eye"></i>
                                                 </a>
-                                                <a href="{{ route('deletehistorychat', ['id' => $data['id_progress']]) }}" class="btn-action-modern btn-delete" title="Hapus Chat" onclick="return confirm('Apakah Anda yakin ingin menghapus history chat ini?')">
-                                                    <i class="fas fa-trash"></i>
-                                                </a>
+                                                <form action="{{ route('deletehistorychat', ['id' => $data['id_progress']]) }}" method="POST" class="d-inline">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn-action-modern btn-delete" title="Hapus Chat" onclick="return confirm('Apakah Anda yakin ingin menghapus history chat ini?')" style="border: none;">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                </form>
                                             </div>
                                         </td>
                                     </tr>

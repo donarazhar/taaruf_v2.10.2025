@@ -8,24 +8,24 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 
+use App\Services\MaaApiService;
+use App\Services\ProfileService;
+
 class DashboardController extends Controller
 {
+    protected $maaApi;
+    protected $profileService;
+
+    public function __construct(MaaApiService $maaApi, ProfileService $profileService)
+    {
+        $this->maaApi = $maaApi;
+        $this->profileService = $profileService;
+    }
+
     public function edukasi()
     {
         $email = Auth::guard('karyawan')->user()->email;
         $dataprofile = DB::table('karyawan')->where('email', $email)->first();
-
-        $cekemail = DB::table('karyawan')
-            ->leftJoin('biodata', 'karyawan.email', '=', 'biodata.email')
-            ->leftJoin('kriteriapasangan', 'karyawan.email', '=', 'kriteriapasangan.email')
-            ->select('karyawan.email', 'biodata.email as biodata_email', 'kriteriapasangan.email as kriteriapasangan_email')
-            ->where('karyawan.email', $email)
-            ->first();
-
-        $menuAktif = false;
-        if ($cekemail && $cekemail->biodata_email !== null && $cekemail->kriteriapasangan_email !== null) {
-            $menuAktif = true;
-        }
 
         $listVideo = DB::table('edukasi')->where('status', 'aktif')->where('jenis', 'video')->orderBy('created_at', 'desc')->get();
         $listArtikel = DB::table('edukasi')->where('status', 'aktif')->where('jenis', 'artikel')->orderBy('created_at', 'desc')->get();
@@ -36,7 +36,7 @@ class DashboardController extends Controller
             ->pluck('status_pendaftaran', 'edukasi_id')
             ->toArray();
 
-        return view('dashboard.edukasi.index', compact('dataprofile', 'menuAktif', 'listVideo', 'listArtikel', 'listKelas', 'riwayatDaftar'));
+        return view('dashboard.edukasi.index', compact('dataprofile', 'listVideo', 'listArtikel', 'listKelas', 'riwayatDaftar'));
     }
 
     public function daftarEdukasi(Request $request, $id)
@@ -68,84 +68,12 @@ class DashboardController extends Controller
         $email = Auth::guard('karyawan')->user()->email;
         // Mendapatkan data profile berdasarkan email
         $dataprofile = DB::table('karyawan')->where('email', $email)->first();
-        try {
-            $response = \Illuminate\Support\Facades\Http::timeout(5)->get(env('MAA_WEB_URL', 'http://localhost:8001') . '/api/posts');
-            if ($response->successful() && isset($response->json()['data']['data'])) {
-                $databerita = collect(json_decode(json_encode($response->json()['data']['data'])))->map(function($item) {
-                    return (object)[
-                        'slug' => $item->slug,
-                        'judul' => $item->title,
-                        'subjudul' => $item->excerpt,
-                        'foto' => $item->featured_image ? env('MAA_WEB_URL', 'http://localhost:8001') . '/storage/' . $item->featured_image : null
-                    ];
-                });
-            } else {
-                $databerita = collect([]);
-            }
-        } catch (\Exception $e) {
-            $databerita = collect([]);
-        }
+        $databerita = $this->maaApi->getPosts();
+        $datalayanan = $this->maaApi->getPrograms();
+        $datayoutube = $this->maaApi->getYoutubeVideos();
+        $dataslider = $this->maaApi->getSliders();
 
-        // Get Data Layanan
-        $datalayanan = collect();
-        try {
-            $responseLayanan = \Illuminate\Support\Facades\Http::timeout(5)->get(env('MAA_WEB_URL', 'http://localhost:8001') . '/api/programs');
-            if ($responseLayanan->successful() && isset($responseLayanan->json()['data'])) {
-                $datalayanan = collect($responseLayanan->json()['data']);
-            }
-        } catch (\Exception $e) {
-            // Ignore error
-        }
-
-        // Get Data Youtube
-        $datayoutube = collect();
-        try {
-            $responseYt = \Illuminate\Support\Facades\Http::timeout(5)->get(env('MAA_WEB_URL', 'http://localhost:8001') . '/api/youtube');
-            if ($responseYt->successful() && isset($responseYt->json()['data'])) {
-                $datayoutube = collect(json_decode(json_encode($responseYt->json()['data'])));
-            }
-        } catch (\Exception $e) {
-            // Ignore error
-        }
-
-        // Get Data Slider
-        $dataslider = collect();
-        try {
-            $responseSlider = \Illuminate\Support\Facades\Http::timeout(5)->get(env('MAA_WEB_URL', 'http://localhost:8001') . '/api/sliders');
-            if ($responseSlider->successful() && isset($responseSlider->json()['data'])) {
-                $dataslider = collect(json_decode(json_encode($responseSlider->json()['data'])));
-            }
-        } catch (\Exception $e) {
-            // Ignore error
-        }
-
-        $cekemail = DB::table('karyawan')
-            ->leftJoin('biodata', 'karyawan.email', '=', 'biodata.email')
-            ->leftJoin('kriteriapasangan', 'karyawan.email', '=', 'kriteriapasangan.email')
-            ->select('karyawan.email', 'biodata.email as biodata_email', 'kriteriapasangan.email as kriteriapasangan_email')
-            ->where('karyawan.email', $email)
-            ->first();
-
-        if ($cekemail) {
-            // Jika email ditemukan di tabel karyawan
-            if (
-                $cekemail->biodata_email !== null && $cekemail->kriteriapasangan_email !== null
-            ) {
-                // Lakukan sesuatu jika email ditemukan di kedua tabel biodata dan kriteriapasangan
-                // Misalnya, aktifkan menu
-                $menuAktif = true;
-            } else {
-                // Lakukan sesuatu jika email tidak ditemukan di salah satu atau kedua tabel
-                // Misalnya, nonaktifkan menu
-                $menuAktif = false;
-            }
-        } else {
-            // Lakukan sesuatu jika email tidak ditemukan di tabel karyawan
-            // Misalnya, nonaktifkan menu
-            $menuAktif = false;
-        }
-
-        return view('dashboard.index', compact('dataprofile', 'databerita', 'datayoutube', 'menuAktif', 'datalayanan', 'dataslider'));
+        return view('dashboard.index', compact('dataprofile', 'databerita', 'datayoutube', 'datalayanan', 'dataslider'));
     }
 
     private function getCommonData()
@@ -153,19 +81,7 @@ class DashboardController extends Controller
         $email = Auth::guard('karyawan')->user()->email;
         $dataprofile = DB::table('karyawan')->where('email', $email)->first();
 
-        $cekemail = DB::table('karyawan')
-            ->leftJoin('biodata', 'karyawan.email', '=', 'biodata.email')
-            ->leftJoin('kriteriapasangan', 'karyawan.email', '=', 'kriteriapasangan.email')
-            ->select('karyawan.email', 'biodata.email as biodata_email', 'kriteriapasangan.email as kriteriapasangan_email')
-            ->where('karyawan.email', $email)
-            ->first();
-
-        $menuAktif = false;
-        if ($cekemail && $cekemail->biodata_email !== null && $cekemail->kriteriapasangan_email !== null) {
-            $menuAktif = true;
-        }
-
-        return ['email' => $email, 'dataprofile' => $dataprofile, 'menuAktif' => $menuAktif];
+        return ['email' => $email, 'dataprofile' => $dataprofile];
     }
 
     public function lainnya()
@@ -216,35 +132,13 @@ class DashboardController extends Controller
         $email = Auth::guard('karyawan')->user()->email;
         $dataprofile = DB::table('karyawan')->where('email', $email)->first();
 
-        $cekemail = DB::table('karyawan')
-            ->leftJoin('biodata', 'karyawan.email', '=', 'biodata.email')
-            ->leftJoin('kriteriapasangan', 'karyawan.email', '=', 'kriteriapasangan.email')
-            ->select('karyawan.email', 'biodata.email as biodata_email', 'kriteriapasangan.email as kriteriapasangan_email')
-            ->where('karyawan.email', $email)
-            ->first();
-
-        if ($cekemail) {
-            if ($cekemail->biodata_email !== null && $cekemail->kriteriapasangan_email !== null) {
-                $menuAktif = true;
-            } else {
-                $menuAktif = false;
-            }
-        } else {
-            $menuAktif = false;
-        }
-
-        try {
-            $response = \Illuminate\Support\Facades\Http::timeout(5)->get(env('MAA_WEB_URL', 'http://localhost:8001') . '/api/posts/' . $slug);
-            if ($response->successful() && isset($response->json()['data'])) {
-                $berita = (object) $response->json()['data'];
-            } else {
-                return abort(404);
-            }
-        } catch (\Exception $e) {
+        $berita = $this->maaApi->getPost($slug);
+        
+        if (!$berita) {
             return abort(404);
         }
 
-        return view('dashboard.berita.show', compact('dataprofile', 'berita', 'menuAktif'));
+        return view('dashboard.berita.show', compact('dataprofile', 'berita'));
     }
 
     public function showLayanan($slug)
@@ -252,35 +146,13 @@ class DashboardController extends Controller
         $email = Auth::guard('karyawan')->user()->email;
         $dataprofile = DB::table('karyawan')->where('email', $email)->first();
 
-        $cekemail = DB::table('karyawan')
-            ->leftJoin('biodata', 'karyawan.email', '=', 'biodata.email')
-            ->leftJoin('kriteriapasangan', 'karyawan.email', '=', 'kriteriapasangan.email')
-            ->select('karyawan.email', 'biodata.email as biodata_email', 'kriteriapasangan.email as kriteriapasangan_email')
-            ->where('karyawan.email', $email)
-            ->first();
-
-        if ($cekemail) {
-            if ($cekemail->biodata_email !== null && $cekemail->kriteriapasangan_email !== null) {
-                $menuAktif = true;
-            } else {
-                $menuAktif = false;
-            }
-        } else {
-            $menuAktif = false;
-        }
-
-        try {
-            $response = \Illuminate\Support\Facades\Http::timeout(5)->get(env('MAA_WEB_URL', 'http://localhost:8001') . '/api/programs/' . $slug);
-            if ($response->successful() && isset($response->json()['data'])) {
-                $layanan = (object) $response->json()['data'];
-            } else {
-                return abort(404);
-            }
-        } catch (\Exception $e) {
+        $layanan = $this->maaApi->getProgram($slug);
+        
+        if (!$layanan) {
             return abort(404);
         }
 
-        return view('dashboard.layanan.show', compact('dataprofile', 'layanan', 'menuAktif'));
+        return view('dashboard.layanan.show', compact('dataprofile', 'layanan'));
     }
 
     public function profile()
@@ -295,34 +167,7 @@ class DashboardController extends Controller
             ->where('karyawan.email', $email)
             ->first();
 
-        $cekemail = DB::table('karyawan')
-            ->leftJoin('biodata', 'karyawan.email', '=', 'biodata.email')
-            ->leftJoin('kriteriapasangan', 'karyawan.email', '=', 'kriteriapasangan.email')
-            ->select('karyawan.email', 'biodata.email as biodata_email', 'kriteriapasangan.email as kriteriapasangan_email')
-            ->where('karyawan.email', $email)
-            ->first();
-
-        if ($cekemail) {
-            // Jika email ditemukan di tabel karyawan
-            if (
-                $cekemail->biodata_email !== null && $cekemail->kriteriapasangan_email !== null
-            ) {
-                // Lakukan sesuatu jika email ditemukan di kedua tabel biodata dan kriteriapasangan
-                // Misalnya, aktifkan menu
-                $menuAktif = true;
-            } else {
-                // Lakukan sesuatu jika email tidak ditemukan di salah satu atau kedua tabel
-                // Misalnya, nonaktifkan menu
-                $menuAktif = false;
-            }
-        } else {
-            // Lakukan sesuatu jika email tidak ditemukan di tabel karyawan
-            // Misalnya, nonaktifkan menu
-            $menuAktif = false;
-        }
-
-
-        return view('dashboard.profile.index', compact('dataprofile', 'dataprofilelengkap', 'menuAktif'));
+        return view('dashboard.profile.index', compact('dataprofile', 'dataprofilelengkap'));
     }
 
     public function checkNotifications()
@@ -468,9 +313,6 @@ class DashboardController extends Controller
     public function updateprofile(Request $request)
     {
         $user = Auth::guard('karyawan')->user();
-        $email = $user->email;
-        $nama = $request->nama;
-        $password = $request->password;
 
         // Validasi untuk file yang diupload
         $request->validate([
@@ -478,29 +320,10 @@ class DashboardController extends Controller
         ]);
 
         try {
-            // Proses Upload Foto
-            $foto = $user->foto;
-            if ($request->hasFile('foto')) {
-                $foto = $email . '.' . $request->file('foto')->getClientOriginalExtension();
-                $request->file('foto')->storeAs('public/uploads/karyawan/img/', $foto);
-            }
-
-            // Data untuk diupdate
-            $data = [
-                'nama' => $nama,
-                'foto' => $foto,
-            ];
-
-            // Jika password diisi, update password
-            if (!empty($password)) {
-                $data['password'] = Hash::make($password);
-            }
-
-            // Lakukan update data karyawan
-            DB::table('karyawan')->where('email', $email)->update($data);
-
+            $this->profileService->updateBasicProfile($user, $request);
             return Redirect::back()->with(['success' => 'Berhasil diupdate']);
         } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error($e->getMessage());
             return Redirect::back()->with(['warning' => 'Maaf ada kesalahan inputan']);
         }
     }
@@ -508,21 +331,6 @@ class DashboardController extends Controller
     public function updateprofile2(Request $request)
     {
         $user = Auth::guard('karyawan')->user();
-        $email = $user->email;
-        $nohp = $request->nohp;
-        $tempatlahir = $request->tempatlahir;
-        $tgllahir = $request->tgllahir;
-        $tinggi = $request->tinggi;
-        $berat = $request->berat;
-        $goldar = $request->goldar;
-        $statusnikah = $request->statusnikah;
-        $pekerjaan = $request->pekerjaan;
-        $suku = $request->suku;
-        $pendidikan = $request->pendidikan;
-        $hobi = $request->hobi;
-        $motto = $request->motto;
-        $alamat = $request->alamat;
-        $video = $request->video;
 
         // Validasi untuk file yang diupload
         $request->validate([
@@ -530,43 +338,10 @@ class DashboardController extends Controller
         ]);
 
         try {
-            // Pemeriksaan apakah biodata dengan email tersebut sudah ada
-            $adaData = DB::table('biodata')->where('email', $email)->first();
-
-            // Proses Upload Foto
-            $video = $user->video;
-            if ($request->hasFile('video')) {
-                $video = $email . '.' . $request->file('video')->getClientOriginalExtension();
-                $request->file('video')->storeAs('public/uploads/karyawan/video/', $video);
-            }
-
-            // Data untuk diupdate
-            $data = [
-                'email' => $email,
-                'nohp' => $nohp,
-                'tempatlahir' => $tempatlahir,
-                'tgllahir' => $tgllahir,
-                'tinggi' => $tinggi,
-                'berat' => $berat,
-                'goldar' => $goldar,
-                'statusnikah' => $statusnikah,
-                'pekerjaan' => $pekerjaan,
-                'suku' => $suku,
-                'pendidikan' => $pendidikan,
-                'hobi' => $hobi,
-                'motto' => $motto,
-                'alamat' => $alamat,
-                'video' => $video,
-            ];
-
-            // Lakukan insert jika belum ada data, atau update jika sudah ada
-            if ($adaData) {
-                DB::table('biodata')->where('email', $email)->update($data);
-            } else {
-                DB::table('biodata')->insert($data);
-            }
+            $this->profileService->updateBiodata($user, $request);
             return Redirect::back()->with(['success' => 'Berhasil diupdate']);
         } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error($e->getMessage());
             return Redirect::back()->with(['warning' => 'Maaf ada kesalahan inputan']);
         }
     }
@@ -574,37 +349,12 @@ class DashboardController extends Controller
     public function updateprofile3(Request $request)
     {
         $user = Auth::guard('karyawan')->user();
-        $email = $user->email;
-        $umurRange = $request->umurRange;
-        $beratRange = $request->beratRange;
-        $tinggiRange = $request->tinggiRange;
-        $sukupilihan = $request->sukupilihan;
-        $kriteriaumum = $request->kriteriaumum;
 
         try {
-            // Pemeriksaan apakah biodata dengan email tersebut sudah ada
-            $adaData = DB::table('kriteriapasangan')->where('email', $email)->first();
-
-            // Data untuk diupdate
-            $data = [
-                'email' => $email,
-                'kriteriaumur' => $umurRange,
-                'kriteriatinggi' => $tinggiRange,
-                'kriteriaberat' => $beratRange,
-                'kriteriasuku' => $sukupilihan,
-                'kriteriaumum' => $kriteriaumum,
-
-            ];
-            // Lakukan insert jika belum ada data, atau update jika sudah ada
-            if ($adaData) {
-                DB::table('kriteriapasangan')->where('email', $email)->update($data);
-            } else {
-                DB::table('kriteriapasangan')->insert($data);
-            }
-
+            $this->profileService->updateKriteria($user, $request);
             return Redirect::back()->with(['success' => 'Berhasil diupdate']);
         } catch (\Exception $e) {
-            dd($e);
+            \Illuminate\Support\Facades\Log::error($e->getMessage());
             return Redirect::back()->with(['warning' => 'Maaf ada kesalahan inputan']);
         }
     }

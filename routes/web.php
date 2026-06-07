@@ -6,7 +6,7 @@ use App\Http\Controllers\DashboardAdminController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MasterInputanController;
 use App\Http\Controllers\ProgressController;
-use App\Http\Controllers\TaarufContoller;
+use App\Http\Controllers\TaarufController;
 use App\Http\Controllers\MurobiController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
@@ -41,19 +41,19 @@ Route::middleware(['guest:karyawan'])->group(function () {
     Route::get('/login', function () {
         return view('auth.login');
     })->name('login');
-    Route::post('/prosesdaftar', [AuthController::class, 'prosesdaftar']);
-    Route::post('/proseslogin', [AuthController::class, 'proseslogin']);
+    Route::post('/prosesdaftar', [AuthController::class, 'prosesdaftar'])->middleware('throttle:6,1');
+    Route::post('/proseslogin', [AuthController::class, 'proseslogin'])->middleware('throttle:10,1');
     Route::get('/masterkaryawan/verify/{token}', [MasterInputanController::class, 'verify'])->name('verify');
 });
 Route::middleware(['guest:user'])->group(function () {
     Route::get('/panel', function () {
         return view('authpanel.login');
     })->name('/panel');
-    Route::post('/prosesloginadmin', [AuthController::class, 'prosesloginadmin']);
+    Route::post('/prosesloginadmin', [AuthController::class, 'prosesloginadmin'])->middleware('throttle:10,1');
 });
 
 // ROUTE AUTH
-Route::middleware(['auth:karyawan'])->group(function () {
+Route::middleware(['auth:karyawan', 'check.profile'])->group(function () {
     Route::get('/proseslogout', [AuthController::class, 'proseslogout']);
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/dashboard/berita/{slug}', [DashboardController::class, 'showBerita'])->name('dashboard.berita.show');
@@ -82,13 +82,13 @@ Route::middleware(['auth:karyawan'])->group(function () {
 
     // Taaruf
     Route::get('/taaruf', [DashboardController::class, 'taaruf'])->name('taaruf');
-    Route::get('/taaruf/{email}/lihatprofile', [TaarufContoller::class, 'lihatprofile']);
-    Route::post('/taaruf/progressprofile', [TaarufContoller::class, 'progressprofile']);
+    Route::get('/taaruf/{email}/lihatprofile', [TaarufController::class, 'lihatprofile']);
+    Route::post('/taaruf/progressprofile', [TaarufController::class, 'progressprofile']);
 
     // Progress
     Route::get('/progress', [ProgressController::class, 'index'])->name('progress');
-    Route::get('/like/{id}', [ProgressController::class, 'like'])->name('like');
-    Route::get('/dislike/{id}', [ProgressController::class, 'dislike'])->name('dislike');
+    Route::post('/like/{id}', [ProgressController::class, 'like'])->name('like');
+    Route::post('/dislike/{id}', [ProgressController::class, 'dislike'])->name('dislike');
 
     // Chat
     Route::get('/chat/{id}', [ChatController::class, 'chat'])->name('chat');
@@ -104,26 +104,26 @@ Route::get('/chat/{id}/fetch', [ChatController::class, 'fetch'])->name('chat.fet
 Route::middleware(['auth:user'])->group(function () {
     Route::get('/dashboardadmin', [DashboardAdminController::class, 'index'])->name('dashboardadmin');
     Route::get('/daftartanya', [DashboardAdminController::class, 'daftartanya'])->name('daftartanya');
-    Route::get('/deletetanya/{id}', [DashboardAdminController::class, 'deletetanya'])->name('deletetanya');
+    Route::delete('/deletetanya/{id}', [DashboardAdminController::class, 'deletetanya'])->name('deletetanya');
     Route::get('/logchat', [DashboardAdminController::class, 'logchat'])->name('logchat');
     Route::get('/prosestaaruf', [DashboardAdminController::class, 'prosestaaruf'])->name('prosestaaruf');
-    Route::get('/deleteprogress/{id}/{source}', [DashboardAdminController::class, 'deleteprogress'])->name('deleteprogress');
+    Route::delete('/deleteprogress/{id}/{source}', [DashboardAdminController::class, 'deleteprogress'])->name('deleteprogress');
     Route::get('/prosescetak/{id}', [DashboardAdminController::class, 'prosescetak'])->name('prosescetak');
     Route::get('/proseslogoutadmin', [AuthController::class, 'proseslogoutadmin']);
     Route::get('/masterkaryawan', [MasterInputanController::class, 'masterkaryawan'])->name('masterkaryawan');
     Route::get('/masterkaryawan/{id_karyawan}/verifikasi', [MasterInputanController::class, 'verifikasi'])->name('verifikasi');
     Route::post('/masterkaryawan/viewkaryawan', [MasterInputanController::class, 'viewkaryawan'])->name('viewkaryawan');
     Route::post('/masterkaryawan/resetpassword', [MasterInputanController::class, 'resetPassword'])->name('resetpassword');
-    Route::get('/masterkaryawan/delete/{id}', [MasterInputanController::class, 'deletekaryawan'])->name('deletekaryawan');
+    Route::delete('/masterkaryawan/delete/{id}', [MasterInputanController::class, 'deletekaryawan'])->name('deletekaryawan');
 
     // Manajemen Admin
     Route::get('/masteradmin', [\App\Http\Controllers\AdminUserController::class, 'index'])->name('masteradmin');
     Route::post('/masteradmin/store', [\App\Http\Controllers\AdminUserController::class, 'store'])->name('masteradmin.store');
     Route::post('/masteradmin/update', [\App\Http\Controllers\AdminUserController::class, 'update'])->name('masteradmin.update');
-    Route::get('/masteradmin/delete/{id}', [\App\Http\Controllers\AdminUserController::class, 'destroy'])->name('masteradmin.delete');
+    Route::delete('/masteradmin/delete/{id}', [\App\Http\Controllers\AdminUserController::class, 'destroy'])->name('masteradmin.delete');
     
     Route::get('/historychat/{id}', [ChatController::class, 'historychat'])->name('historychat');
-    Route::get('/deletehistorychat/{id}', [ChatController::class, 'deletehistorychat'])->name('deletehistorychat');
+    Route::delete('/deletehistorychat/{id}', [ChatController::class, 'deletehistorychat'])->name('deletehistorychat');
 
     // Murobi Routes
     Route::get('/murobi/taaruf', [MurobiController::class, 'taaruf'])->name('murobi.taaruf');
@@ -139,7 +139,7 @@ Route::middleware(['auth:user'])->group(function () {
     Route::get('/murobi/edukasi', [MurobiController::class, 'edukasi'])->name('murobi.edukasi');
     Route::post('/murobi/edukasi/store', [MurobiController::class, 'storeEdukasi'])->name('murobi.edukasi.store');
     Route::post('/murobi/edukasi/update/{id}', [MurobiController::class, 'updateEdukasi'])->name('murobi.edukasi.update');
-    Route::get('/murobi/edukasi/delete/{id}', [MurobiController::class, 'deleteEdukasi'])->name('murobi.edukasi.delete');
+    Route::delete('/murobi/edukasi/delete/{id}', [MurobiController::class, 'deleteEdukasi'])->name('murobi.edukasi.delete');
     Route::post('/murobi/edukasi/peserta/{id}/approve', [MurobiController::class, 'approvePeserta'])->name('murobi.edukasi.peserta.approve');
     Route::post('/murobi/edukasi/peserta/{id}/reject', [MurobiController::class, 'rejectPeserta'])->name('murobi.edukasi.peserta.reject');
 

@@ -794,7 +794,11 @@
             </div>
             <div style="padding: 20px 28px; border-top: 2px solid var(--gray-200); background: var(--gray-50); display: flex; justify-content: flex-end; gap: 12px; border-radius: 0 0 var(--radius-xl) var(--radius-xl);">
                 <button type="button" class="btn" style="padding: 10px 20px; border-radius: var(--radius-md); font-weight: 600; background: var(--gray-200); color: var(--gray-700); border: none; cursor: pointer;" data-dismiss="modal">Batal</button>
-                <a href="#" id="delete-confirm-btn" class="btn" style="padding: 10px 20px; border-radius: var(--radius-md); font-weight: 600; background: #ef4444; color: var(--white); text-decoration: none; display: inline-flex; align-items: center; justify-content: center;">Hapus Permanen</a>
+                <form id="delete-confirm-form" action="" method="POST" class="d-inline" style="margin: 0;">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn" style="padding: 10px 20px; border-radius: var(--radius-md); font-weight: 600; background: #ef4444; color: var(--white); border: none; cursor: pointer;">Hapus Permanen</button>
+                </form>
             </div>
         </div>
     </div>
@@ -861,7 +865,7 @@
                 var nama = $(this).data('nama');
                 
                 $('#delete-nama').text(nama);
-                $('#delete-confirm-btn').attr('href', '/masterkaryawan/delete/' + id);
+                $('#delete-confirm-form').attr('action', '/masterkaryawan/delete/' + id);
                 
                 $("#modal-deleteKaryawan").addClass('show');
             });

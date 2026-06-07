@@ -384,9 +384,13 @@
                                                     <i class="fas fa-pencil-alt"></i>
                                                 </button>
                                                 @if($datauser->id != $admin->id)
-                                                <a href="/masteradmin/delete/{{ $admin->id }}" class="btn-action delete" title="Hapus Admin" onclick="return confirm('Apakah Anda yakin ingin menghapus admin ini?');">
-                                                    <i class="fas fa-trash"></i>
-                                                </a>
+                                                <form action="/masteradmin/delete/{{ $admin->id }}" method="POST" class="d-inline">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn-action delete" title="Hapus Admin" onclick="return confirm('Apakah Anda yakin ingin menghapus admin ini?')" style="border: none;">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                </form>
                                                 @else
                                                 <button class="btn-action" style="background: var(--gray-300); cursor: not-allowed;" title="Tidak dapat menghapus diri sendiri" disabled>
                                                     <i class="fas fa-trash"></i>

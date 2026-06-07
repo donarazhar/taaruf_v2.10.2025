@@ -63,9 +63,21 @@ class ChatController extends Controller
 
     public function store($id, Request $request)
     {
-
         $emailAuth = Auth::guard('karyawan')->user()->email;
         $pesan = $request->pesan;
+
+        // Cek authorization
+        $progress = DB::table('progress')
+            ->where('id', $id)
+            ->where(function ($query) use ($emailAuth) {
+                $query->where('email_auth', $emailAuth)
+                    ->orWhere('email_profile', $emailAuth);
+            })
+            ->first();
+
+        if (!$progress) {
+            abort(403, 'Unauthorized action.');
+        }
 
         try {
             $data = [

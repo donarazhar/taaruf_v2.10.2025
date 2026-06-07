@@ -746,12 +746,13 @@
                                                    title="Lihat Detail">
                                                     <i class="fas fa-eye"></i>
                                                 </a>
-                                                <a href="{{ route('deletetanya', ['id' => $d->id]) }}" 
-                                                   class="btn-action-modern btn-delete" 
-                                                   title="Hapus Pertanyaan"
-                                                   onclick="return confirm('Apakah Anda yakin ingin menghapus pertanyaan ini?')">
-                                                    <i class="fas fa-trash"></i>
-                                                </a>
+                                                <form action="{{ route('deletetanya', ['id' => $d->id]) }}" method="POST" class="d-inline">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn-action-modern btn-delete" title="Hapus Pertanyaan" onclick="return confirm('Apakah Anda yakin ingin menghapus pertanyaan ini?')" style="border: none;">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                </form>
                                             </div>
                                         </td>
                                     </tr>

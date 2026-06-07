@@ -718,17 +718,21 @@
 
                 <!-- Action Buttons -->
                 <div class="progress-actions">
-                    <a class="progress-btn btn-like {{ $likedislikeStatus && $likedislikeStatus->status == 1 ? 'btn-disabled' : '' }}"
-                       href="{{ route('like', ['id' => isset($d->id) ? $d->id : 0]) }}">
-                        <i class="bi bi-hand-thumbs-up-fill"></i>
-                        <span>{{ $likedislikeStatus && $likedislikeStatus->status == 1 ? 'Sudah Menyukai' : 'Saya Cocok' }}</span>
-                    </a>
+                    <form action="{{ route('like', ['id' => isset($d->id) ? $d->id : 0]) }}" method="POST" style="flex: 1; display: flex;">
+                        @csrf
+                        <button type="submit" class="progress-btn btn-like {{ $likedislikeStatus && $likedislikeStatus->status == 1 ? 'btn-disabled' : '' }}" style="width: 100%; border: none;">
+                            <i class="bi bi-hand-thumbs-up-fill"></i>
+                            <span>{{ $likedislikeStatus && $likedislikeStatus->status == 1 ? 'Sudah Menyukai' : 'Saya Cocok' }}</span>
+                        </button>
+                    </form>
 
-                    <a class="progress-btn btn-dislike {{ $likedislikeStatus && $likedislikeStatus->status == 0 ? 'btn-disabled' : '' }}"
-                       href="{{ route('dislike', ['id' => isset($d->id) ? $d->id : 0]) }}">
-                        <i class="bi bi-heartbreak-fill"></i>
-                        <span>{{ $likedislikeStatus && $likedislikeStatus->status == 0 ? 'Sudah Tidak Menyukai' : 'Tidak Cocok' }}</span>
-                    </a>
+                    <form action="{{ route('dislike', ['id' => isset($d->id) ? $d->id : 0]) }}" method="POST" style="flex: 1; display: flex;">
+                        @csrf
+                        <button type="submit" class="progress-btn btn-dislike {{ $likedislikeStatus && $likedislikeStatus->status == 0 ? 'btn-disabled' : '' }}" style="width: 100%; border: none;">
+                            <i class="bi bi-heartbreak-fill"></i>
+                            <span>{{ $likedislikeStatus && $likedislikeStatus->status == 0 ? 'Sudah Tidak Menyukai' : 'Tidak Cocok' }}</span>
+                        </button>
+                    </form>
 
                     <a class="progress-btn btn-chat"
                        href="{{ route('chat', ['id' => isset($d->id) ? $d->id : 0]) }}">

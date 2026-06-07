@@ -795,13 +795,13 @@
                                                         <i class="fas fa-lock"></i>
                                                     </button>
                                                 @endif
-                                                <a href="{{ route('deleteprogress', ['id' => $data->id, 'source' => $data->source_table]) }}" 
-                                                   class="btn-action-modern btn-delete" 
-                                                   style="background: #ef4444; padding: 8px 12px;"
-                                                   title="Hapus Progress"
-                                                   onclick="return confirm('Apakah Anda yakin ingin menghapus progress ini?')">
-                                                    <i class="fas fa-trash"></i>
-                                                </a>
+                                                <form action="{{ route('deleteprogress', ['id' => $data->id, 'source' => $data->source_table]) }}" method="POST" class="d-inline">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn-action-modern btn-delete" style="background: #ef4444; padding: 8px 12px; border: none;" title="Hapus Progress" onclick="return confirm('Apakah Anda yakin ingin menghapus progress ini?')">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                </form>
                                             </div>
                                         </td>
                                     </tr>
