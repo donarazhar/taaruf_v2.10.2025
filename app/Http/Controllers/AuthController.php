@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
+use App\Http\Requests\RegisterRequest;
+use App\Http\Requests\LoginRequest;
 
 class AuthController extends Controller
 {
@@ -22,7 +24,7 @@ class AuthController extends Controller
         return $result;
     }
 
-    public function prosesdaftar(Request $request)
+    public function prosesdaftar(RegisterRequest $request)
     {
         $nip = $request->nip;
         $nama = $request->nama;
@@ -53,7 +55,7 @@ class AuthController extends Controller
     }
 
     // Login karyawam
-    public function proseslogin(Request $request)
+    public function proseslogin(LoginRequest $request)
     {
 
         if (Auth::guard('karyawan')->attempt(['email' => $request->email, 'password' => $request->password, 'status' => '1'])) {
