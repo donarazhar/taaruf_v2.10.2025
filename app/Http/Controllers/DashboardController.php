@@ -10,6 +10,9 @@ use Illuminate\Support\Facades\Redirect;
 
 use App\Services\MaaApiService;
 use App\Services\ProfileService;
+use App\Http\Requests\UpdateBasicProfileRequest;
+use App\Http\Requests\UpdateBiodataRequest;
+use App\Http\Requests\UpdateKriteriaRequest;
 
 class DashboardController extends Controller
 {
@@ -329,14 +332,9 @@ class DashboardController extends Controller
         return view('dashboard.progress.index', compact('dataprofile'));
     }
 
-    public function updateprofile(Request $request)
+    public function updateprofile(UpdateBasicProfileRequest $request)
     {
         $user = Auth::guard('karyawan')->user();
-
-        // Validasi untuk file yang diupload
-        $request->validate([
-            'foto' => 'image|mimes:png,jpg|max:2024'
-        ]);
 
         try {
             $this->profileService->updateBasicProfile($user, $request);
@@ -347,14 +345,9 @@ class DashboardController extends Controller
         }
     }
 
-    public function updateprofile2(Request $request)
+    public function updateprofile2(UpdateBiodataRequest $request)
     {
         $user = Auth::guard('karyawan')->user();
-
-        // Validasi untuk file yang diupload
-        $request->validate([
-            'video' => 'mimetypes:video/mp4,video/x-msvideo,video/mpeg,video/quicktime|max:8024',
-        ]);
 
         try {
             $this->profileService->updateBiodata($user, $request);
@@ -365,7 +358,7 @@ class DashboardController extends Controller
         }
     }
 
-    public function updateprofile3(Request $request)
+    public function updateprofile3(UpdateKriteriaRequest $request)
     {
         $user = Auth::guard('karyawan')->user();
 
