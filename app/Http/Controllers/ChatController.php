@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
+use App\Http\Requests\StoreChatRequest;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\NewChatNotification;
 
@@ -63,7 +64,7 @@ class ChatController extends Controller
         return view('dashboard.progress.chat', compact('karyawan', 'datachat', 'dataprogress'));
     }
 
-    public function store($id, Request $request)
+    public function store($id, StoreChatRequest $request)
     {
         $emailAuth = Auth::guard('karyawan')->user()->email;
         $pesan = $request->pesan;
@@ -83,7 +84,6 @@ class ChatController extends Controller
 
         try {
             $data = [
-
                 'pesan' => $pesan,
                 'id_progress' => $id,
                 'email_sender' => $emailAuth,
@@ -107,7 +107,7 @@ class ChatController extends Controller
                 return redirect()->back();
             }
         } catch (\Exception $e) {
-            return redirect()->back();
+            return redirect()->back()->with(['error' => 'Gagal mengirim pesan']);
         }
     }
     

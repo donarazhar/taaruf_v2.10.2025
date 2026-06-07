@@ -13,6 +13,7 @@ use App\Services\ProfileService;
 use App\Http\Requests\UpdateBasicProfileRequest;
 use App\Http\Requests\UpdateBiodataRequest;
 use App\Http\Requests\UpdateKriteriaRequest;
+use App\Http\Requests\StoreKonsultasiRequest;
 
 class DashboardController extends Controller
 {
@@ -328,13 +329,8 @@ class DashboardController extends Controller
         }
     }
 
-    public function storeKonsultasi(Request $request)
+    public function storeKonsultasi(StoreKonsultasiRequest $request)
     {
-        $request->validate([
-            'topik_konsultasi' => 'required',
-            'pesan' => 'required',
-        ]);
-
         DB::table('konsultasi')->insert([
             'karyawan_email' => Auth::guard('karyawan')->user()->email,
             'topik_konsultasi' => $request->topik_konsultasi,
