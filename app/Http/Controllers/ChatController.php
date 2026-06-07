@@ -16,23 +16,21 @@ class ChatController extends Controller
     {
         // Mendapatkan email auth
         $emailAuth = Auth::guard('karyawan')->user()->email;
-        // Mendapatkan data profile berdasarkan email
-        $karyawan = DB::table('karyawan')
-            ->select('karyawan.*', 'biodata.*', 'kriteriapasangan.*')
-            ->leftJoin('biodata', 'karyawan.email', '=', 'biodata.email')
-            ->leftJoin(
-                'kriteriapasangan',
-                'karyawan.email',
-                '=',
-                'kriteriapasangan.email'
-            )
-            ->where(
-                'karyawan.email',
-                '=',
-                $emailAuth
-            ) // Tambahkan tanda kutip di sekitar $email
+        
+        // Cek authorization: pastikan progress ini milik user yang login
+        $currentProgress = DB::table('progress')
+            ->where('id', $id)
+            ->where(function ($query) use ($emailAuth) {
+                $query->where('email_auth', $emailAuth)
+                      ->orWhere('email_profile', $emailAuth);
+            })
             ->first();
 
+        if (!$currentProgress) {
+            abort(403, 'Anda tidak memiliki akses ke percakapan ini.');
+        }
+
+        // Data progress list (untuk sidebar jika ada)
         $dataprogress = DB::table('progress')
             ->leftJoin('karyawan', 'karyawan.email', '=', 'progress.email_auth')
             ->where(function ($query) use ($emailAuth) {
@@ -43,25 +41,16 @@ class ChatController extends Controller
             ->select('progress.*', 'karyawan.nama')
             ->get();
 
-        // Melakukan LEFT JOIN ke tabel karyawan untuk mendapatkan data dari tabel karyawan
+        // Ambil data chat KHUSUS untuk progress ID ini
         $datachat = DB::table('chat')
-            ->join(
-                'progress',
-                'progress.id',
-                '=',
-                'chat.id_progress'
-            )
+            ->join('progress', 'progress.id', '=', 'chat.id_progress')
             ->leftJoin('karyawan', 'karyawan.email', '=', 'chat.email_sender')
-            ->where(function ($query) use ($emailAuth) {
-                $query->where('progress.email_auth', $emailAuth)
-                    ->orWhere('progress.email_profile', $emailAuth);
-            })
-            ->where('progress.status', 1)
+            ->where('chat.id_progress', $id)
             ->select('chat.id', 'progress.id as id_progress', 'chat.email_sender', 'chat.pesan', 'chat.tgl_pesan', 'karyawan.nama', 'karyawan.foto', 'karyawan.jenkel')
             ->orderBy('chat.tgl_pesan', 'asc')
             ->get();
 
-        return view('dashboard.progress.chat', compact('karyawan', 'datachat', 'dataprogress'));
+        return view('dashboard.progress.chat', compact('datachat', 'dataprogress', 'id'));
     }
 
     public function store($id, StoreChatRequest $request)
