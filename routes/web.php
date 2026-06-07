@@ -21,6 +21,16 @@ use Illuminate\Support\Facades\DB;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+// ROUTE HALAMAN LEGAL (Dapat diakses public, baik login maupun tidak)
+Route::get('/privacy', function () {
+    return view('landing.privacy');
+})->name('privacy');
+
+Route::get('/tos', function () {
+    return view('landing.tos');
+})->name('tos');
+
 // ROUTE TAMU/PENGGUNA TANPA LOGIN
 Route::middleware(['guest:karyawan'])->group(function () {
     Route::get('/', function () {
@@ -41,6 +51,9 @@ Route::middleware(['guest:karyawan'])->group(function () {
     Route::get('/login', function () {
         return view('auth.login');
     })->name('login');
+
+
+
     Route::post('/prosesdaftar', [AuthController::class, 'prosesdaftar'])->middleware('throttle:6,1');
     Route::post('/proseslogin', [AuthController::class, 'proseslogin'])->middleware('throttle:10,1');
     Route::get('/masterkaryawan/verify/{token}', [MasterInputanController::class, 'verify'])->name('verify');

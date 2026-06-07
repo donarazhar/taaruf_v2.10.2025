@@ -1167,7 +1167,93 @@
     </footer>
     <div style="height: 4px; width: 100%; background: linear-gradient(90deg, var(--primary-color) 0%, #10b981 33%, #f59e0b 66%, #ef4444 100%);"></div>
 
+    <!-- Legal Links Bottom Area -->
+    <div style="background-color: var(--white); padding: 15px 0; text-align: center; font-size: 0.85rem;">
+        <div class="container d-flex justify-content-center align-items-center" style="gap: 15px;">
+            <a href="#" data-bs-toggle="modal" data-bs-target="#privacyModal" style="color: var(--gray-700); text-decoration: none; font-weight: 500; transition: color 0.3s;" onmouseover="this.style.color='var(--primary-color)'" onmouseout="this.style.color='var(--gray-700)'"><i class="fa fa-shield"></i> Kebijakan Privasi</a>
+            <span style="color: var(--gray-400);">|</span>
+            <a href="#" data-bs-toggle="modal" data-bs-target="#tosModal" style="color: var(--gray-700); text-decoration: none; font-weight: 500; transition: color 0.3s;" onmouseover="this.style.color='var(--primary-color)'" onmouseout="this.style.color='var(--gray-700)'"><i class="fa fa-file-text-o"></i> Syarat & Ketentuan</a>
+        </div>
+    </div>
+
 </div>
+
+<!-- Privacy Policy Modal -->
+<div class="modal fade" id="privacyModal" tabindex="-1" aria-labelledby="privacyModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content border-0 shadow-lg">
+      <div class="modal-header border-bottom-0" style="background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%); color: white;">
+        <h5 class="modal-title fw-bold" id="privacyModalLabel"><i class="fa fa-shield me-2"></i> Kebijakan Privasi</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body p-4" style="color: var(--gray-700); line-height: 1.8;">
+        <h6 class="fw-bold text-dark mb-3">Terakhir diperbarui: {{ date('d F Y') }}</h6>
+        <div class="mb-4">
+            <h6 class="fw-bold text-primary mb-2">1. Pendahuluan</h6>
+            <p>Selamat datang di TaarufV2. Kami menghargai privasi Anda dan berkomitmen untuk melindungi informasi pribadi yang Anda bagikan dengan kami. Kebijakan Privasi ini menjelaskan bagaimana kami mengumpulkan, menggunakan, dan menjaga data Anda.</p>
+        </div>
+        <div class="mb-4">
+            <h6 class="fw-bold text-primary mb-2">2. Informasi yang Kami Kumpulkan</h6>
+            <p>Kami mengumpulkan informasi yang Anda berikan langsung kepada kami saat mendaftar, membuat profil, atau menggunakan layanan kami. Ini mungkin termasuk nama, alamat email, foto profil, dan informasi kriteria pencarian pasangan.</p>
+        </div>
+        <div class="mb-4">
+            <h6 class="fw-bold text-primary mb-2">3. Penggunaan Informasi</h6>
+            <p>Informasi Anda digunakan untuk memfasilitasi proses ta'aruf, memberikan rekomendasi pasangan yang relevan, dan berkomunikasi dengan Anda mengenai layanan kami.</p>
+        </div>
+        <div class="mb-4">
+            <h6 class="fw-bold text-primary mb-2">4. Perlindungan Data</h6>
+            <p>Kami menerapkan langkah-langkah keamanan teknis dan organisasi yang sesuai untuk melindungi data pribadi Anda dari akses yang tidak sah, kehilangan, atau penyalahgunaan.</p>
+        </div>
+        <div class="mb-4">
+            <h6 class="fw-bold text-primary mb-2">5. Perubahan pada Kebijakan Privasi</h6>
+            <p>Kami dapat memperbarui Kebijakan Privasi ini dari waktu ke waktu. Kami akan memberi tahu pengguna tentang perubahan material melalui email atau pemberitahuan di situs web.</p>
+        </div>
+      </div>
+      <div class="modal-footer bg-light border-top-0">
+        <button type="button" class="btn btn-secondary rounded-pill px-4" data-bs-dismiss="modal">Tutup</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TOS Modal -->
+<div class="modal fade" id="tosModal" tabindex="-1" aria-labelledby="tosModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content border-0 shadow-lg">
+      <div class="modal-header border-bottom-0" style="background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%); color: white;">
+        <h5 class="modal-title fw-bold" id="tosModalLabel"><i class="fa fa-file-text-o me-2"></i> Syarat & Ketentuan</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body p-4" style="color: var(--gray-700); line-height: 1.8;">
+        <h6 class="fw-bold text-dark mb-3">Terakhir diperbarui: {{ date('d F Y') }}</h6>
+        <div class="mb-4">
+            <h6 class="fw-bold text-primary mb-2">1. Penerimaan Syarat</h6>
+            <p>Dengan mengakses atau menggunakan platform TaarufV2, Anda menyetujui untuk terikat oleh Syarat dan Ketentuan ini. Jika Anda tidak setuju dengan bagian mana pun dari syarat ini, Anda dilarang menggunakan layanan kami.</p>
+        </div>
+        <div class="mb-4">
+            <h6 class="fw-bold text-primary mb-2">2. Penggunaan Layanan</h6>
+            <p>Anda setuju untuk menggunakan layanan kami hanya untuk tujuan yang sah, yakni untuk proses ta'aruf yang sesuai dengan syariat Islam. Anda tidak diperkenankan menggunakan platform ini untuk tujuan penipuan, pelecehan, atau aktivitas ilegal lainnya.</p>
+        </div>
+        <div class="mb-4">
+            <h6 class="fw-bold text-primary mb-2">3. Akun Pengguna</h6>
+            <p>Anda bertanggung jawab untuk menjaga kerahasiaan kata sandi akun Anda dan atas semua aktivitas yang terjadi di bawah akun Anda. Anda harus memberikan informasi yang akurat dan lengkap saat mendaftar.</p>
+        </div>
+        <div class="mb-4">
+            <h6 class="fw-bold text-primary mb-2">4. Konten Pengguna</h6>
+            <p>Anda mempertahankan hak cipta atas konten yang Anda unggah (seperti foto profil dan biodata). Namun, Anda memberikan kami lisensi untuk menggunakan konten tersebut dalam rangka menyediakan layanan platform TaarufV2.</p>
+        </div>
+        <div class="mb-4">
+            <h6 class="fw-bold text-primary mb-2">5. Penghentian</h6>
+            <p>Kami berhak untuk menghentikan atau menangguhkan akun Anda secara sepihak jika kami menemukan adanya pelanggaran terhadap Syarat dan Ketentuan ini.</p>
+        </div>
+      </div>
+      <div class="modal-footer bg-light border-top-0">
+        <button type="button" class="btn btn-secondary rounded-pill px-4" data-bs-dismiss="modal">Tutup</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 @endsection
 
 @push('myscript')
